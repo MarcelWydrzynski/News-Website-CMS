@@ -1,10 +1,18 @@
-import React from "react";
-import { Outlet } from "react-router";
+import UseFetchArticles from "../hooks/UseFetchArticles";
 
 const Homepage = () => {
+  const { articles, error, loading } = UseFetchArticles();
+  console.log(articles, error, loading);
   return (
     <div>
-      <h1>hello, i am the homepage</h1>
+      <h1 className="font-sans">hello, i am the homepage</h1>
+      <ul>
+        {articles.map((article) => (
+          <li>
+            {article.title} {article.author}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
