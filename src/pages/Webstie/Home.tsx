@@ -16,7 +16,7 @@ const Homepage = () => {
   });
 
   return (
-    <div className="">
+    <div className="bg-slate-600 w-screen h-screen">
       <p className="text-bold"></p>
 
       <ul>
