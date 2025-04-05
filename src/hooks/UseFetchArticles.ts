@@ -15,27 +15,30 @@ interface Article {
 
 const UseFetchArticles = () => {
   const [articles, setArticles] = useState<Article[]>([]);
-  const [error, setError] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [fetchingArticlesError, setFetchingArticlesError] = useState<
+    string | null
+  >(null);
+  const [fetchingArticlesLoading, setFetchingArticlesLoading] =
+    useState<boolean>(true);
 
   const fetchArticles = async () => {
-    setLoading(true);
+    setFetchingArticlesLoading(true);
 
     let { data, error } = await supabase.from("ArticlesList").select("*");
 
     if (error) {
-      setError(true);
+      setFetchingArticlesError(error.message);
     } else {
       setArticles(data || []);
     }
-    setLoading(false);
+    setFetchingArticlesLoading(false);
   };
 
   useEffect(() => {
     fetchArticles();
   }, []);
 
-  return { articles, error, loading };
+  return { articles, fetchingArticlesError, fetchingArticlesLoading };
 };
 
 export default UseFetchArticles;
