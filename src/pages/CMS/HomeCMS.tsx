@@ -6,7 +6,7 @@ const HomeCMS = () => {
   return (
     <div className="bg-[#111827] w-screen h-screen flex flex-col">
       <Header />
-      <div className="p-4 flex justify-center items-center flex-grow">
+      <div className="p-4 flex">
         <Outlet />
       </div>
     </div>

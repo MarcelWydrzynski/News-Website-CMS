@@ -7,16 +7,12 @@ const ArticlesCMS = () => {
   const { articles, fetchingArticlesLoading, fetchingArticlesError } =
     UseFetchArticles();
 
-  if (fetchingArticlesLoading) {
-    return <LoaderCMS />;
-  }
-
-  if (fetchingArticlesError) {
-    return <Error errorMessage={fetchingArticlesError} />;
-  }
-
   return (
     <div className="flex gap-8 flex-wrap justify-center items-center">
+      {fetchingArticlesLoading ? <LoaderCMS /> : null}
+      {fetchingArticlesError ? (
+        <Error errorMessage={fetchingArticlesError} />
+      ) : null}
       {articles.map((article) => (
         <Card
           key={article.id}
