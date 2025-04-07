@@ -1,9 +1,21 @@
 import React, { ChangeEvent, useState } from "react";
 import { TextInput, Button, FileInput, Label } from "flowbite-react";
 import uploadImage from "../../hooks/UseUploadImage";
+import deleteImages from "../../hooks/UseDeleteImages";
 
+type Image = {
+  id: string;
+  url: string;
+  name: string;
+};
 
-const ImagesFiltersCMS = () => {
+type ImagesFiltersCMSProps = {
+  selectedImages: Image[];
+};
+
+const ImagesFiltersCMS: React.FC<ImagesFiltersCMSProps> = ({
+  selectedImages,
+}) => {
   const [file, setFile] = useState<File | null>(null);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -13,11 +25,19 @@ const ImagesFiltersCMS = () => {
     }
   };
 
-  const onClick = () => {
+  const handleUpload = () => {
     if (file) {
       uploadImage(file);
     } else {
       alert("Please select a file first.");
+    }
+  };
+
+  const handleDelete = () => {
+    if (selectedImages.length > 0) {
+      deleteImages(selectedImages.map((image) => image.name));
+    } else {
+      alert("No images selected for deletion.");
     }
   };
 
@@ -37,8 +57,11 @@ const ImagesFiltersCMS = () => {
         <FileInput className="w-sm" id="file-upload" onChange={onChange} />
       </div>
 
-      <Button className="self-end" onClick={onClick}>
+      <Button className="self-end" onClick={handleUpload}>
         Upload
+      </Button>
+      <Button className="self-end" onClick={handleDelete}>
+        Delete images
       </Button>
     </div>
   );

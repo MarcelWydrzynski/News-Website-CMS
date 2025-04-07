@@ -19,7 +19,6 @@ const uploadImage = async (file: File) => {
     return;
   }
 
-  console.log("Upload successful", data);
 };
 
 export default uploadImage;
