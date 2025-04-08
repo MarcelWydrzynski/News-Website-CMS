@@ -42,27 +42,32 @@ const ImagesFiltersCMS: React.FC<ImagesFiltersCMSProps> = ({
   };
 
   return (
-    <div className="flex flex-wrap gap-y-4 gap-x-4">
+    <div className="flex flex-wrap items-end gap-y-4 gap-x-4 w-full max-[800px]:justify-center">
       <div>
         <Label className="mb-2 block" htmlFor="img-search">
           Search for image
         </Label>
-        <TextInput id="imgname" type="text" className="mr-0 w-sm" />
+        <TextInput id="imgname" type="text" className="mr-0 w-sm max-[410px]:w-auto" />
       </div>
 
       <div>
         <Label className="mb-2 block" htmlFor="file-upload">
           Upload file
         </Label>
-        <FileInput className="w-sm" id="file-upload" onChange={onChange} />
+        <FileInput className="w-sm max-[410px]:w-auto" id="file-upload" onChange={onChange} />
       </div>
 
-      <Button className="self-end" onClick={handleUpload}>
-        Upload
-      </Button>
-      <Button className="self-end" onClick={handleDelete}>
-        Delete images
-      </Button>
+      <div>
+        <Button className="self-end" onClick={handleUpload}>
+          Upload
+        </Button>
+      </div>
+
+      <div className="ml-auto max-[800px]:m-0">
+        <Button className="self-end max-[800px]:m-0" onClick={handleDelete}>
+          Delete selected image/images
+        </Button>
+      </div>
     </div>
   );
 };

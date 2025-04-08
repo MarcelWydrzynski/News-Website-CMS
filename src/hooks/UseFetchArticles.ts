@@ -6,8 +6,7 @@ interface Article {
   author: string;
   category: string;
   title: string;
-  short_title: string;
-  short_description: string;
+  description: string;
   lead: string;
   image: string;
   content: string;

@@ -33,7 +33,7 @@ function Header() {
           <NavbarLink>Images</NavbarLink>
         </Link>
         <Link to="/CMS/articles">
-          <NavbarLink>Ads</NavbarLink>
+          <NavbarLink>Categories</NavbarLink>
         </Link>
         <Link to="/CMS/articles">
           <NavbarLink>Authors</NavbarLink>

@@ -12,13 +12,14 @@ const uploadImage = async (file: File) => {
   const { data, error } = await supabase.storage
     .from("cmsstorage")
     .upload(fileName, file);
+    alert("The image has been uploaded. The page will no reload.");
+    location.reload();
 
   if (error) {
     console.error("Upload Error", error.message);
     alert("Failed to upload image");
     return;
   }
-
 };
 
 export default uploadImage;

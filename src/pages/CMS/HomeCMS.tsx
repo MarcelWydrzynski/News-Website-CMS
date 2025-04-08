@@ -1,4 +1,4 @@
-import ArticlesCMS from "../../components/CMS/ArticlesCMS";
+import ArticlesCMS from "../../pages/CMS/ArticlesCMS"
 import { Outlet } from "react-router";
 import Header from "../../components/CMS/HeaderCMS";
 

@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Button, Card, Checkbox } from "flowbite-react";
 import UseFetchImages from "../../hooks/UseFetchImages";
 import ErrorCMS from "../../components/CMS/ErrorCMS";
-import LoaderCMS from "./LoaderCMS";
-import ImagesFiltersCMS from "./ImagesFiltersCMS";
+import LoaderCMS from "../../components/CMS/LoaderCMS";
+import ImagesFiltersCMS from "../../components/CMS/ImagesFiltersCMS";
 import { ChangeEvent } from "react";
 
 type Image = {
@@ -30,26 +30,31 @@ const ImagesCMS = () => {
 
   return (
     <>
-      <div className="flex gap-4 flex-col w-full">
+      <div className="flex gap-y-10 flex-col w-full">
+        <ImagesFiltersCMS selectedImages={selectedImages} />
+
         {fetchingImagesLoading ? <LoaderCMS /> : null}
         {fetchingImagesError ? (
           <ErrorCMS errorMessage={fetchingImagesError} />
         ) : null}
-        <ImagesFiltersCMS selectedImages={selectedImages} />
         <div className="flex gap-y-8 gap-x-6 flex-wrap">
-          {images.map((image) => (
-            <Card
-              className="max-w-lg relative"
-              imgSrc={image.url}
-              imgAlt={image.name}
-            >
-              <Checkbox
-                className="absolute top-3 left-3"
-                onChange={(e) => handleCheckboxChange(e, image)}
-              />
-              <Button className="w-fit">Show Image</Button>
-            </Card>
-          ))}
+          {images.length === 0 ? (
+            <p className="text-2xl text-white">No images stored in database</p>
+          ) : (
+            images.map((image) => (
+              <Card
+                className="max-w-sm relative hover:scale-105 transition-all" 
+                imgSrc={image.url}
+                imgAlt={image.name}
+              >
+                <Checkbox
+                  className="absolute top-3 left-3 w-6 h-6"
+                  onChange={(e) => handleCheckboxChange(e, image)}
+                />
+                <Button className="w-fit">Show Image</Button>
+              </Card>
+            ))
+          )}
         </div>
       </div>
     </>
