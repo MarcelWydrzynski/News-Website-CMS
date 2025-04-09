@@ -1,60 +1,225 @@
-import {
-  Button,
-  select,
-  Label,
-  TextInput,
-  Textarea,
-  Select,
-} from "flowbite-react";
+import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
+import { useState } from "react";
 
 const AddArticleForm = () => {
+  const [newArticle, setNewArticle] = useState({
+    author: "",
+    category: "",
+    title: "",
+    description: "",
+    lead: "",
+    image: "",
+    content: "",
+  });
+
+  const [error, setError] = useState({
+    errorstate: false,
+    errorMessage: "",
+  });
+
+  const handleFormValidation = () => {
+    if (newArticle.title.trim().length === 0) {
+      return setError({
+        errorstate: true,
+        errorMessage: "Title cannot be empty",
+      });
+    }
+    if (newArticle.title.length < 20) {
+      return setError({
+        errorstate: true,
+        errorMessage: "Title must be at least 20 characters",
+      });
+    }
+    if (newArticle.title.length > 70) {
+      return setError({
+        errorstate: true,
+        errorMessage: "Title must be less than 70 characters",
+      });
+    }
+
+    if (newArticle.description.trim().length === 0) {
+      return setError({
+        errorstate: true,
+        errorMessage: "Description cannot be empty",
+      });
+    }
+    if (newArticle.lead.length < 100) {
+      return setError({
+        errorstate: true,
+        errorMessage: "Lead must be at least 100 characters",
+      });
+    }
+    if (newArticle.content.length < 500) {
+      return setError({
+        errorstate: true,
+        errorMessage: "Content must be at least 500 characters",
+      });
+    }
+    if (newArticle.image.length === 0) {
+      return setError({
+        errorstate: true,
+        errorMessage: "Please select an image",
+      });
+    }
+    if (newArticle.category.length === 0) {
+      return setError({
+        errorstate: true,
+        errorMessage: "Category must be selected",
+      });
+    }
+    if (newArticle.author.length === 0) {
+      return setError({
+        errorstate: true,
+        errorMessage: "Author cannot be empty",
+      });
+    }
+
+    setError({ errorstate: false, errorMessage: "" });
+
+    console.log("Form is valid", newArticle);
+  };
+
+  console.log(error.errorMessage);
+
   return (
-    <form className="flex w-4/5 flex-col gap-4">
+    <form
+      className="flex w-4/5 flex-col gap-4"
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleFormValidation();
+      }}
+    >
+      {error ? (
+        <p className="self-center text-red-500 text-xl">{error.errorMessage}</p>
+      ) : null}
       <div>
-        <div className="mb-2 block">
-          <Label htmlFor="articleTitle">Title</Label>
-        </div>
-        <TextInput id="articleTitle" type="text" />
+        <Label htmlFor="articleTitle">Title</Label>
+        <TextInput
+          id="articleTitle"
+          type="text"
+          value={newArticle.title}
+          color={error.errorMessage.includes("Title") ? "failure" : "gray"}
+          onChange={(e) =>
+            setNewArticle((prev) => ({
+              ...prev,
+              title: e.target.value,
+            }))
+          }
+        />
       </div>
+
       <div>
-        <div className="mb-2 block">
-          <Label htmlFor="password1">author</Label>
-        </div>
-        <TextInput id="articleAuthor" type="text" />
+        <Label htmlFor="articleDescription">Description</Label>
+        <TextInput
+          id="articleDescription"
+          type="text"
+          value={newArticle.description}
+          color={
+            error.errorMessage.includes("Description") ? "failure" : "gray"
+          }
+          onChange={(e) =>
+            setNewArticle((prev) => ({
+              ...prev,
+              description: e.target.value,
+            }))
+          }
+        />
       </div>
+
       <div>
-        <div className="mb-2 block">
-          <Label htmlFor="articleDescription">description</Label>
-        </div>
-        <TextInput id="articleDescription" type="text" />
+        <Label htmlFor="articleLead">Lead</Label>
+        <Textarea
+          id="articleLead"
+          rows={4}
+          value={newArticle.lead}
+          color={error.errorMessage.includes("Lead") ? "failure" : "gray"}
+          onChange={(e) =>
+            setNewArticle((prev) => ({
+              ...prev,
+              lead: e.target.value,
+            }))
+          }
+        />
       </div>
+
       <div>
-        <div className="mb-2 block">
-          <Label htmlFor="articleLead">lead</Label>
-        </div>
-        <Textarea id="articleLead" rows={10} />
+        <Label htmlFor="articleContent">Content</Label>
+        <Textarea
+          id="articleContent"
+          rows={10}
+          value={newArticle.content}
+          color={error.errorMessage.includes("Content") ? "failure" : "gray"}
+          onChange={(e) =>
+            setNewArticle((prev) => ({
+              ...prev,
+              content: e.target.value,
+            }))
+          }
+        />
       </div>
-      <div>
-        <div className="mb-2 block">
-          <Label htmlFor="articleContent">Content</Label>
-        </div>
-        <Textarea id="articleContent" rows={20} />
-      </div>
+
       <div className="flex gap-4 justify-end">
-        <Button className="self-end">Select Image</Button>
+        <Button
+          type="button"
+          className="self-end"
+          color={error.errorMessage.includes("image") ? "red" : "gray"}
+          onClick={() =>
+            setNewArticle((prev) => ({
+              ...prev,
+              image: "sample-image.png",
+            }))
+          }
+        >
+          Select Image
+        </Button>
+
         <div className="max-w-md">
-          <div className="mb-2 block">
-            <Label htmlFor="articleAuthor">Select your Author</Label>
-          </div>
-          <Select id="authors" required>
-            <option>United States</option>
-            <option>Canada</option>
-            <option>France</option>
-            <option>Germany</option>
+          <Label htmlFor="categories">Select your Category</Label>
+          <Select
+            id="catogries"
+            value={newArticle.category}
+            color={error.errorMessage.includes("Category") ? "failure" : "gray"}
+            onChange={(e) =>
+              setNewArticle((prev) => ({
+                ...prev,
+                category: e.target.value,
+              }))
+            }
+          >
+            <option value="">Select category</option>
+            <option value="Tech">Tech</option>
+            <option value="Health">Health</option>
+            <option value="Travel">Travel</option>
+            <option value="Business">Business</option>
+          </Select>
+        </div>
+        <div className="max-w-md">
+          <Label htmlFor="authors">Select your Author</Label>
+          <Select
+            id="authors"
+            value={newArticle.author}
+            color={error.errorMessage.includes("Author") ? "failure" : "gray"}
+            onChange={(e) =>
+              setNewArticle((prev) => ({
+                ...prev,
+                author: e.target.value,
+              }))
+            }
+          >
+            <option value="">Select Author</option>
+            <option value="Tech">tom</option>
+            <option value="Health">bob</option>
+            <option value="Travel">angela</option>
           </Select>
         </div>
       </div>
-      <Button className="w-fit self-end">Submit</Button>
+
+      <Button
+        type="submit"
+        className="w-fit self-end"
+      >
+        Submit
+      </Button>
     </form>
   );
 };
