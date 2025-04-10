@@ -14,13 +14,9 @@ type Image = {
 
 const ImagesCMS = () => {
   const [selectedImages, setSelectedImages] = useState<Image[]>([]);
-  const { images, fetchingImagesError, fetchingImagesLoading } =
-    UseFetchImages();
+  const { images, fetchingImagesError, fetchingImagesLoading } = UseFetchImages();
 
-  const handleCheckboxChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    image: Image
-  ) => {
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>, image: Image) => {
     if (event.target.checked) {
       setSelectedImages((prev) => [...prev, image]);
     } else {
@@ -34,23 +30,14 @@ const ImagesCMS = () => {
         <ImagesFiltersCMS selectedImages={selectedImages} />
 
         {fetchingImagesLoading ? <LoaderCMS /> : null}
-        {fetchingImagesError ? (
-          <ErrorCMS errorMessage={fetchingImagesError} />
-        ) : null}
+        {fetchingImagesError ? <ErrorCMS errorMessage={fetchingImagesError} /> : null}
         <div className="flex gap-y-8 gap-x-6 flex-wrap">
           {images.length === 0 ? (
             <p className="text-2xl text-white">No images stored in database</p>
           ) : (
             images.map((image) => (
-              <Card
-                className="max-w-sm relative hover:scale-105 transition-all" 
-                imgSrc={image.url}
-                imgAlt={image.name}
-              >
-                <Checkbox
-                  className="absolute top-3 left-3 w-6 h-6"
-                  onChange={(e) => handleCheckboxChange(e, image)}
-                />
+              <Card className="max-w-sm relative hover:scale-105 transition-all" imgSrc={image.url} imgAlt={image.name}>
+                <Checkbox className="absolute top-3 left-3 w-6 h-6" onChange={(e) => handleCheckboxChange(e, image)} />
                 <Button className="w-fit">Show Image</Button>
               </Card>
             ))

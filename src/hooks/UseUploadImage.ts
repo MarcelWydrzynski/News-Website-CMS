@@ -1,4 +1,3 @@
-import { ChangeEvent, useState } from "react";
 import supabase from "../lib/supabase";
 
 const uploadImage = async (file: File) => {

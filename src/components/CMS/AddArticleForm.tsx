@@ -1,21 +1,38 @@
 import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
+import ImagesModalCMS from "./ImagesModalCMS";
+import uploadArticle from "../../hooks/UseUploadArticle";
+
+type Image = {
+  id: string;
+  url: string;
+  name: string;
+};
 
 const AddArticleForm = () => {
   const [newArticle, setNewArticle] = useState({
+    title: "",
     author: "",
     category: "",
-    title: "",
-    description: "",
     lead: "",
     image: "",
     content: "",
+    description: "",
   });
-
   const [error, setError] = useState({
     errorstate: false,
     errorMessage: "",
   });
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleCheckboxChecked = (event: ChangeEvent<HTMLInputElement>, image: Image) => {
+    if (event.target.checked) {
+      setSelectedImage(image);
+    } else {
+      setSelectedImage(null);
+    }
+  };
 
   const handleFormValidation = () => {
     if (newArticle.title.trim().length === 0) {
@@ -75,152 +92,143 @@ const AddArticleForm = () => {
     }
 
     setError({ errorstate: false, errorMessage: "" });
-
-    console.log("Form is valid", newArticle);
+    uploadArticle(newArticle);
   };
 
-  console.log(error.errorMessage);
-
   return (
-    <form
-      className="flex w-4/5 flex-col gap-4"
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleFormValidation();
-      }}
-    >
-      {error ? (
-        <p className="self-center text-red-500 text-xl">{error.errorMessage}</p>
+    <>
+      {openModal ? (
+        <ImagesModalCMS
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+          handleCheckboxChecked={handleCheckboxChecked}
+          selectedImage={selectedImage}
+          setNewArticle={setNewArticle}
+        />
       ) : null}
-      <div>
-        <Label htmlFor="articleTitle">Title</Label>
-        <TextInput
-          id="articleTitle"
-          type="text"
-          value={newArticle.title}
-          color={error.errorMessage.includes("Title") ? "failure" : "gray"}
-          onChange={(e) =>
-            setNewArticle((prev) => ({
-              ...prev,
-              title: e.target.value,
-            }))
-          }
-        />
-      </div>
-
-      <div>
-        <Label htmlFor="articleDescription">Description</Label>
-        <TextInput
-          id="articleDescription"
-          type="text"
-          value={newArticle.description}
-          color={
-            error.errorMessage.includes("Description") ? "failure" : "gray"
-          }
-          onChange={(e) =>
-            setNewArticle((prev) => ({
-              ...prev,
-              description: e.target.value,
-            }))
-          }
-        />
-      </div>
-
-      <div>
-        <Label htmlFor="articleLead">Lead</Label>
-        <Textarea
-          id="articleLead"
-          rows={4}
-          value={newArticle.lead}
-          color={error.errorMessage.includes("Lead") ? "failure" : "gray"}
-          onChange={(e) =>
-            setNewArticle((prev) => ({
-              ...prev,
-              lead: e.target.value,
-            }))
-          }
-        />
-      </div>
-
-      <div>
-        <Label htmlFor="articleContent">Content</Label>
-        <Textarea
-          id="articleContent"
-          rows={10}
-          value={newArticle.content}
-          color={error.errorMessage.includes("Content") ? "failure" : "gray"}
-          onChange={(e) =>
-            setNewArticle((prev) => ({
-              ...prev,
-              content: e.target.value,
-            }))
-          }
-        />
-      </div>
-
-      <div className="flex gap-4 justify-end">
-        <Button
-          type="button"
-          className="self-end"
-          color={error.errorMessage.includes("image") ? "red" : "gray"}
-          onClick={() =>
-            setNewArticle((prev) => ({
-              ...prev,
-              image: "sample-image.png",
-            }))
-          }
-        >
-          Select Image
-        </Button>
-
-        <div className="max-w-md">
-          <Label htmlFor="categories">Select your Category</Label>
-          <Select
-            id="catogries"
-            value={newArticle.category}
-            color={error.errorMessage.includes("Category") ? "failure" : "gray"}
-            onChange={(e) =>
-              setNewArticle((prev) => ({
-                ...prev,
-                category: e.target.value,
-              }))
-            }
-          >
-            <option value="">Select category</option>
-            <option value="Tech">Tech</option>
-            <option value="Health">Health</option>
-            <option value="Travel">Travel</option>
-            <option value="Business">Business</option>
-          </Select>
-        </div>
-        <div className="max-w-md">
-          <Label htmlFor="authors">Select your Author</Label>
-          <Select
-            id="authors"
-            value={newArticle.author}
-            color={error.errorMessage.includes("Author") ? "failure" : "gray"}
-            onChange={(e) =>
-              setNewArticle((prev) => ({
-                ...prev,
-                author: e.target.value,
-              }))
-            }
-          >
-            <option value="">Select Author</option>
-            <option value="Tech">tom</option>
-            <option value="Health">bob</option>
-            <option value="Travel">angela</option>
-          </Select>
-        </div>
-      </div>
-
-      <Button
-        type="submit"
-        className="w-fit self-end"
+      <form
+        className="flex w-4/5 flex-col gap-4"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleFormValidation();
+        }}
       >
-        Submit
-      </Button>
-    </form>
+        {error ? <p className="self-center text-red-500 text-xl">{error.errorMessage}</p> : null}
+        <div>
+          <Label htmlFor="articleTitle">Title</Label>
+          <TextInput
+            id="articleTitle"
+            type="text"
+            value={newArticle.title}
+            color={error.errorMessage.includes("Title") ? "failure" : "gray"}
+            onChange={(e) =>
+              setNewArticle((prev) => ({
+                ...prev,
+                title: e.target.value,
+              }))
+            }
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="articleDescription">Description</Label>
+          <TextInput
+            id="articleDescription"
+            type="text"
+            value={newArticle.description}
+            color={error.errorMessage.includes("Description") ? "failure" : "gray"}
+            onChange={(e) =>
+              setNewArticle((prev) => ({
+                ...prev,
+                description: e.target.value,
+              }))
+            }
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="articleLead">Lead</Label>
+          <Textarea
+            id="articleLead"
+            rows={4}
+            value={newArticle.lead}
+            color={error.errorMessage.includes("Lead") ? "failure" : "gray"}
+            onChange={(e) =>
+              setNewArticle((prev) => ({
+                ...prev,
+                lead: e.target.value,
+              }))
+            }
+          />
+        </div>
+
+        <div>
+          <Label htmlFor="articleContent">Content</Label>
+          <Textarea
+            id="articleContent"
+            rows={10}
+            value={newArticle.content}
+            color={error.errorMessage.includes("Content") ? "failure" : "gray"}
+            onChange={(e) =>
+              setNewArticle((prev) => ({
+                ...prev,
+                content: e.target.value,
+              }))
+            }
+          />
+        </div>
+
+        <div className="flex gap-4 justify-end">
+          <Button type="button" className="self-end" color={error.errorMessage.includes("image") ? "red" : "gray"} onClick={() => setOpenModal(true)}>
+            Select Image
+          </Button>
+
+          <div className="max-w-md">
+            <Label htmlFor="categories">Select your Category</Label>
+            <Select
+              id="catogries"
+              value={newArticle.category}
+              color={error.errorMessage.includes("Category") ? "failure" : "gray"}
+              onChange={(e) =>
+                setNewArticle((prev) => ({
+                  ...prev,
+                  category: e.target.value,
+                }))
+              }
+            >
+              <option value="">Select category</option>
+              <option value="Tech">Tech</option>
+              <option value="Health">Health</option>
+              <option value="Travel">Travel</option>
+              <option value="Business">Business</option>
+            </Select>
+          </div>
+          <div className="max-w-md">
+            <Label htmlFor="authors">Select your Author</Label>
+            <Select
+              id="authors"
+              value={newArticle.author}
+              color={error.errorMessage.includes("Author") ? "failure" : "gray"}
+              onChange={(e) =>
+                setNewArticle((prev) => ({
+                  ...prev,
+                  author: e.target.value,
+                }))
+              }
+            >
+              <option value="">Select Author</option>
+              <option value="Tech">tom</option>
+              <option value="Health">bob</option>
+              <option value="Travel">angela</option>
+            </Select>
+          </div>
+        </div>
+
+        <Button type="submit" className="w-fit self-end">
+          Submit
+        </Button>
+      </form>
+    </>
   );
 };
 
