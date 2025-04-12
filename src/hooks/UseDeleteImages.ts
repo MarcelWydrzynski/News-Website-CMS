@@ -1,6 +1,6 @@
 import supabase from "../lib/supabase";
 
-const DeleteImages = async (images: string[]) => {
+const deleteImages = async (images: string[]) => {
   if (!images || images.length === 0) {
     alert("Please select image/images to be deleted.");
     return;
@@ -21,4 +21,4 @@ const DeleteImages = async (images: string[]) => {
   console.log("Delete successful", data);
 };
 
-export default DeleteImages;
+export default deleteImages;

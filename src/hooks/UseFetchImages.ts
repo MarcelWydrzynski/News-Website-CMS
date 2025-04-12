@@ -34,7 +34,7 @@ const UseFetchImages = () => {
         url: CDNURL + file.name,
       }));
 
-      setImages(formattedData);
+      setImages(formattedData.reverse());
       setFetchingImagesError(null);
       setFetchingImagesLoading(false);
     }

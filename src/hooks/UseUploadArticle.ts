@@ -1,5 +1,4 @@
 import supabase from "../lib/supabase";
-import { v4 as uuidv4 } from "uuid";
 
 type Article = {
   id: number;
@@ -11,16 +10,20 @@ type Article = {
   content: string;
   description: string;
 };
-const uploadArticle = async (article: Article) => {
-  if (!article) {
-    return;
-  }
+const generateRandomID = () => Math.floor(Math.random() * 1_000_000_000);
 
-  const articleWithId = { ...article, id: uuidv4() };
+const uploadArticle = async (article: Article) => {
+  const articleWithId = {
+    ...article,
+    id: generateRandomID(),
+  };
+
   const { data, error } = await supabase.from("ArticlesList").insert([articleWithId]);
 
   if (error) {
-    alert(error.message);
+    console.error("Upload Error", error.message);
+    alert("Failed to upload article: " + error.message);
+    return;
   }
 };
 export default uploadArticle;
