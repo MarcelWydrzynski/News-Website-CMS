@@ -4,32 +4,38 @@ import Error from "../../components/CMS/ErrorCMS";
 import { Card, Checkbox } from "flowbite-react";
 import LoaderCMS from "../../components/CMS/LoaderCMS";
 import ArticlesFiltersCMS from "../../components/CMS/ArticlesFiltersCMS";
-import { useDeleteArticles } from "../../hooks/UseDeleteArticles";
+import { ChangeEvent } from "react";
+
+type Article = {
+  id: number;
+  author: string;
+  category: string;
+  title: string;
+  description: string;
+  lead: string;
+  image: string;
+  content: string;
+};
 
 const ArticlesCMS = () => {
   const { articles, fetchingArticlesLoading, fetchingArticlesError } = UseFetchArticles();
-  const { deleteArticles } = useDeleteArticles();
+  const [selectedArticles, setSelectedArticles] = useState<number[]>([]);
 
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
-
-  const toggleCheckbox = (id: number) => {
-    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>, article: Article) => {
+    if (event.target.checked) {
+      setSelectedArticles((prev) => [...prev, article.id]);
+      console.log(selectedArticles);
+    } else {
+      setSelectedArticles((prev) => [...prev.filter((id) => id === article.id)]);
+      console.log(selectedArticles);
+    }
   };
-
-  const handleDelete = async () => {
-    if (selectedIds.length === 0) return;
-    deleteArticles(selectedIds);
-    setSelectedIds([]);
-
-  };
-
   return (
     <div className="flex gap-y-10 flex-col w-full">
-      <ArticlesFiltersCMS onDelete={handleDelete} selectedIds={selectedIds} />
+      <ArticlesFiltersCMS selectedArticles={selectedArticles} />
 
       {fetchingArticlesLoading && <LoaderCMS />}
       {fetchingArticlesError && <Error errorMessage={fetchingArticlesError} />}
-
 
       <div className="flex gap-y-8 gap-x-6 flex-wrap max-[800px]:justify-center">
         {articles.length === 0 ? (
@@ -37,7 +43,7 @@ const ArticlesCMS = () => {
         ) : (
           articles.map((article) => (
             <Card key={article.id} className="max-w-sm hover:scale-105 transition-all relative" imgAlt={article.title} imgSrc={article.image}>
-              <Checkbox className="absolute top-3 left-3 w-6 h-6" checked={selectedIds.includes(article.id)} onChange={() => toggleCheckbox(article.id)} />
+              <Checkbox className="absolute top-3 left-3 w-6 h-6" onChange={(event) => handleCheckboxChange(event, article)} />
               <h5 className="text-sm font-bold tracking-tight text-gray-900 dark:text-white">
                 <span className="font-thin">By: </span>
                 {article.author}

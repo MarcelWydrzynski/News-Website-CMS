@@ -11,6 +11,7 @@ type Image = {
 
 const AddArticleForm = () => {
   const [newArticle, setNewArticle] = useState({
+    id: 0,
     title: "",
     author: "",
     category: "",

@@ -1,12 +1,16 @@
 import { TextInput, Button, Label } from "flowbite-react";
 import { Link } from "react-router";
+import deleteArticles from "../../hooks/UseDeleteArticles";
 
-interface ArticlesFiltersCMSProps {
-  selectedIds: number[];
-  onDelete: () => void;
-}
+type ArticlesFiltersCMSProps = {
+  selectedArticles: number[];
+};
 
-const ArticlesFiltersCMS = ({ onDelete }: ArticlesFiltersCMSProps) => {
+const ArticlesFiltersCMS: React.FC<ArticlesFiltersCMSProps> = ({ selectedArticles }) => {
+  const handleDelete = () => {
+    deleteArticles(selectedArticles);
+  };
+
   return (
     <div className="flex flex-wrap gap-y-4 gap-x-4 max-[800px]:justify-center">
       <div>
@@ -19,7 +23,7 @@ const ArticlesFiltersCMS = ({ onDelete }: ArticlesFiltersCMSProps) => {
         <Button>Add article</Button>
       </Link>
       <div className="ml-auto max-[800px]:m-0 self-end">
-        <Button onClick={onDelete}>Delete selected article/articles</Button>
+        <Button onClick={handleDelete}>Delete selected article/articles</Button>
       </div>
     </div>
   );

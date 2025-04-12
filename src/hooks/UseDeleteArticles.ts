@@ -1,24 +1,27 @@
 import supabase from "../lib/supabase";
 
-export function useDeleteArticles() {
-  const deleteArticles = async (articleIds: number[]) => {
-    if (articleIds.length === 0) {
-      alert("Please select article/articles to delete");
-      return;
-    }
+const deleteArticles = async (articleIds: number[]) => {
+  if (articleIds.length === 0) {
+    alert("Please select article/articles to delete");
+    return;
+  }
 
-    const { data, error } = await supabase.from("ArticlesList").delete().in("id", articleIds);
-    alert("The image/images have been deleted. The page will no reload.");
-    location.reload();
+  const { error } = await supabase
+    .from("ArticlesList") //
+    .delete()
+    .in("id", articleIds);
 
-    if (error) {
-      console.error("Delete error:", error);
-    }
+  alert("The article has been delete, the page will now reload");
+  location.reload();
 
-    return data;
-  };
+  if (error) {
+    console.log(error.message);
+    return;
+  }
 
   return {
     deleteArticles,
   };
-}
+};
+
+export default deleteArticles;

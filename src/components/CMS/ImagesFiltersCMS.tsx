@@ -13,9 +13,7 @@ type ImagesFiltersCMSProps = {
   selectedImages: Image[];
 };
 
-const ImagesFiltersCMS: React.FC<ImagesFiltersCMSProps> = ({
-  selectedImages,
-}) => {
+const ImagesFiltersCMS: React.FC<ImagesFiltersCMSProps> = ({ selectedImages }) => {
   const [file, setFile] = useState<File | null>(null);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
