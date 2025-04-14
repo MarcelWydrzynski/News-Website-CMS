@@ -15,7 +15,7 @@ interface Article {
 const UseFetchArticles = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [fetchingArticlesError, setFetchingArticlesError] = useState<string | null>(null);
-  const [fetchingArticlesLoading, setFetchingArticlesLoading] = useState<boolean>(true);
+  const [fetchingArticlesLoading, setFetchingArticlesLoading] = useState<boolean>();
 
   const fetchArticles = async () => {
     setFetchingArticlesLoading(true);

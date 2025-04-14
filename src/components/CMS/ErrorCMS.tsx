@@ -4,13 +4,8 @@ type ErrorProps = {
   errorMessage: string;
 };
 
-const Error: React.FC<ErrorProps> = ({ errorMessage }) => {
-  return (
-    <div className="text-white">
-      <h1 className="text-2xl">Oops! </h1>
-      <span>There's an error: <p className="font-bold">{errorMessage}</p></span>
-    </div>
-  );
+const ErrorCMS: React.FC<ErrorProps> = ({ errorMessage }) => {
+  return <p className="text-center text-xl text-red-400">{errorMessage}</p>;
 };
 
-export default Error;
+export default ErrorCMS;

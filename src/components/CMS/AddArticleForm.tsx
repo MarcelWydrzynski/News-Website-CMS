@@ -2,6 +2,7 @@ import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
 import { ChangeEvent, useState } from "react";
 import ImagesModalCMS from "./ImagesModalCMS";
 import uploadArticle from "../../hooks/UseUploadArticle";
+import ErrorCMS from "./ErrorCMS";
 
 type Image = {
   id: string;
@@ -114,7 +115,7 @@ const AddArticleForm = () => {
           handleFormValidation();
         }}
       >
-        {error ? <p className="self-center text-red-500 text-xl">{error.errorMessage}</p> : null}
+        {error.errorstate ? <ErrorCMS errorMessage={error.errorMessage} /> : <p className="opacity-0 text-xl">Error placeholder</p>}
         <div>
           <Label htmlFor="articleTitle">Title</Label>
           <TextInput

@@ -5,16 +5,16 @@ import HomeCMS from "./pages/CMS/HomeCMS";
 import ArticlesCMS from "./pages/CMS/ArticlesCMS";
 import ImagesCMS from "./pages/CMS/ImagesCMS";
 import AddArticle from "./pages/CMS/AddArticleCMS";
+import CategoriesCMS from "./pages/CMS/CategoriesCMS";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-
       <Route path="/CMS" element={<HomeCMS />}>
         <Route path="articles" element={<ArticlesCMS />} />
         <Route path="images" element={<ImagesCMS />} />
-        <Route path="ads" element={<ArticlesCMS />} />
+        <Route path="categories" element={<CategoriesCMS />} />
         <Route path="add-article" element={<AddArticle />} />
       </Route>
     </Routes>
