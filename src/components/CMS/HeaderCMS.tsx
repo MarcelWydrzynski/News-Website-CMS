@@ -32,11 +32,8 @@ function Header() {
         <Link to="/CMS/images">
           <NavbarLink>Images</NavbarLink>
         </Link>
-        <Link to="/CMS/categories">
+        <Link to="/CMS/authors">
           <NavbarLink>Categories</NavbarLink>
-        </Link>
-        <Link to="/CMS/articles">
-          <NavbarLink>Authors</NavbarLink>
         </Link>
       </NavbarCollapse>
     </MegaMenu>

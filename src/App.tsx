@@ -5,7 +5,7 @@ import HomeCMS from "./pages/CMS/HomeCMS";
 import ArticlesCMS from "./pages/CMS/ArticlesCMS";
 import ImagesCMS from "./pages/CMS/ImagesCMS";
 import AddArticle from "./pages/CMS/AddArticleCMS";
-import CategoriesCMS from "./pages/CMS/CategoriesCMS";
+import AuthorsCMS from "./pages/CMS/AuthorsCMS";
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
       <Route path="/CMS" element={<HomeCMS />}>
         <Route path="articles" element={<ArticlesCMS />} />
         <Route path="images" element={<ImagesCMS />} />
-        <Route path="categories" element={<CategoriesCMS />} />
+        <Route path="authors" element={<AuthorsCMS />} />
         <Route path="add-article" element={<AddArticle />} />
       </Route>
     </Routes>
