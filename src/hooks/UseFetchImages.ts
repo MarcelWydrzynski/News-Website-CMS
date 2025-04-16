@@ -28,7 +28,7 @@ const UseFetchImages = () => {
     }
 
     if (data) {
-      const formattedData = data.map((file) => ({
+      const formattedData = data.reverse().map((file) => ({
         name: file.name,
         id: file.id,
         url: CDNURL + file.name,

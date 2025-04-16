@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, Checkbox } from "flowbite-react";
 import UseFetchAuthors from "../../hooks/UseFetchAuthors";
 import AuthorsButtonsCMS from "../../components/CMS/AuthorsButtonsCMS";
-import AddCategoryForm from "../../components/CMS/AddCategoryForm";
+import AddCategoryForm from "../../components/CMS/AddAuthorForm";
 
 type Author = {
   id: number;
@@ -35,7 +35,7 @@ const CategoriesCMS = () => {
         {authors.length === 0 ? (
           <p className="text-2xl text-white">No authors stored in database</p>
         ) : (
-          authors.map((author) => (
+          authors.reverse().map((author) => (
             <Card key={author.id} className="max-w-sm relative hover:scale-105 transition-all p-8">
               <Checkbox className="absolute top-3 left-3 w-6 h-6" onChange={(event) => handleCheckBox(event, author)} />
               <h4 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{author.name}</h4>

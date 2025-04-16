@@ -1,24 +1,21 @@
 import supabase from "../lib/supabase";
 
-type Article = {
+type Author = {
   id: number;
-  title: string;
-  author: string;
-  category: string;
-  lead: string;
-  image: string;
-  content: string;
-  description: string;
+  created_at: Date;
+  name: string;
 };
 const generateRandomID = () => Math.floor(Math.random() * 1_000_000_000);
 
-const uploadArticle = async (article: Article) => {
-  const articleWithId = {
-    ...article,
+const uploadAuthor = async (author: Author) => {
+  const authorWithId = {
+    ...author,
     id: generateRandomID(),
+    created_at: new Date(),
   };
-
-  const { data, error } = await supabase.from("ArticlesList").insert([articleWithId]);
+  const { data, error } = await supabase.from("authors").insert([authorWithId]);
+  alert("New author has been added the page will now reload");
+  location.reload();
 
   if (error) {
     console.error("Upload Error", error.message);
@@ -26,4 +23,4 @@ const uploadArticle = async (article: Article) => {
     return;
   }
 };
-export default uploadArticle;
+export default uploadAuthor;

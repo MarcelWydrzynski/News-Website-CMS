@@ -38,6 +38,7 @@ const ImagesCMS = () => {
             images.map((image) => (
               <Card className="max-w-sm relative hover:scale-105 transition-all" imgSrc={image.url} imgAlt={image.name}>
                 <Checkbox className="absolute top-3 left-3 w-6 h-6" onChange={(e) => handleCheckboxChange(e, image)} />
+                <h4 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{image.name}</h4>
                 <Button className="w-fit">Show Image</Button>
               </Card>
             ))

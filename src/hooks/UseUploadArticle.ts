@@ -19,6 +19,8 @@ const uploadArticle = async (article: Article) => {
   };
 
   const { data, error } = await supabase.from("ArticlesList").insert([articleWithId]);
+  alert("New article has been added. The page will now reload.");
+  location.reload();
 
   if (error) {
     console.error("Upload Error", error.message);

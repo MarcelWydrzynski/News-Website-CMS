@@ -21,7 +21,7 @@ const UseFetchAuthors = () => {
       setFetchingAuthorsError(error.message);
       return;
     } else {
-      setAuthors(data);
+      setAuthors(data.reverse());
     }
 
     setFetchingAuthorsLoading(false);

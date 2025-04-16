@@ -2,6 +2,7 @@ import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
 import { ChangeEvent, useState } from "react";
 import ImagesModalCMS from "./ImagesModalCMS";
 import uploadArticle from "../../hooks/UseUploadArticle";
+import UseFetchAuthors from "../../hooks/UseFetchAuthors";
 import ErrorCMS from "./ErrorCMS";
 
 type Image = {
@@ -25,6 +26,7 @@ const AddArticleForm = () => {
     errorstate: false,
     errorMessage: "",
   });
+  const { authors, fetchingAuthorsError, fetchingAuthorsLoading } = UseFetchAuthors();
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [openModal, setOpenModal] = useState(false);
 
@@ -198,11 +200,12 @@ const AddArticleForm = () => {
                 }))
               }
             >
-              <option value="">Select category</option>
+              <option value="" disabled>Select category</option>
               <option value="Tech">Tech</option>
-              <option value="Health">Health</option>
-              <option value="Travel">Travel</option>
-              <option value="Business">Business</option>
+              <option value="Politics">Politics</option>
+              <option value="TBusiness">Business</option>
+              <option value="Business">Sports</option>
+              <option value="Crypto">Crypto</option>
             </Select>
           </div>
           <div className="max-w-md">
@@ -218,10 +221,14 @@ const AddArticleForm = () => {
                 }))
               }
             >
-              <option value="">Select Author</option>
-              <option value="Tech">tom</option>
-              <option value="Health">bob</option>
-              <option value="Travel">angela</option>
+              <option value="" disabled>
+                Select Author
+              </option>
+              {authors.map((author) => (
+                <option key={author.name} value={author.name}>
+                  {author.name}
+                </option>
+              ))}
             </Select>
           </div>
         </div>

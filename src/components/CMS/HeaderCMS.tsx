@@ -11,8 +11,8 @@ import { Link } from "react-router";
 
 function Header() {
   return (
-    <MegaMenu>
-      <Link to="/CMS">
+    <MegaMenu className="">
+      <Link to="/CMS/articles">
         <NavbarBrand>
           <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
             CMS
@@ -20,7 +20,7 @@ function Header() {
         </NavbarBrand>
       </Link>
 
-      <div className="order-2 hidden items-center md:flex">
+      <div className="order-2 hidden items-center md:flex ">
         <Button href="#">Sign up</Button>
       </div>
       <NavbarToggle />
@@ -33,7 +33,7 @@ function Header() {
           <NavbarLink>Images</NavbarLink>
         </Link>
         <Link to="/CMS/authors">
-          <NavbarLink>Categories</NavbarLink>
+          <NavbarLink>Authors</NavbarLink>
         </Link>
       </NavbarCollapse>
     </MegaMenu>

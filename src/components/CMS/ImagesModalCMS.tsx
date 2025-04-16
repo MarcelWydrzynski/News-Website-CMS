@@ -35,10 +35,10 @@ const ImagesModalCMS: React.FC<ImagesModalCMSProps> = ({ openModal, setOpenModal
   return (
     <Modal dismissible show={openModal} onClose={() => setOpenModal(false)} size="7xl">
       <ModalHeader>Select a image for you article and hit proceed</ModalHeader>
-      <ModalBody className="flex justify-center items-center">
+      <ModalBody className="">
         {fetchingImagesLoading ? <LoaderCMS /> : null}
         {fetchingImagesError ? <ErrorCMS errorMessage={fetchingImagesError} /> : null}
-        <div className="flex gap-y-8 gap-x-6 flex-wrap">
+        <div className="flex flex-wrap gap-x-4 gap-y-6 justify-center items-center">
           {images.length === 0 ? (
             <p className="text-2xl text-white">No images stored in database</p>
           ) : (
