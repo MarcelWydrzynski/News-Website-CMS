@@ -11,9 +11,10 @@ type Image = {
 
 type ImagesFiltersCMSProps = {
   selectedImages: Image[];
+  onSearch: (query: string) => void;
 };
 
-const ImagesFiltersCMS: React.FC<ImagesFiltersCMSProps> = ({ selectedImages }) => {
+const ImagesFiltersCMS: React.FC<ImagesFiltersCMSProps> = ({ selectedImages, onSearch }) => {
   const [file, setFile] = useState<File | null>(null);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -22,13 +23,20 @@ const ImagesFiltersCMS: React.FC<ImagesFiltersCMSProps> = ({ selectedImages }) =
       setFile(selectedFile);
     }
   };
-
   const handleUpload = () => {
-    if (file) {
-      uploadImage(file);
-    } else {
-      alert("Please select a file first.");
+    if (!file) {
+      alert("Please select a file to upload");
+      return;
     }
+
+    const validTypes = ["image/jpeg", "image/jpg", "image/png"];
+    if (!validTypes.includes(file.type)) {
+      alert("Please upload a jpg/jpeg/png image");
+      return;
+    }
+
+    console.log(file);
+    uploadImage(file);
   };
 
   const handleDelete = () => {
@@ -43,16 +51,16 @@ const ImagesFiltersCMS: React.FC<ImagesFiltersCMSProps> = ({ selectedImages }) =
     <div className="flex flex-wrap items-end gap-y-4 gap-x-4 w-full max-[800px]:justify-center">
       <div>
         <Label className="mb-2 block" htmlFor="img-search">
-          Search for image
+          Search for image by name
         </Label>
-        <TextInput id="imgname" type="text" className="mr-0 w-sm max-[410px]:w-auto" />
+        <TextInput id="imgname" type="text" className="mr-0 w-sm max-[410px]:w-auto" onChange={(e) => onSearch(e.target.value)} />
       </div>
 
       <div>
         <Label className="mb-2 block" htmlFor="file-upload">
           Upload file
         </Label>
-        <FileInput className="w-sm max-[410px]:w-auto" id="file-upload" onChange={onChange} />
+        <FileInput className="w-sm max-[410px]:w-auto" id="file-upload" onChange={onChange} accept="image/jpg" lang="en" />
       </div>
 
       <div>

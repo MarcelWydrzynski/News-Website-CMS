@@ -15,6 +15,7 @@ type Image = {
 const ImagesCMS = () => {
   const [selectedImages, setSelectedImages] = useState<Image[]>([]);
   const { images, fetchingImagesError, fetchingImagesLoading } = UseFetchImages();
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>, image: Image) => {
     if (event.target.checked) {
@@ -24,18 +25,25 @@ const ImagesCMS = () => {
     }
   };
 
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+  };
+
+  const filterdImages = searchQuery.trim().length == 0 ? images : images.filter((image) => image.name.includes(searchQuery));
+  
+
   return (
     <>
       <div className="flex gap-y-10 flex-col w-full">
-        <ImagesFiltersCMS selectedImages={selectedImages} />
+        <ImagesFiltersCMS selectedImages={selectedImages} onSearch={handleSearch} />
 
         {fetchingImagesLoading ? <LoaderCMS /> : null}
         {fetchingImagesError ? <ErrorCMS errorMessage={fetchingImagesError} /> : null}
         <div className="flex gap-y-8 gap-x-6 flex-wrap">
-          {images.length === 0 ? (
+          {filterdImages.length === 0 ? (
             <p className="text-2xl text-white">No images stored in database</p>
           ) : (
-            images.map((image) => (
+            filterdImages.map((image) => (
               <Card className="max-w-sm relative hover:scale-105 transition-all" imgSrc={image.url} imgAlt={image.name}>
                 <Checkbox className="absolute top-3 left-3 w-6 h-6" onChange={(e) => handleCheckboxChange(e, image)} />
                 <h4 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{image.name}</h4>

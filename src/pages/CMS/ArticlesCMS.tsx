@@ -5,6 +5,7 @@ import LoaderCMS from "../../components/CMS/LoaderCMS";
 import ArticlesFiltersCMS from "../../components/CMS/ArticlesFiltersCMS";
 import deleteArticles from "../../hooks/UseDeleteArticles";
 import { Button, Card, Checkbox } from "flowbite-react";
+import ArticleModal from "../../components/CMS/ArticleModal";
 
 type Article = {
   id: number;
@@ -21,6 +22,8 @@ const ArticlesCMS = () => {
   const { articles, fetchingArticlesLoading, fetchingArticlesError } = UseFetchArticles();
   const [selectedArticles, setSelectedArticles] = useState<number[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedArticle, setSelectedArticle] = useState<Article>();
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>, article: Article) => {
     if (event.target.checked) {
@@ -38,16 +41,22 @@ const ArticlesCMS = () => {
     deleteArticles(selectedArticles);
   };
 
+  const handleModal = (article: Article) => {
+    setSelectedArticle(article);
+    setOpenModal(true);
+  };
+
   const filteredArticles = searchQuery.trim() === "" ? articles : articles.filter((article) => article.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
     <div className="flex gap-y-10 flex-col w-full">
       <ArticlesFiltersCMS selectedArticles={selectedArticles} onSearch={handleSearch} onDelete={handleDelete} />
+      {openModal ? <ArticleModal openModal={openModal} setOpenModal={setOpenModal} article={selectedArticle} /> : null}
 
       {fetchingArticlesLoading && <LoaderCMS />}
       {fetchingArticlesError && <Error errorMessage={fetchingArticlesError} />}
 
-      <div className="flex gap-y-8 gap-x-6 flex-wrap max-[800px]:justify-center items-stretch">
+      <div className="flex gap-y-8 gap-x-6 flex-wrap max-[800px]:justify-center items-stretch justify-center">
         {filteredArticles.length === 0 ? (
           <p className="text-2xl text-white">No articles found</p>
         ) : (
@@ -71,7 +80,9 @@ const ArticlesCMS = () => {
                 <p className="font-normal text-gray-700 dark:text-gray-400">{article.description}</p>
               </div>
 
-              <Button className="mt-auto w-fit">Display article</Button>
+              <Button className="mt-auto w-fit" onClick={() => handleModal(article)}>
+                Display article
+              </Button>
             </Card>
           ))
         )}
