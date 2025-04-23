@@ -1,16 +1,19 @@
 import { Routes, Route } from "react-router";
-import Home from "./pages/Webstie/Home";
-import "./index.css";
+import Layout from "./components/Website/Layout";
 import HomeCMS from "./pages/CMS/HomeCMS";
 import ArticlesCMS from "./pages/CMS/ArticlesCMS";
 import ImagesCMS from "./pages/CMS/ImagesCMS";
 import AddArticle from "./pages/CMS/AddArticleCMS";
 import AuthorsCMS from "./pages/CMS/AuthorsCMS";
+import LatestArticles from "./components/Website/LatestArticles";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Layout />}>
+        <Route index element={<LatestArticles />} />
+      </Route>
+
       <Route path="/CMS" element={<HomeCMS />}>
         <Route path="articles" element={<ArticlesCMS />} />
         <Route path="images" element={<ImagesCMS />} />

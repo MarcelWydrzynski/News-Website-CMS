@@ -1,22 +1,12 @@
-import {
-  Button,
-  MegaMenu,
-  MegaMenuDropdown,
-  NavbarBrand,
-  NavbarCollapse,
-  NavbarLink,
-  NavbarToggle,
-} from "flowbite-react";
+import { Button, MegaMenu, MegaMenuDropdown, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from "flowbite-react";
 import { Link } from "react-router";
 
-function Header() {
+function HeaderCMS() {
   return (
     <MegaMenu className="">
       <Link to="/CMS/articles">
         <NavbarBrand>
-          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-            CMS
-          </span>
+          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">CMS</span>
         </NavbarBrand>
       </Link>
 
@@ -40,4 +30,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default HeaderCMS;

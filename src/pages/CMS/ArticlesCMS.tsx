@@ -57,7 +57,7 @@ const ArticlesCMS = () => {
       {fetchingArticlesError && <Error errorMessage={fetchingArticlesError} />}
 
       <div className="flex gap-y-8 gap-x-6 flex-wrap max-[800px]:justify-center items-stretch justify-center">
-        {filteredArticles.length === 0 ? (
+        {filteredArticles.length === 0 && fetchingArticlesLoading === false ? (
           <p className="text-2xl text-white">No articles found</p>
         ) : (
           filteredArticles.map((article) => (
