@@ -5,13 +5,13 @@ import ArticlesCMS from "./pages/CMS/ArticlesCMS";
 import ImagesCMS from "./pages/CMS/ImagesCMS";
 import AddArticle from "./pages/CMS/AddArticleCMS";
 import AuthorsCMS from "./pages/CMS/AuthorsCMS";
-import LatestArticles from "./components/Website/LatestArticles";
+import Home from "./pages/Webstie/Home";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route index element={<LatestArticles />} />
+        <Route index element={<Home />} />
       </Route>
 
       <Route path="/CMS" element={<HomeCMS />}>

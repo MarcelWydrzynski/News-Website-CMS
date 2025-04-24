@@ -4,9 +4,9 @@ import FooterComponent from "../Website/Footer";
 
 const Layout = () => {
   return (
-    <div className="bg-[#c3c3c3] w-full min-h-screen flex flex-col">
+    <div className="bg-[#ececec] w-full min-h-screen flex flex-col gap-8">
       <Header />
-      <div className="flex-grow p-4 w-full max-w-[1440px] mx-auto border-2">
+      <div className="flex-grow p-4 w-full max-w-[1440px] mx-auto">
         <Outlet />
       </div>
       <FooterComponent />

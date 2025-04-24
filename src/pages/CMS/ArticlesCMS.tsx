@@ -63,13 +63,13 @@ const ArticlesCMS = () => {
           filteredArticles.map((article) => (
             <Card
               key={article.id}
-              className="max-w-sm hover:scale-105 transition-all relative break-word flex flex-col justify-between"
+              className="max-w-sm hover:scale-105 transition-all relative flex flex-col justify-between break-words"
               imgAlt={article.title}
               imgSrc={article.image}
             >
               <Checkbox className="absolute top-3 left-3 w-6 h-6" onChange={(event) => handleCheckboxChange(event, article)} />
 
-              <div className="flex flex-col gap-2 flex-grow">
+              <div className="flex flex-col gap-2 flex-grow overflow-hidden">
                 <h5 className="text-sm font-bold tracking-tight text-gray-900 dark:text-white">
                   <div className="flex gap-1 flex-wrap">
                     <span className="font-thin">By:</span> {article.author}

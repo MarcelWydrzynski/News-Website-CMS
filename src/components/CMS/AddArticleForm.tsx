@@ -4,6 +4,7 @@ import ImagesModalCMS from "./ImagesModalCMS";
 import uploadArticle from "../../hooks/UseUploadArticle";
 import UseFetchAuthors from "../../hooks/UseFetchAuthors";
 import ErrorCMS from "./ErrorCMS";
+import { useNavigate } from "react-router"; 
 
 type Image = {
   id: string;
@@ -26,9 +27,11 @@ const AddArticleForm = () => {
     errorstate: false,
     errorMessage: "",
   });
-  const { authors, fetchingAuthorsError, fetchingAuthorsLoading } = UseFetchAuthors();
+  const { authors } = UseFetchAuthors();
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [openModal, setOpenModal] = useState(false);
+
+  const navigate = useNavigate(); 
 
   const handleCheckboxChecked = (event: ChangeEvent<HTMLInputElement>, image: Image) => {
     if (event.target.checked) {
@@ -64,6 +67,12 @@ const AddArticleForm = () => {
         errorMessage: "Description cannot be empty",
       });
     }
+    if (newArticle.description.trim().length >= 100) {
+      return setError({
+        errorstate: true,
+        errorMessage: "Description cannot be longer than 100 characters",
+      });
+    }
     if (newArticle.lead.length < 100) {
       return setError({
         errorstate: true,
@@ -96,7 +105,7 @@ const AddArticleForm = () => {
     }
 
     setError({ errorstate: false, errorMessage: "" });
-    uploadArticle(newArticle);
+    uploadArticle(newArticle, navigate);
   };
 
   return (
@@ -184,7 +193,7 @@ const AddArticleForm = () => {
 
         <div className="flex gap-4 justify-end">
           <Button type="button" className="self-end" color={error.errorMessage.includes("image") ? "red" : "gray"} onClick={() => setOpenModal(true)}>
-            Select Image
+            {selectedImage === null ? "Select your image" : selectedImage.name}
           </Button>
 
           <div className="max-w-md">
@@ -200,11 +209,13 @@ const AddArticleForm = () => {
                 }))
               }
             >
-              <option value="" disabled>Select category</option>
+              <option value="" disabled>
+                Select category
+              </option>
               <option value="Tech">Tech</option>
               <option value="Politics">Politics</option>
-              <option value="TBusiness">Business</option>
-              <option value="Business">Sports</option>
+              <option value="Business">Business</option>
+              <option value="Sports">Sports</option>
               <option value="Crypto">Crypto</option>
             </Select>
           </div>

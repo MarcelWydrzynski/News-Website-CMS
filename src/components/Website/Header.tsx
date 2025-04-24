@@ -16,20 +16,19 @@ function Header() {
   const currentTime = `${formattedHours}:${formattedMinutes} ${isPM ? "PM" : "AM"}`;
 
   return (
-    <MegaMenu className="bg-[#dbdbdbe3]! py-2 w-full">
+    <MegaMenu className="bg-transparent! py-2 w-full border-b-1 select-none">
       <NavbarBrand>
         <img src={Logo} alt="logo of czeladź times company" className="w-56" />
       </NavbarBrand>
       <div className="flex md:order-2 gap-2">
-        <p className="font-bold">{currentDate}</p>
-        <p className="font-bold">{currentTime}</p>
+        <p className="font-bold text-xl">{currentDate} {currentTime}</p>
       </div>
       <NavbarToggle className="hover:bg-[#dbdbdbe3]! focus:ring-black" />
 
       <NavbarCollapse>
-        <NavbarLink className="text-black! hover:cursor-pointer hover:bg-white! p-4! rounded-2xl mt-2">Articles</NavbarLink>
-        <NavbarLink className="text-black! hover:cursor-pointer hover:bg-white! p-4! rounded-2xl mt-2">Crypto</NavbarLink>
-        <NavbarLink className="text-black! hover:cursor-pointer hover:bg-white! p-4! rounded-2xl mt-2">Weather</NavbarLink>
+        <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2">Articles</NavbarLink>
+        <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2">Crypto</NavbarLink>
+        <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2">Weather</NavbarLink>
       </NavbarCollapse>
     </MegaMenu>
   );

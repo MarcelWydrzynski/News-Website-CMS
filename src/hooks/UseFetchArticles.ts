@@ -10,22 +10,23 @@ interface Article {
   lead: string;
   image: string;
   content: string;
+  date_created: string; 
 }
 
 const UseFetchArticles = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [fetchingArticlesError, setFetchingArticlesError] = useState<string | null>(null);
-  const [fetchingArticlesLoading, setFetchingArticlesLoading] = useState<boolean>();
+  const [fetchingArticlesLoading, setFetchingArticlesLoading] = useState<boolean>(false);
 
   const fetchArticles = async () => {
     setFetchingArticlesLoading(true);
 
-    let { data, error } = await supabase.from("ArticlesList").select("*");
+    const { data, error } = await supabase.from("ArticlesList").select("*").order("date_created", { ascending: false }); // Sort by date_created in descending order (newest first)
 
     if (error) {
       setFetchingArticlesError(error.message);
     } else {
-      setArticles(data?.reverse() || []);
+      setArticles(data || []);
     }
     setFetchingArticlesLoading(false);
   };

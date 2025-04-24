@@ -1,6 +1,4 @@
-import React from "react";
-import { Button, Modal, ModalBody, ModalHeader } from "flowbite-react";
-import { useState } from "react";
+import {  Modal, ModalBody, ModalHeader } from "flowbite-react";
 
 type Article = {
   id: number;
@@ -16,7 +14,7 @@ type Article = {
 type ArticleModalProps = {
   openModal: boolean;
   setOpenModal: (arg0: boolean) => void;
-  article: null | Article;
+  article: Article | null | undefined; 
 };
 
 const ArticleModal = ({ openModal, setOpenModal, article }: ArticleModalProps) => {
@@ -26,10 +24,11 @@ const ArticleModal = ({ openModal, setOpenModal, article }: ArticleModalProps) =
         <ModalHeader />
         <ModalBody>
           <div className="flex flex-col gap-4 flex-grow">
-            <img src={article?.image} alt={article?.title} className="w-5/6 self-center rounded-2xl"/>
+            <img src={article?.image} alt={article?.title} className="w-5/6 self-center rounded-2xl" />
             <h5 className="text-sm font-bold tracking-tight text-gray-900 dark:text-white">
               <div className="flex gap-1 flex-wrap">
-                <span className="font-thin">Author:</span>{article?.author}
+                <span className="font-thin">Author:</span>
+                {article?.author}
                 <span className="font-thin ml-2">Category:</span> {article?.category}
               </div>
             </h5>
