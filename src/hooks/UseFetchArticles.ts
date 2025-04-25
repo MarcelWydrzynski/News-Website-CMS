@@ -21,7 +21,7 @@ const UseFetchArticles = () => {
   const fetchArticles = async () => {
     setFetchingArticlesLoading(true);
 
-    const { data, error } = await supabase.from("ArticlesList").select("*").order("date_created", { ascending: false }); // Sort by date_created in descending order (newest first)
+    const { data, error } = await supabase.from("ArticlesList").select("*").order("date_created", { ascending: false });
 
     if (error) {
       setFetchingArticlesError(error.message);

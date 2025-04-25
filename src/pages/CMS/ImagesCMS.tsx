@@ -40,7 +40,7 @@ const ImagesCMS = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-y-10 w-full">
+      <div className="flex flex-col gap-y-10 w-full ">
         <ImagesFiltersCMS selectedImages={selectedImages} onSearch={handleSearch} />
 
         {openModal ? <ImageModalCMS selectedImage={selectedImage} setOpenModal={setOpenModal} /> : null}
@@ -48,7 +48,7 @@ const ImagesCMS = () => {
         {fetchingImagesLoading && <LoaderCMS />}
         {fetchingImagesError && <ErrorCMS errorMessage={fetchingImagesError} />}
 
-        <div className="flex flex-wrap gap-y-8 gap-x-6 items-center justify-center">
+        <div className="flex flex-wrap gap-y-8 gap-x-6 justify-center items-stretch">
           {filteredImages.length === 0 && fetchingImagesLoading === false ? (
             <p className="text-2xl text-white">No images stored in database</p>
           ) : (
@@ -56,7 +56,7 @@ const ImagesCMS = () => {
               <Card key={image.id} className="max-w-sm relative hover:scale-105 transition-all" imgSrc={image.url} imgAlt={image.name}>
                 <Checkbox className="absolute top-3 left-3 w-6 h-6" onChange={(e) => handleCheckboxChange(e, image)} />
                 <h4 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{image.name}</h4>
-                <Button className="w-fit" onClick={() => handleModal(image)}>
+                <Button className="w-fit self-end mt-auto" onClick={() => handleModal(image)}>
                   Show Image
                 </Button>
               </Card>

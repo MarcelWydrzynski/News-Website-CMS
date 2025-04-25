@@ -1,20 +1,33 @@
-import React from "react";
-import UseFetchArticles from "../../hooks/UseFetchArticles";
 import { Button, Card, Spinner } from "flowbite-react";
 import ErrorCMS from "../CMS/ErrorCMS";
 
-const LatestArticles = () => {
-  const { articles, fetchingArticlesError, fetchingArticlesLoading } = UseFetchArticles();
+type Article = {
+  id: number;
+  author: string;
+  category: string;
+  title: string;
+  description: string;
+  lead: string;
+  image: string;
+  content: string;
+  date_created: string;
+};
 
-  const fiveLatestArticles = articles.slice(0, 5);
+type LatestArticlesProps = {
+  data: Article[];
+  loading: boolean;
+  error: string | null;
+};
+const LatestArticles = ({ data, loading, error }: LatestArticlesProps) => {
+  const fiveLatestArticles = data.slice(0, 5);
 
   return (
     <div className="min-w-full flex flex-col items-center gap-y-5">
       <h1 className="text-3xl font-serif self-start">Latest articles</h1>
       <div className="w-full flex flex-wrap gap-y-4">
-        {fetchingArticlesError ? <ErrorCMS errorMessage={fetchingArticlesError} /> : null}
+        {error ? <ErrorCMS errorMessage={error} /> : null}
 
-        {fetchingArticlesLoading ? (
+        {loading ? (
           <div>
             Loading... <Spinner color="success" aria-label="Success spinner example" className="m-4" size="lg" />
           </div>
@@ -22,7 +35,7 @@ const LatestArticles = () => {
 
         {fiveLatestArticles.length === 0 ? <p>No articles in database</p> : null}
 
-        {fetchingArticlesLoading === false && articles.length > 0 && (
+        {loading === false && data.length > 0 && (
           <>
             <div className="flex flex-wrap w-full justify-around gap-4">
               {fiveLatestArticles.slice(0, 2).map((article) => (
@@ -39,7 +52,9 @@ const LatestArticles = () => {
                     </div>
                     <h5 className="text-2xl font-bold">{article.title}</h5>
                     <p className="text-gray-900">{article.description}</p>
-                    <Button className="bg-transparent! text-black border w-fit self-end mt-auto hover:bg-white focus:ring-transparent! hover:cursor-pointer">view article</Button>
+                    <Button className="bg-transparent! text-black border w-fit self-end mt-auto hover:bg-white focus:ring-transparent! hover:cursor-pointer">
+                      view article
+                    </Button>
                   </div>
                 </Card>
               ))}
@@ -60,7 +75,9 @@ const LatestArticles = () => {
                     </div>
                     <h5 className="text-2xl font-bold">{article.title}</h5>
                     <p className="text-gray-900">{article.description}</p>
-                    <Button className="bg-transparent! text-black border w-fit self-end mt-auto hover:bg-white focus:ring-transparent! hover:cursor-pointer">view article</Button>
+                    <Button className="bg-transparent! text-black border w-fit self-end mt-auto hover:bg-white focus:ring-transparent! hover:cursor-pointer">
+                      view article
+                    </Button>
                   </div>
                 </Card>
               ))}
