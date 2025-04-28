@@ -13,7 +13,7 @@ const uploadAuthor = async (author: Author) => {
     id: generateRandomID(),
     created_at: new Date(),
   };
-  const { data, error } = await supabase.from("authors").insert([authorWithId]);
+  const { error } = await supabase.from("authors").insert([authorWithId]);
   alert("New author has been added the page will now reload");
   location.reload();
 

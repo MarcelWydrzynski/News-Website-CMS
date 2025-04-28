@@ -6,15 +6,13 @@ const deleteArticles = async (articleIds: number[]) => {
     return;
   }
 
-  const { error } = await supabase
+  const {} = await supabase
     .from("ArticlesList") //
     .delete()
     .in("id", articleIds);
 
   alert("The article has been delete, the page will now reload");
   location.reload();
-
-
 
   return {
     deleteArticles,

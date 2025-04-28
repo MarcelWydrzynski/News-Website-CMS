@@ -11,7 +11,7 @@ type Author = {
 };
 
 const CategoriesCMS = () => {
-  const { authors, fetchingAuthorsError, fetchingAuthorsLoading } = UseFetchAuthors();
+  const { authors } = UseFetchAuthors();
   const [selectedAuthors, setSelectedAuthors] = useState<number[]>([]);
   const [modal, setModal] = useState(false);
 
