@@ -1,4 +1,4 @@
-import { Button, MegaMenu, MegaMenuDropdown, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from "flowbite-react";
+import { Button, MegaMenu, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from "flowbite-react";
 import { Link } from "react-router";
 
 function HeaderCMS() {

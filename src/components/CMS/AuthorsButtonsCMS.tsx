@@ -1,4 +1,4 @@
-import { TextInput, Button, FileInput, Label } from "flowbite-react";
+import {  Button, } from "flowbite-react";
 import deleteAuthors from "../../hooks/UseDeleteAuthors";
 
 type Props = {

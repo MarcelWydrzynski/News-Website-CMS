@@ -1,4 +1,3 @@
-import React from "react";
 import ReturnToHomeButton from "../../components/Website/ReturnToHomeButton";
 
 const Licensing = () => {
