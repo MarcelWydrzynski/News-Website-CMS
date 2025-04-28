@@ -18,6 +18,12 @@ function App() {
 
   return (
     <Routes>
+      <Route path="/CMS" element={<HomeCMS />}>
+        <Route index element={<ArticlesCMS />} />
+        <Route path="images" element={<ImagesCMS />} />
+        <Route path="authors" element={<AuthorsCMS />} />
+        <Route path="add-article" element={<AddArticle />} />
+      </Route>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="article/:slug" element={<Article />} />
@@ -25,13 +31,6 @@ function App() {
         <Route path="licensing" element={<Licensing />} />
         <Route path="terms&conditions" element={<TermsAndConditions />} />
         <Route path="InProgress" element={<InProgress />} />
-      </Route>
-
-      <Route path="/CMS" element={<HomeCMS />}>
-        <Route path="articles" element={<ArticlesCMS />} />
-        <Route path="images" element={<ImagesCMS />} />
-        <Route path="authors" element={<AuthorsCMS />} />
-        <Route path="add-article" element={<AddArticle />} />
       </Route>
     </Routes>
   );

@@ -4,7 +4,7 @@ import { Link } from "react-router";
 function HeaderCMS() {
   return (
     <MegaMenu className="">
-      <Link to="/CMS/articles">
+      <Link to="/CMS">
         <NavbarBrand>
           <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">CMS</span>
         </NavbarBrand>
@@ -15,7 +15,7 @@ function HeaderCMS() {
       </div>
       <NavbarToggle />
       <NavbarCollapse>
-        <Link to="/CMS/articles">
+        <Link to="/CMS">
           <NavbarLink>Articles</NavbarLink>
         </Link>
 
@@ -24,6 +24,9 @@ function HeaderCMS() {
         </Link>
         <Link to="/CMS/authors">
           <NavbarLink>Authors</NavbarLink>
+        </Link>
+        <Link to="/">
+          <NavbarLink>Go to webstie</NavbarLink>
         </Link>
       </NavbarCollapse>
     </MegaMenu>
