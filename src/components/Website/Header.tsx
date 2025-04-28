@@ -1,5 +1,6 @@
 import { MegaMenu, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from "flowbite-react";
 import Logo from "../../../public/czelad-times-high-resolution-logo.png";
+import { Link } from "react-router-dom";
 
 function Header() {
   const today = new Date();
@@ -18,17 +19,28 @@ function Header() {
   return (
     <MegaMenu className="bg-transparent! py-2 w-full border-b-1 select-none">
       <NavbarBrand>
-        <img src={Logo} alt="logo of czeladź times company" className="w-56" />
+        <Link to={"/"}>
+          <img src={Logo} alt="logo of czeladź times company" className="w-56 max-[500px]:w-full" />
+        </Link>
       </NavbarBrand>
       <div className="flex md:order-2 gap-2">
-        <p className="font-bold text-xl">{currentDate} {currentTime}</p>
+        <p className="font-bold text-xl">
+          {currentDate} {currentTime}
+        </p>
       </div>
-      <NavbarToggle className="hover:bg-[#dbdbdbe3]! focus:ring-black" />
+      <NavbarToggle className="hover:bg-[#dbdbdbe3]! focus:ring-transparent!" />
 
       <NavbarCollapse>
-        <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2">Articles</NavbarLink>
-        <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2">Crypto</NavbarLink>
-        <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2">Weather</NavbarLink>
+        <Link to={"/"}>
+          <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2 border-none! text-center">Articles</NavbarLink>
+        </Link>
+        <Link to={"InProgress"}>
+          <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2 border-none! text-center">Crypto</NavbarLink>
+        </Link>
+
+        <Link to={"InProgress"}>
+          <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2 border-none! text-center">Weather</NavbarLink>
+        </Link>
       </NavbarCollapse>
     </MegaMenu>
   );

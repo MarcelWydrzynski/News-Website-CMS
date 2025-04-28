@@ -10,7 +10,7 @@ interface Article {
   lead: string;
   image: string;
   content: string;
-  date_created: string; 
+  date_created: string;
 }
 
 const UseFetchArticles = () => {

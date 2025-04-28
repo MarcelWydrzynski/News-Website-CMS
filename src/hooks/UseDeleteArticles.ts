@@ -14,10 +14,7 @@ const deleteArticles = async (articleIds: number[]) => {
   alert("The article has been delete, the page will now reload");
   location.reload();
 
-  if (error) {
-    console.log(error.message);
-    return;
-  }
+
 
   return {
     deleteArticles,
