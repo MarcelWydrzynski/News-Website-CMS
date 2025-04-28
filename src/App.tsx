@@ -18,12 +18,15 @@ function App() {
 
   return (
     <Routes>
+   
       <Route path="/admin" element={<HomeCMS />}>
         <Route index element={<ArticlesCMS />} />
         <Route path="images" element={<ImagesCMS />} />
         <Route path="authors" element={<AuthorsCMS />} />
         <Route path="add-article" element={<AddArticle />} />
       </Route>
+
+ 
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="article/:slug" element={<Article />} />
