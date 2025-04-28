@@ -5,6 +5,6 @@ import flowbiteReact from "flowbite-react/plugin/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/CMS",
+  base: "/admin", 
   plugins: [react(), tailwindcss(), flowbiteReact()],
 });

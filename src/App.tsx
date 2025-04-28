@@ -18,7 +18,7 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/CMS" element={<HomeCMS />}>
+      <Route path="/admin" element={<HomeCMS />}>
         <Route index element={<ArticlesCMS />} />
         <Route path="images" element={<ImagesCMS />} />
         <Route path="authors" element={<AuthorsCMS />} />

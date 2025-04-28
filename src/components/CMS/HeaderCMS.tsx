@@ -3,30 +3,30 @@ import { Link } from "react-router";
 
 function HeaderCMS() {
   return (
-    <MegaMenu className="">
-      <Link to="/CMS">
+    <MegaMenu>
+      <Link to="/admin">
         <NavbarBrand>
-          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">CMS</span>
+          <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Admin</span>
         </NavbarBrand>
       </Link>
 
-      <div className="order-2 hidden items-center md:flex ">
+      <div className="order-2 hidden items-center md:flex">
         <Button href="#">Sign up</Button>
       </div>
       <NavbarToggle />
       <NavbarCollapse>
-        <Link to="/CMS">
+        <Link to="/admin">
           <NavbarLink>Articles</NavbarLink>
         </Link>
 
-        <Link to="/CMS/images">
+        <Link to="/admin/images">
           <NavbarLink>Images</NavbarLink>
         </Link>
-        <Link to="/CMS/authors">
+        <Link to="/admin/authors">
           <NavbarLink>Authors</NavbarLink>
         </Link>
         <Link to="/">
-          <NavbarLink>Go to webstie</NavbarLink>
+          <NavbarLink>Go to Website</NavbarLink>
         </Link>
       </NavbarCollapse>
     </MegaMenu>
