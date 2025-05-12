@@ -8,6 +8,7 @@ import AddArticle from "./pages/CMS/AddArticleCMS";
 import AuthorsCMS from "./pages/CMS/AuthorsCMS";
 import Home from "./pages/Webstie/Home";
 import Article from "./pages/Webstie/Article";
+import Crytpo from "./pages/Webstie/Crytpo";
 import PrivacyPolicy from "./pages/Webstie/PrivacyPolicy";
 import Licensing from "./pages/Webstie/Licensing";
 import TermsAndConditions from "./pages/Webstie/TermsAndConditions";
@@ -21,6 +22,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="article/:slug" element={<Article />} />
+        <Route path="crypto" element={<Crytpo />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="licensing" element={<Licensing />} />
         <Route path="terms&conditions" element={<TermsAndConditions />} />

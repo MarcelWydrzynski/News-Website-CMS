@@ -34,7 +34,7 @@ function Header() {
         <Link to={"/"}>
           <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2 border-none! text-center">Articles</NavbarLink>
         </Link>
-        <Link to={"InProgress"}>
+        <Link to={"crypto"}>
           <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2 border-none! text-center">Crypto</NavbarLink>
         </Link>
 
