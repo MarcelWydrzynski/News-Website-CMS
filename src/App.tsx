@@ -13,6 +13,7 @@ import PrivacyPolicy from "./pages/Webstie/PrivacyPolicy";
 import Licensing from "./pages/Webstie/Licensing";
 import TermsAndConditions from "./pages/Webstie/TermsAndConditions";
 import InProgress from "./pages/Webstie/InProgress";
+import SingleCrypto from "./pages/Webstie/SingleCrypto";
 
 function App() {
   useScrollToTop();
@@ -23,6 +24,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path="article/:slug" element={<Article />} />
         <Route path="crypto" element={<Crytpo />} />
+        <Route path="crypto/:slug" element={<SingleCrypto />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="licensing" element={<Licensing />} />
         <Route path="terms&conditions" element={<TermsAndConditions />} />

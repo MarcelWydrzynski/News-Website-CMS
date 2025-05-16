@@ -7,13 +7,13 @@ const useFetchAllCrypto = () => {
 
   useEffect(() => {
     const fetchAllCoins = async () => {
-      fetch("https://api.coingecko.com/api/v3/coins/list")
+      const options = { method: "GET", headers: { accept: "application/json" } };
+
+      fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd", options)
         .then((res) => res.json())
         .then((res) => setAllCoins(res))
-        .then((res) => console.log(res))
         .catch((err) => console.error(err));
     };
-
     fetchAllCoins();
   }, []);
 

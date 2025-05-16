@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 
 type CustomPaginationProps = {
   currentPage: number;
@@ -26,7 +26,7 @@ const CustomPagination = ({ currentPage, totalPages, onPageChange }: CustomPagin
   }
 
   return (
-    <div className="flex items-center justify-center space-x-2 mt-6 flex-wrap">
+    <div className="flex items-center justify-center space-x-2 space-y-2 mt-20 flex-wrap select-none">
       <button
         onClick={() => handlePageClick(prevPage)}
         className={` cursor-pointer px-3 py-2 rounded-l-lg border ${

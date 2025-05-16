@@ -24,7 +24,7 @@ function Header() {
         </Link>
       </NavbarBrand>
       <div className="flex md:order-2 gap-2">
-        <p className="font-bold text-xl">
+        <p className="text-md">
           {currentDate} {currentTime}
         </p>
       </div>
