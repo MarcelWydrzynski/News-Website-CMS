@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 
 const useFetchAllCrypto = () => {
   const [allCoins, setAllCoins] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchAllCoins = async () => {
@@ -17,7 +15,7 @@ const useFetchAllCrypto = () => {
     fetchAllCoins();
   }, []);
 
-  return { allCoins, loading, error };
+  return { allCoins};
 };
 
 export default useFetchAllCrypto;

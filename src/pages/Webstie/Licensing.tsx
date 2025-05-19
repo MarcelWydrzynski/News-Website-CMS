@@ -1,9 +1,9 @@
-import ReturnToHomeButton from "../../components/Website/ReturnButton";
+import ReturnButton from "../../components/Website/ReturnButton";
 
 const Licensing = () => {
   return (
     <div className="w-full mx-auto">
-      <ReturnToHomeButton />
+      <ReturnButton path={"/"}/>
       <h1 className="text-4xl font-bold mb-6">Licensing</h1>
       <p className="mb-4">
         Unless stated otherwise, all content on this website, including text, graphics, and code, is the intellectual property of [Your Website Name].

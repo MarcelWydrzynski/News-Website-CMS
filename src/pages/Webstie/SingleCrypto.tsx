@@ -1,4 +1,3 @@
-import React from "react";
 import { useLocation } from "react-router";
 import ReturnButton from "../../components/Website/ReturnButton";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";

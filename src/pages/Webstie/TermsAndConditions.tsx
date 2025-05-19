@@ -1,9 +1,9 @@
-import ReturnToHomeButton from "../../components/Website/ReturnButton";
+import ReturnButton from "../../components/Website/ReturnButton";
 
 const TermsAndConditions = () => {
   return (
     <div className="w-full mx-auto">
-      <ReturnToHomeButton />
+      <ReturnButton path={"/"} />
       <h1 className="text-4xl font-bold mb-6">Terms and Conditions</h1>
       <p className="mb-4">
         By accessing this website, you agree to be bound by these terms and conditions. If you do not agree, please do not use our website.
