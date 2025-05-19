@@ -2,7 +2,7 @@ import CryptoList from "../../components/Website/CryptoList";
 
 const Crytpo = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       <div className="flex flex-col items-center gap-y-4 mb-10">
         <h2 className="text-2xl select-none">Search your favorite crypto below</h2>
         <input

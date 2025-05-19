@@ -23,10 +23,8 @@ const CryptoList = () => {
   const indexOfFirstCoin = indexOfLastCoin - coinsPerPage;
   const currentCoins = allCoins.slice(indexOfFirstCoin, indexOfLastCoin);
 
-  console.log(allCoins);
-
   return (
-    <div className="items-stretch w-fit mx-auto">
+    <div className="items-stretch w-full max-w-4xl mx-auto">
       <ul className="rounded-2xl flex flex-col gap-y-3">
         <div className="grid grid-cols-[10px_2fr_1fr_1fr_1fr] max-[700px]:grid-cols-[10px_2fr_1fr_1fr] items-center gap-4 py-2 font-bold">
           <p>#</p>

@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import ReturnToHomeButton from "../../components/Website/ReturnToHomeButton";
+import ReturnButton from "../../components/Website/ReturnButton";
 import ShowRelatedArticles from "../../components/Website/ShowRelatedArticles";
 
 type Article = {
@@ -22,7 +22,7 @@ const Article = () => {
   return (
     <>
       <div className="w-full">
-        <ReturnToHomeButton />
+        <ReturnButton path={"/"}/>
         {!article ? (
           <p>Article not found please return to homepage</p>
         ) : (

@@ -1,5 +1,4 @@
-
-import ReturnToHomeButton from "../../components/Website/ReturnToHomeButton";
+import ReturnToHomeButton from "../../components/Website/ReturnButton";
 
 const PrivacyPolicy = () => {
   return (

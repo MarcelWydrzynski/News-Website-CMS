@@ -28,8 +28,9 @@ const ShowRelatedArticles = ({ articlesFromSameCategory, selectedArticle }: Show
   return (
     <>
       <Separator />
+      <h1 className="text-3xl font-bold select-none mb-10">Related articles</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-15">
-        {filterArticlesFromSameCategory.map((article) => (
+        {filterArticlesFromSameCategory.slice(1).map((article) => (
           <Card
             key={article.id}
             className="!bg-[#ececec] text-black hover:scale-105 transition-all flex flex-col h-full"
