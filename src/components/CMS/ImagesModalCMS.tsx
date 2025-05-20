@@ -36,7 +36,7 @@ const ImagesModalCMS: React.FC<ImagesModalCMSProps> = ({ openModal, setOpenModal
     <Modal dismissible show={openModal} onClose={() => setOpenModal(false)} size="7xl">
       <ModalHeader>Select a image for you article and hit proceed</ModalHeader>
       <ModalBody className="">
-        {fetchingImagesLoading ? <LoaderCMS /> : null}
+        {fetchingImagesLoading ? <LoaderCMS textDark={false}/> : null}
         {fetchingImagesError ? <ErrorCMS errorMessage={fetchingImagesError} /> : null}
         <div className="flex flex-wrap gap-x-4 gap-y-6 justify-center items-center">
           {images.length === 0 ? (

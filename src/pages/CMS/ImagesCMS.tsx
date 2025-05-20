@@ -45,7 +45,7 @@ const ImagesCMS = () => {
 
         {openModal ? <ImageModalCMS selectedImage={selectedImage} setOpenModal={setOpenModal} /> : null}
 
-        {fetchingImagesLoading && <LoaderCMS />}
+        {fetchingImagesLoading && <LoaderCMS textDark={false}/>}
         {fetchingImagesError && <ErrorCMS errorMessage={fetchingImagesError} />}
 
         <div className="flex flex-wrap gap-y-8 gap-x-6 justify-center items-stretch">
