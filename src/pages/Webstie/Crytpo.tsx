@@ -6,7 +6,7 @@ const Crytpo = () => {
       <div className="flex flex-col items-center gap-y-4 mb-10">
         <h2 className="text-2xl select-none">Search your favorite crypto below</h2>
         <input
-          className="w-fit bg-transparent placeholder:text-black text-black text-sm border border-black rounded-md px-3 py-2  focus:outline-none focus:border-black shadow-sm focus:shadow"
+          className="w-full max-w-2xl bg-transparent placeholder:text-black text-black text-sm border border-black rounded-md px-3 py-2  focus:outline-none focus:border-black shadow-sm focus:shadow"
           placeholder="Type here..."
         />
       </div>

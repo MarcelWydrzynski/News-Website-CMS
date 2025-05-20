@@ -53,7 +53,7 @@ const ArticlesCMS = () => {
       <ArticlesFiltersCMS selectedArticles={selectedArticles} onSearch={handleSearch} onDelete={handleDelete} />
       {openModal ? <ArticleModal openModal={openModal} setOpenModal={setOpenModal} article={selectedArticle} /> : null}
 
-      {fetchingArticlesLoading && <LoaderCMS />}
+      {fetchingArticlesLoading && <LoaderCMS textDark={false}/>}
       {fetchingArticlesError && <Error errorMessage={fetchingArticlesError} />}
 
       <div className="flex gap-y-8 gap-x-6 flex-wrap max-[800px]:justify-center items-stretch justify-center">

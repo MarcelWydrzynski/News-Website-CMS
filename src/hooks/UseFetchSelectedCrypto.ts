@@ -6,7 +6,7 @@ type MarketChartData = {
   total_volumes: [number, number][];
 };
 
-const useFetchSelectedCrypto = ( cryptoName: string) => {
+const useFetchSelectedCrypto = (cryptoName: string) => {
   const [selectedCrypto, setSelectedCrypto] = useState<MarketChartData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -20,7 +20,8 @@ const useFetchSelectedCrypto = ( cryptoName: string) => {
         setSelectedCrypto(data);
       } catch (err) {
         setError(true);
-        console.error(err);
+        console.log(error)
+        setLoading(false);
       } finally {
         setLoading(false);
       }

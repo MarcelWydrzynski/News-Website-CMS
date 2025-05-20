@@ -2,6 +2,7 @@ import { useState } from "react";
 import useFetchAllCrypto from "../../hooks/UseFetchAllCrytpo";
 import Pagination from "../../components/Website/Pagination";
 import CryptoCard from "./CryptoCard";
+import LoaderCMS from "../CMS/LoaderCMS";
 
 type Coin = {
   id: string;
@@ -13,7 +14,7 @@ type Coin = {
 };
 
 const CryptoList = () => {
-  const { allCoins } = useFetchAllCrypto();
+  const { allCoins, loading, error } = useFetchAllCrypto();
   const [currentPage, setCurrentPage] = useState(1);
 
   const coinsPerPage = 10;
@@ -33,12 +34,13 @@ const CryptoList = () => {
           <p>24H Change</p>
           <p className="max-[700px]:hidden">Market Cap</p>
         </div>
+        {loading && <LoaderCMS textDark={true} />}
+        {error && <p className="text-black mt-10 mx-auto">Failed to fetch crypto data. Please try again later.</p>}
         {currentCoins.map((coin: Coin, index) => (
           <CryptoCard key={index} data={coin} number={index} />
         ))}
       </ul>
-
-      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={(page) => setCurrentPage(page)} />
+      {!loading && !error ? <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={(page) => setCurrentPage(page)} /> : null}
     </div>
   );
 };

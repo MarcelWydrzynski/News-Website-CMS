@@ -1,5 +1,3 @@
-
-
 type CustomPaginationProps = {
   currentPage: number;
   totalPages: number;
@@ -25,13 +23,13 @@ const CustomPagination = ({ currentPage, totalPages, onPageChange }: CustomPagin
     pageNumbers.push(i);
   }
 
+  const baseButtonClasses = "cursor-pointer px-3 py-2 border text-sm bg-white text-gray-700 hover:bg-gray-200";
+
   return (
-    <div className="flex items-center justify-center space-x-2 space-y-2 mt-20 flex-wrap select-none">
+    <div className="flex justify-center items-center space-x-2 space-y-2 mt-20 flex-wrap select-none">
       <button
         onClick={() => handlePageClick(prevPage)}
-        className={` cursor-pointer px-3 py-2 rounded-l-lg border ${
-          currentPage === 1 ? "cursor-not-allowed text-gray-500" : "bg-white text-gray-700 hover:bg-gray-200"
-        }`}
+        className={`${baseButtonClasses} rounded-l-lg ${currentPage === 1 ? "cursor-not-allowed text-gray-500 bg-gray-100 hover:bg-gray-100" : ""}`}
         disabled={currentPage === 1}
       >
         Previous
@@ -48,7 +46,9 @@ const CustomPagination = ({ currentPage, totalPages, onPageChange }: CustomPagin
         <button
           key={page}
           onClick={() => handlePageClick(page)}
-          className={`cursor-pointer px-3 py-2 rounded border text-sm ${page === currentPage ? "bg-gray-200 text-black" : "bg-white text-gray-700 hover:bg-gray-200"}`}
+          className={`cursor-pointer px-3 py-2 rounded border text-sm ${
+            page === currentPage ? "bg-gray-200 text-black" : "bg-white text-gray-700 hover:bg-gray-200"
+          }`}
         >
           {page}
         </button>
@@ -63,9 +63,7 @@ const CustomPagination = ({ currentPage, totalPages, onPageChange }: CustomPagin
 
       <button
         onClick={() => handlePageClick(nextPage)}
-        className={`cursor-pointer px-3 py-2 rounded-r-lg border ${
-          currentPage === totalPages ? "cursor-not-allowed text-gray-500" : "bg-white text-gray-700 hover:bg-gray-200"
-        }`}
+        className={`${baseButtonClasses} mb-2 rounded-r-lg ${currentPage === totalPages ? "cursor-not-allowed text-gray-500 bg-gray-100 hover:bg-gray-100" : ""}`}
         disabled={currentPage === totalPages}
       >
         Next
