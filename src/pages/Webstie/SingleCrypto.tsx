@@ -50,7 +50,7 @@ const SingleCrypto = () => {
         {error && <p className="text-black mt-10">Failed to fetch crypto data. Please try again later.</p>}
         {!loading && !error && (
           <>
-            <img src={data.image} alt={`${data.name} logo`} />
+            <img src={data.image} alt={`${data.name} logo`} className="max-[500px]:w-1/4"/>
             <h1 className="text-3xl font-bold font-mono mt-5">
               {data.name} ({data.symbol.toUpperCase()})
             </h1>

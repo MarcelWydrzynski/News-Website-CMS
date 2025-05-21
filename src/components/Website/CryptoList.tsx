@@ -1,5 +1,4 @@
 import { useState } from "react";
-import useFetchAllCrypto from "../../hooks/UseFetchAllCrytpo";
 import Pagination from "../../components/Website/Pagination";
 import CryptoCard from "./CryptoCard";
 import LoaderCMS from "../CMS/LoaderCMS";
@@ -13,8 +12,13 @@ type Coin = {
   market_cap: number;
 };
 
-const CryptoList = () => {
-  const { allCoins, loading, error } = useFetchAllCrypto();
+type CryptoListProps = {
+  allCoins: Coin[];
+  loading: boolean;
+  error: boolean;
+};
+
+const CryptoList = ({ allCoins, loading, error }: CryptoListProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const coinsPerPage = 10;
