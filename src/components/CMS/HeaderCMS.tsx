@@ -4,7 +4,7 @@ import { Link } from "react-router";
 function HeaderCMS() {
   return (
     <MegaMenu>
-      <Link to="/admin">
+      <Link to="/cms">
         <NavbarBrand>
           <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">Admin</span>
         </NavbarBrand>
@@ -15,14 +15,14 @@ function HeaderCMS() {
       </div>
       <NavbarToggle />
       <NavbarCollapse>
-        <Link to="/admin">
+        <Link to="/cms">
           <NavbarLink>Articles</NavbarLink>
         </Link>
 
-        <Link to="/admin/images">
+        <Link to="/cms/images">
           <NavbarLink>Images</NavbarLink>
         </Link>
-        <Link to="/admin/authors">
+        <Link to="/cms/authors">
           <NavbarLink>Authors</NavbarLink>
         </Link>
         <Link to="https://news-website-cms.vercel.app/">

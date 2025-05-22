@@ -41,10 +41,8 @@ function Header() {
         <Link to={"InProgress"}>
           <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2 border-none! text-center">Weather</NavbarLink>
         </Link>
-        <Link to="/admin">
-          <NavbarLink>
-            <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2 border-none! text-center">Go to CMS</NavbarLink>
-          </NavbarLink>
+        <Link to={"cms"}>
+          <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2 border-none! text-center">Go to CMS</NavbarLink>
         </Link>
       </NavbarCollapse>
     </MegaMenu>

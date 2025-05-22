@@ -31,7 +31,7 @@ function App() {
         <Route path="InProgress" element={<InProgress />} />
       </Route>
 
-      <Route path="/admin" element={<HomeCMS />}>
+      <Route path="/cms" element={<HomeCMS />}>
         <Route index element={<ArticlesCMS />} />
         <Route path="images" element={<ImagesCMS />} />
         <Route path="authors" element={<AuthorsCMS />} />

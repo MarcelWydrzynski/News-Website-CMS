@@ -1,10 +1,11 @@
+import { useState, ChangeEvent } from "react";
 import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
-import { ChangeEvent, useState } from "react";
 import ImagesModalCMS from "./ImagesModalCMS";
 import uploadArticle from "../../hooks/UseUploadArticle";
 import UseFetchAuthors from "../../hooks/UseFetchAuthors";
 import ErrorCMS from "./ErrorCMS";
-import { useNavigate } from "react-router"; 
+import { useNavigate } from "react-router";
+import RichTextEditor from "./RichTextEditor";
 
 type Image = {
   id: string;
@@ -20,7 +21,7 @@ const AddArticleForm = () => {
     category: "",
     lead: "",
     image: "",
-    content: "",
+    content: "", // <-- content here
     description: "",
   });
   const [error, setError] = useState({
@@ -30,78 +31,51 @@ const AddArticleForm = () => {
   const { authors } = UseFetchAuthors();
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [openModal, setOpenModal] = useState(false);
-
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleCheckboxChecked = (event: ChangeEvent<HTMLInputElement>, image: Image) => {
     if (event.target.checked) {
       setSelectedImage(image);
+      setNewArticle((prev) => ({ ...prev, image: image.url })); // Update image URL in form state
     } else {
       setSelectedImage(null);
+      setNewArticle((prev) => ({ ...prev, image: "" }));
     }
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const handleFormValidation = () => {
+    let errorMessage = "";
     if (newArticle.title.trim().length === 0) {
-      return setError({
-        errorstate: true,
-        errorMessage: "Title cannot be empty",
-      });
-    }
-    if (newArticle.title.length < 20) {
-      return setError({
-        errorstate: true,
-        errorMessage: "Title must be at least 20 characters",
-      });
-    }
-    if (newArticle.title.length > 70) {
-      return setError({
-        errorstate: true,
-        errorMessage: "Title must be less than 70 characters",
-      });
+      errorMessage = "Title cannot be empty";
+    } else if (newArticle.title.length < 20) {
+      errorMessage = "Title must be at least 20 characters";
+    } else if (newArticle.title.length > 70) {
+      errorMessage = "Title must be less than 70 characters";
+    } else if (newArticle.description.trim().length === 0) {
+      errorMessage = "Description cannot be empty";
+    } else if (newArticle.description.trim().length >= 100) {
+      errorMessage = "Description cannot be longer than 100 characters";
+    } else if (newArticle.lead.length < 100) {
+      errorMessage = "Lead must be at least 100 characters";
+    } else if (newArticle.content.replace(/<[^>]+>/g, "").length < 500) {
+      // Strip HTML tags and check text length in content
+      errorMessage = "Content must be at least 500 characters";
+    } else if (newArticle.image.length === 0) {
+      errorMessage = "Please select an image";
+    } else if (newArticle.category.length === 0) {
+      errorMessage = "Category must be selected";
+    } else if (newArticle.author.length === 0) {
+      errorMessage = "Author cannot be empty";
     }
 
-    if (newArticle.description.trim().length === 0) {
-      return setError({
-        errorstate: true,
-        errorMessage: "Description cannot be empty",
-      });
-    }
-    if (newArticle.description.trim().length >= 100) {
-      return setError({
-        errorstate: true,
-        errorMessage: "Description cannot be longer than 100 characters",
-      });
-    }
-    if (newArticle.lead.length < 100) {
-      return setError({
-        errorstate: true,
-        errorMessage: "Lead must be at least 100 characters",
-      });
-    }
-    if (newArticle.content.length < 500) {
-      return setError({
-        errorstate: true,
-        errorMessage: "Content must be at least 500 characters",
-      });
-    }
-    if (newArticle.image.length === 0) {
-      return setError({
-        errorstate: true,
-        errorMessage: "Please select an image",
-      });
-    }
-    if (newArticle.category.length === 0) {
-      return setError({
-        errorstate: true,
-        errorMessage: "Category must be selected",
-      });
-    }
-    if (newArticle.author.length === 0) {
-      return setError({
-        errorstate: true,
-        errorMessage: "Author cannot be empty",
-      });
+    if (errorMessage) {
+      setError({ errorstate: true, errorMessage });
+      scrollToTop();
+      return;
     }
 
     setError({ errorstate: false, errorMessage: "" });
@@ -110,7 +84,7 @@ const AddArticleForm = () => {
 
   return (
     <>
-      {openModal ? (
+      {openModal && (
         <ImagesModalCMS
           openModal={openModal}
           setOpenModal={setOpenModal}
@@ -118,7 +92,7 @@ const AddArticleForm = () => {
           selectedImage={selectedImage}
           setNewArticle={setNewArticle}
         />
-      ) : null}
+      )}
       <form
         className="flex w-4/5 flex-col gap-4"
         onSubmit={(e) => {
@@ -127,6 +101,7 @@ const AddArticleForm = () => {
         }}
       >
         {error.errorstate ? <ErrorCMS errorMessage={error.errorMessage} /> : <p className="opacity-0 text-xl">Error placeholder</p>}
+
         <div>
           <Label htmlFor="articleTitle">Title</Label>
           <TextInput
@@ -176,22 +151,19 @@ const AddArticleForm = () => {
         </div>
 
         <div>
-          <Label htmlFor="articleContent">Content</Label>
-          <Textarea
-            id="articleContent"
-            rows={10}
+          <Label>Content</Label>
+          <RichTextEditor
             value={newArticle.content}
-            color={error.errorMessage.includes("Content") ? "failure" : "gray"}
-            onChange={(e) =>
+            onChange={(html) =>
               setNewArticle((prev) => ({
                 ...prev,
-                content: e.target.value,
+                content: html,
               }))
             }
           />
         </div>
 
-        <div className="flex gap-4 justify-end">
+        <div className="flex gap-4 justify-end flex-wrap max-[800px]:justify-center">
           <Button type="button" className="self-end" color={error.errorMessage.includes("image") ? "red" : "gray"} onClick={() => setOpenModal(true)}>
             {selectedImage === null ? "Select your image" : selectedImage.name}
           </Button>
@@ -199,7 +171,7 @@ const AddArticleForm = () => {
           <div className="max-w-md">
             <Label htmlFor="categories">Select your Category</Label>
             <Select
-              id="catogries"
+              id="categories"
               value={newArticle.category}
               color={error.errorMessage.includes("Category") ? "failure" : "gray"}
               onChange={(e) =>
@@ -219,6 +191,7 @@ const AddArticleForm = () => {
               <option value="Crypto">Crypto</option>
             </Select>
           </div>
+
           <div className="max-w-md">
             <Label htmlFor="authors">Select your Author</Label>
             <Select
@@ -244,7 +217,7 @@ const AddArticleForm = () => {
           </div>
         </div>
 
-        <Button type="submit" className="w-fit self-end">
+        <Button type="submit" className="w-fit self-end max-[800px]:self-center">
           Submit
         </Button>
       </form>
