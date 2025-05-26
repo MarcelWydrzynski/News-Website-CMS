@@ -22,7 +22,7 @@ const Article = () => {
   return (
     <>
       <div className="w-full">
-        <ReturnButton path={"/"}/>
+        <ReturnButton path={"/"} />
         {!article ? (
           <p>Article not found please return to homepage</p>
         ) : (
@@ -32,7 +32,7 @@ const Article = () => {
               By {article.author} | Category: {article.category}
             </p>
             <img src={article.image} alt={article.title} className="w-full h-auto rounded mb-8" />
-            <p className="text-lg">{article.content}</p>
+            <div className="break-all text-black text-xl" dangerouslySetInnerHTML={{ __html: article?.content ?? "" }} />
           </>
         )}
       </div>

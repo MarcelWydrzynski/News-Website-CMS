@@ -29,7 +29,7 @@ const uploadArticle = async (article: Article, navigate: Function) => {
   }
 
   alert("The article has been uploaded. You will now be taken to the articles page :)");
-  navigate("/CMS/articles");
+  navigate("/cms");
 };
 
 export default uploadArticle;

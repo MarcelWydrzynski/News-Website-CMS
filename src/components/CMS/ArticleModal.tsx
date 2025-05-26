@@ -1,4 +1,4 @@
-import {  Modal, ModalBody, ModalHeader } from "flowbite-react";
+import { Modal, ModalBody, ModalHeader } from "flowbite-react";
 
 type Article = {
   id: number;
@@ -14,7 +14,7 @@ type Article = {
 type ArticleModalProps = {
   openModal: boolean;
   setOpenModal: (arg0: boolean) => void;
-  article: Article | null | undefined; 
+  article: Article | null | undefined;
 };
 
 const ArticleModal = ({ openModal, setOpenModal, article }: ArticleModalProps) => {
@@ -34,7 +34,7 @@ const ArticleModal = ({ openModal, setOpenModal, article }: ArticleModalProps) =
             </h5>
             <h4 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{article?.title}</h4>
             <p className="font-normal text-gray-700 dark:text-gray-200">{article?.lead}</p>
-            <p className="font-normal text-gray-700 dark:text-gray-200">{article?.content}</p>
+            <div className="text-white" dangerouslySetInnerHTML={{ __html: article?.content ?? "" }} />
           </div>
         </ModalBody>
       </Modal>

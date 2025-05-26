@@ -21,7 +21,7 @@ const AddArticleForm = () => {
     category: "",
     lead: "",
     image: "",
-    content: "", // <-- content here
+    content: "",
     description: "",
   });
   const [error, setError] = useState({
@@ -36,7 +36,7 @@ const AddArticleForm = () => {
   const handleCheckboxChecked = (event: ChangeEvent<HTMLInputElement>, image: Image) => {
     if (event.target.checked) {
       setSelectedImage(image);
-      setNewArticle((prev) => ({ ...prev, image: image.url })); // Update image URL in form state
+      setNewArticle((prev) => ({ ...prev, image: image.url }));
     } else {
       setSelectedImage(null);
       setNewArticle((prev) => ({ ...prev, image: "" }));
@@ -62,7 +62,6 @@ const AddArticleForm = () => {
     } else if (newArticle.lead.length < 100) {
       errorMessage = "Lead must be at least 100 characters";
     } else if (newArticle.content.replace(/<[^>]+>/g, "").length < 500) {
-      // Strip HTML tags and check text length in content
       errorMessage = "Content must be at least 500 characters";
     } else if (newArticle.image.length === 0) {
       errorMessage = "Please select an image";
