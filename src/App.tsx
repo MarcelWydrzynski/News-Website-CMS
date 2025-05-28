@@ -5,6 +5,7 @@ import HomeCMS from "./pages/CMS/HomeCMS";
 import ArticlesCMS from "./pages/CMS/ArticlesCMS";
 import ImagesCMS from "./pages/CMS/ImagesCMS";
 import AddArticle from "./pages/CMS/AddArticleCMS";
+import EditArticle from "./pages/CMS/EditArticleCMS";
 import AuthorsCMS from "./pages/CMS/AuthorsCMS";
 import Home from "./pages/Webstie/Home";
 import Article from "./pages/Webstie/Article";
@@ -36,6 +37,7 @@ function App() {
         <Route path="images" element={<ImagesCMS />} />
         <Route path="authors" element={<AuthorsCMS />} />
         <Route path="add-article" element={<AddArticle />} />
+        <Route path="edit-article" element={<EditArticle />} />
       </Route>
     </Routes>
   );

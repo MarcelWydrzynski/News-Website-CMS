@@ -16,15 +16,15 @@ type ImagesModalCMSProps = {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
   handleCheckboxChecked: (event: ChangeEvent<HTMLInputElement>, image: Image) => void;
   selectedImage: Image | null;
-  setNewArticle: React.Dispatch<React.SetStateAction<any>>;
+  setEditedArticle: React.Dispatch<React.SetStateAction<any>>;
 };
 
-const ImagesModalCMS: React.FC<ImagesModalCMSProps> = ({ openModal, setOpenModal, handleCheckboxChecked, selectedImage, setNewArticle }) => {
+const ImagesModalCMS: React.FC<ImagesModalCMSProps> = ({ openModal, setOpenModal, handleCheckboxChecked, selectedImage, setEditedArticle }) => {
   const { images, fetchingImagesError, fetchingImagesLoading } = UseFetchImages();
 
   const handleProceed = () => {
     if (selectedImage) {
-      setNewArticle((prev: object) => ({ ...prev, image: selectedImage.url }));
+      setEditedArticle((prev: object) => ({ ...prev, image: selectedImage.url }));
       setOpenModal(false);
     } else {
       alert("Please select a image to proceed with");

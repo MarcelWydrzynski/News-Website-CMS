@@ -17,7 +17,7 @@ type Article = {
 const Article = () => {
   const { state } = useLocation();
   const article = state?.article as Article;
-  const allArticles = state?.allArticles as Article[];
+  const allArticles = state?.allArticles as Article[]; 
 
   return (
     <>

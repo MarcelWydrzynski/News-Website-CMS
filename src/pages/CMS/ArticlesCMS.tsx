@@ -6,6 +6,7 @@ import ArticlesFiltersCMS from "../../components/CMS/ArticlesFiltersCMS";
 import deleteArticles from "../../hooks/UseDeleteArticles";
 import { Button, Card, Checkbox } from "flowbite-react";
 import ArticleModal from "../../components/CMS/ArticleModal";
+import { Link } from "react-router-dom";
 
 type Article = {
   id: number;
@@ -48,12 +49,14 @@ const ArticlesCMS = () => {
 
   const filteredArticles = searchQuery.trim() === "" ? articles : articles.filter((article) => article.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
+
   return (
     <div className="flex gap-y-10 flex-col w-full">
+      
       <ArticlesFiltersCMS selectedArticles={selectedArticles} onSearch={handleSearch} onDelete={handleDelete} />
       {openModal ? <ArticleModal openModal={openModal} setOpenModal={setOpenModal} article={selectedArticle} /> : null}
 
-      {fetchingArticlesLoading && <LoaderCMS textDark={false}/>}
+      {fetchingArticlesLoading && <LoaderCMS textDark={false} />}
       {fetchingArticlesError && <Error errorMessage={fetchingArticlesError} />}
 
       <div className="flex gap-y-8 gap-x-6 flex-wrap max-[800px]:justify-center items-stretch justify-center">
@@ -61,6 +64,7 @@ const ArticlesCMS = () => {
           <p className="text-2xl text-white">No articles found</p>
         ) : (
           filteredArticles.map((article) => (
+            
             <Card
               key={article.id}
               className="max-w-sm hover:scale-105 transition-all relative flex flex-col justify-between break-words"
@@ -80,9 +84,14 @@ const ArticlesCMS = () => {
                 <p className="font-normal text-gray-700 dark:text-gray-400">{article.description}</p>
               </div>
 
-              <Button className="mt-auto w-fit" onClick={() => handleModal(article)}>
-                Display article
-              </Button>
+              <div className="flex justify-between flex-wrap gap-6 max-[365px]:justify-center">
+                <Button className="mt-auto w-fit" onClick={() => handleModal(article)}>
+                  Display article
+                </Button>
+                <Link to={`edit-article`} state={article.id}>
+                  <Button className="mt-auto w-fit">Edit Article</Button>
+                </Link>
+              </div>
             </Card>
           ))
         )}

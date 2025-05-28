@@ -9,10 +9,8 @@ interface RichTextEditorProps {
 const RichTextEditor: React.FC<RichTextEditorProps> = React.memo(({ value, onChange }) => {
   const editorRef = useRef<any>(null);
 
-  // Initialize editor content once on mount
   useEffect(() => {
     if (editorRef.current && value) {
-      // Only set content if editor is ready and content differs
       if (editorRef.current.getContent() !== value) {
         editorRef.current.setContent(value);
       }
@@ -28,7 +26,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = React.memo(({ value, onCha
       apiKey="0lmixtwmc0d3fqrrj5q05glw2yycoy5cpskqu0azgrgnqcum"
       onInit={(_evt, editor) => {
         editorRef.current = editor;
-        // Set initial content only once
         if (value) {
           editor.setContent(value);
         }
@@ -49,7 +46,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = React.memo(({ value, onCha
           "removeformat | help | code | fullscreen",
         content_css: "default",
         content_style:
-          "body { font-family: Inter, ui-sans-serif, system-ui, -apple-system, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif; font-size: 1rem; line-height: 1.5; color: #374151; }",
+          "body {   font-family: Inter, ui-sans-serif, system-ui, -apple-system, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif; font-size: 1rem; line-height: 1.5; color: #374151; }",
       }}
     />
   );

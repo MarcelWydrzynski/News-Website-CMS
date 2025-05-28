@@ -4,7 +4,7 @@ import UseFetchImages from "../../hooks/UseFetchImages";
 import ErrorCMS from "../../components/CMS/ErrorCMS";
 import LoaderCMS from "../../components/CMS/LoaderCMS";
 import ImagesFiltersCMS from "../../components/CMS/ImagesFiltersCMS";
-import ImageModalCMS from "../../components/CMS/ImageModalCMS"; // ✅ Fixed import name
+import ImageModalCMS from "../../components/CMS/ImageModalCMS";
 
 type Image = {
   id: string;
