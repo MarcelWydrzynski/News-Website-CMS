@@ -14,11 +14,17 @@ type Article = {
   date_created: string;
 };
 
+const renderHtmlContent = (htmlString: string) => {
+  return <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: htmlString }} />;
+};
+
 const Article = () => {
   const { state } = useLocation();
   const article = state?.article as Article;
-  const allArticles = state?.allArticles as Article[]; 
+  const allArticles = state?.allArticles as Article[];
 
+  console.log(article.content);
+  console.log(renderHtmlContent(article.content));
   return (
     <>
       <div className="w-full">
@@ -32,7 +38,7 @@ const Article = () => {
               By {article.author} | Category: {article.category}
             </p>
             <img src={article.image} alt={article.title} className="w-full h-auto rounded mb-8" />
-            <div className="break-all text-black text-xl" dangerouslySetInnerHTML={{ __html: article?.content ?? "" }} />
+            {renderHtmlContent(article.content)}
           </>
         )}
       </div>

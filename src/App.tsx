@@ -15,6 +15,7 @@ import Licensing from "./pages/Webstie/Licensing";
 import TermsAndConditions from "./pages/Webstie/TermsAndConditions";
 import InProgress from "./pages/Webstie/InProgress";
 import SingleCrypto from "./pages/Webstie/SingleCrypto";
+import Weather from "./pages/Webstie/Weather.tsx";
 
 function App() {
   useScrollToTop();
@@ -26,6 +27,7 @@ function App() {
         <Route path="article/:slug" element={<Article />} />
         <Route path="crypto" element={<Crytpo />} />
         <Route path="crypto/:slug" element={<SingleCrypto />} />
+        <Route path="weather" element={<Weather />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="licensing" element={<Licensing />} />
         <Route path="terms&conditions" element={<TermsAndConditions />} />

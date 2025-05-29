@@ -4,6 +4,7 @@ import ImagesModalCMS from "./ImagesModalCMS";
 import UseFetchAuthors from "../../hooks/UseFetchAuthors";
 import ErrorCMS from "./ErrorCMS";
 import RichTextEditor from "./RichTextEditor";
+import useUpdateArticle from "../../hooks/UseUpdateArticle";
 
 interface Image {
   id: string;
@@ -32,14 +33,18 @@ const EditArticleForm: React.FC<{ article: Article }> = ({ article }) => {
   const handleCheckboxChecked = (event: ChangeEvent<HTMLInputElement>, image: Image) => {
     if (event.target.checked) {
       setSelectedImage(image);
+      setEditedArticle({ ...editedArticle, image: image.url });
     } else {
       setSelectedImage(null);
+      setEditedArticle({ ...editedArticle, image: "" });
     }
   };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const { updateArticle } = useUpdateArticle();
 
   const handleFormValidation = () => {
     if (!editedArticle) return;
@@ -77,12 +82,14 @@ const EditArticleForm: React.FC<{ article: Article }> = ({ article }) => {
     return true;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editedArticle) return;
 
-    if (!handleFormValidation()) return;
-    console.log("Submitting article:", editedArticle);
+    const isValid = handleFormValidation();
+    if (!isValid) return;
+
+    await updateArticle(editedArticle);
   };
 
   return (
@@ -183,7 +190,7 @@ const EditArticleForm: React.FC<{ article: Article }> = ({ article }) => {
         </div>
 
         <Button type="submit" className="w-fit self-end max-[800px]:self-center">
-          Submit
+          Update article
         </Button>
       </form>
     </>

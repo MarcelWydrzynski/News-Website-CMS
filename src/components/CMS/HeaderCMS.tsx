@@ -25,7 +25,7 @@ function HeaderCMS() {
         <Link to="/cms/authors">
           <NavbarLink>Authors</NavbarLink>
         </Link>
-        <Link to="https://news-website-cms.vercel.app/">
+        <Link to="/">
           <NavbarLink>Go to Website</NavbarLink>
         </Link>
       </NavbarCollapse>

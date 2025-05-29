@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import HeaderCMS from "../../components/CMS/HeaderCMS";
 
 const HomeCMS = () => {
+  
   return (
     <div className="bg-[#111827] w-full min-h-screen flex flex-col">
       <HeaderCMS />

@@ -1,55 +1,73 @@
 import React, { useRef, useEffect } from "react";
-import { Editor } from "@tinymce/tinymce-react";
 
 interface RichTextEditorProps {
   value: string;
   onChange: (html: string) => void;
 }
 
-const RichTextEditor: React.FC<RichTextEditorProps> = React.memo(({ value, onChange }) => {
-  const editorRef = useRef<any>(null);
+const toolbarButtonClass = `
+  px-3 py-1 rounded bg-[] border
+  hover:bg-gray-100 hover:cursor-pointer
+`;
+
+const RichTextEditor: React.FC<RichTextEditorProps> = ({ value, onChange }) => {
+  const editorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (editorRef.current && value) {
-      if (editorRef.current.getContent() !== value) {
-        editorRef.current.setContent(value);
-      }
+    if (editorRef.current && editorRef.current.innerHTML !== value) {
+      editorRef.current.innerHTML = value || "<p><br></p>";
     }
   }, [value]);
 
-  const handleEditorChange = (content: string, editor: any) => {
-    onChange(content);
+  const handleInput = () => {
+    if (editorRef.current) {
+      onChange(editorRef.current.innerHTML);
+    }
+  };
+
+  const execCommand = (command: "bold" | "italic") => {
+    document.execCommand(command, false);
+    handleInput();
   };
 
   return (
-    <Editor
-      apiKey="0lmixtwmc0d3fqrrj5q05glw2yycoy5cpskqu0azgrgnqcum"
-      onInit={(_evt, editor) => {
-        editorRef.current = editor;
-        if (value) {
-          editor.setContent(value);
-        }
-      }}
-      onEditorChange={handleEditorChange}
-      init={{
-        height: 500,
-        menubar: false,
-        plugins: [
-          "advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount",
-        ],
-        toolbar:
-          "undo redo | blocks | " +
-          "bold italic underline strikethrough forecolor backcolor | " +
-          "alignleft aligncenter alignright alignjustify | " +
-          "bullist numlist outdent indent | " +
-          "link image media table | " +
-          "removeformat | help | code | fullscreen",
-        content_css: "default",
-        content_style:
-          "body {   font-family: Inter, ui-sans-serif, system-ui, -apple-system, system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif; font-size: 1rem; line-height: 1.5; color: #374151; }",
-      }}
-    />
+    <div className=" rounded-md  bg-[#374151]">
+      <div className="flex gap-2 bg-[#374151] p-2 rounded-t-md border-b-1">
+        <button
+          type="button"
+          className={toolbarButtonClass}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            execCommand("bold");
+          }}
+          aria-label="Bold"
+          title="Bold"
+        >
+          <b>B</b>
+        </button>
+        <button
+          type="button"
+          className={toolbarButtonClass}
+          onMouseDown={(e) => {
+            e.preventDefault();
+            execCommand("italic");
+          }}
+          aria-label="Italic"
+          title="Italic"
+        >
+          <em>I</em>
+        </button>
+      </div>
+      <div
+        ref={editorRef}
+        contentEditable
+        onInput={handleInput}
+        className="min-h-[150px] p-2 text-white font-sans text-base leading-relaxed outline-none "
+        style={{ whiteSpace: "pre-wrap", overflowWrap: "break-word" }}
+        spellCheck={true}
+      />
+    </div>
   );
-});
+};
 
 export default RichTextEditor;
