@@ -1,9 +1,13 @@
-import React, { useState } from "react";
-import fetchWeatherData from "../../hooks/UseFetchCurrentWeather";
+import useFetchCurrentWeather from "../../hooks/UseFetchCurrentWeather";
+import useFetchWeeklyForecast from "../../hooks/UseFetchWeatherForecast";
 import CurrentWeatherForecast from "../../components/Website/CurrentWeatherForecast";
+import WeeklyForecast from "../../components/Website/WeeklyForecast";
 
 const Weather = () => {
-  const { weatherData } = fetchWeatherData();
+  const { weatherData } = useFetchCurrentWeather();
+  const { forecastData } = useFetchWeeklyForecast();
+
+  const isCurrentWeatherReady = weatherData && weatherData.main && weatherData.weather && weatherData.wind && weatherData.clouds;
 
   return (
     <div className="flex flex-col w-full">
@@ -16,8 +20,10 @@ const Weather = () => {
           />
         </div>
       </div>
-      <div className="border-2 py-20 w-full">
-        <CurrentWeatherForecast />
+
+      <div className="py-20 w-4/5 flex flex-wrap gap-y-10 items-stretch mx-auto">
+        {isCurrentWeatherReady && <CurrentWeatherForecast current={weatherData} forecast={forecastData} />}
+        {Array.isArray(forecastData) && forecastData.length > 0 && <WeeklyForecast data={forecastData} />}
       </div>
     </div>
   );
