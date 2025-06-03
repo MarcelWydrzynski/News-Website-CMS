@@ -1,5 +1,3 @@
-import React from "react";
-
 type ForecastItem = {
   dt_txt: string;
   main: {

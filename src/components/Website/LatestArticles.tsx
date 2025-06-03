@@ -27,7 +27,7 @@ const LatestArticles = ({ data, loading, error }: LatestArticlesProps) => {
     <div className="min-w-full flex flex-col items-center gap-y-5">
       <h2 className="text-3xl font-serif self-start select-none">Latest articles</h2>
       <div className="w-full flex flex-wrap gap-y-4">
-        {error && <p className="text-black mt-10 mx-auto">Failed to fetch crypto data. Please try again later.</p>}
+        {error && <p className="text-black mt-10 mx-auto">Failed to fetch article data. Please try again later.</p>}
 
         {loading && <LoaderCMS textDark={true} />}
 

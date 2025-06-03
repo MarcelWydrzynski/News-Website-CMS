@@ -2,7 +2,6 @@ import { useState } from "react";
 import CryptoList from "../../components/Website/CryptoList";
 import CryptoSearchResults from "../../components/Website/CryptoSearchResults";
 import useFetchAllCrypto from "../../hooks/UseFetchAllCrytpo";
-import LoaderCMS from "../../components/CMS/LoaderCMS";
 
 type Coin = {
   id: string;

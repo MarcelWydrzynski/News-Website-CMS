@@ -89,7 +89,7 @@ const AddArticleForm = () => {
           setOpenModal={setOpenModal}
           handleCheckboxChecked={handleCheckboxChecked}
           selectedImage={selectedImage}
-          setNewArticle={setNewArticle}
+          setEditedArticle={setNewArticle}
         />
       )}
       <form
