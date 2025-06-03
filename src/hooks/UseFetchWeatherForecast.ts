@@ -1,20 +1,32 @@
-// hooks/useFetchWeeklyForecast.ts
 import { useEffect, useState } from "react";
+import axios from "axios";
 
-const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
+const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
-const useFetchWeeklyForecast = () => {
-  const [forecastData, setForecastData] = useState<any[]>([]);
+const useFetchWeeklyForecast = (coords: { lat: number; lon: number } | null) => {
+  const [forecastData, setForecastData] = useState([]);
 
   useEffect(() => {
+    if (!coords) return;
+
     const fetchForecast = async () => {
-      const res = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=London&appid=${apiKey}&units=metric`);
-      const json = await res.json();
-      setForecastData(json.list);
+      try {
+        const res = await axios.get("https://api.openweathermap.org/data/2.5/forecast", {
+          params: {
+            lat: coords.lat,
+            lon: coords.lon,
+            units: "metric",
+            appid: API_KEY,
+          },
+        });
+        setForecastData(res.data.list);
+      } catch (err) {
+        console.error("Forecast fetch error", err);
+      }
     };
 
     fetchForecast();
-  }, []);
+  }, [coords]);
 
   return { forecastData };
 };

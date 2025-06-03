@@ -45,7 +45,6 @@ const CurrentWeatherForecast = ({ current, forecast }: CurrentWeatherForecastPro
   const currentDate = `${today.getDate()}/${today.getMonth() + 1}`;
   const weatherIcon = `https://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`;
 
-  // Get next 4 forecast entries for today's forecast
   const todayForecast = forecast.slice(0, 4);
 
   return (

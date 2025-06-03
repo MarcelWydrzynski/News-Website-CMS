@@ -1,33 +1,34 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
+const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
-const useFetchWeatherData = () => {
-  const [weatherData, setWeatherData] = useState<any>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+const useFetchCurrentWeather = (coords: { lat: number; lon: number } | null) => {
+  const [weatherData, setWeatherData] = useState(null);
 
   useEffect(() => {
-    const fetchWeatherData = async () => {
-      try {
-        const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=44.34&lon=10.99&appid=${apiKey}`
+    if (!coords) return;
 
-        );
-        const data = await res.json();
-        setWeatherData(data);
-        console.log(data);
+    const fetchWeather = async () => {
+      try {
+        const res = await axios.get("https://api.openweathermap.org/data/2.5/weather", {
+          params: {
+            lat: coords.lat,
+            lon: coords.lon,
+            units: "metric",
+            appid: API_KEY,
+          },
+        });
+        setWeatherData(res.data);
       } catch (err) {
-        console.error("Failed to fetch data:", err);
-        setError(true);
-      } finally {
-        setLoading(false);
+        console.error("Current weather error", err);
       }
     };
 
-    fetchWeatherData();
-  }, []);
+    fetchWeather();
+  }, [coords]);
 
   return { weatherData };
 };
 
-export default useFetchWeatherData;
+export default useFetchCurrentWeather;
