@@ -2,26 +2,11 @@ import { useState, ChangeEvent } from "react";
 import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
 import ImagesModalCMS from "./ImagesModalCMS";
 import UseFetchAuthors from "../../hooks/UseFetchAuthors";
-import ErrorCMS from "./ErrorCMS";
+import ErrorCMS from "../ErrorCMS";
 import RichTextEditor from "./RichTextEditor";
 import useUpdateArticle from "../../hooks/UseUpdateArticle";
-
-interface Image {
-  id: string;
-  url: string;
-  name: string;
-}
-
-interface Article {
-  id: number;
-  title: string;
-  author: string;
-  category: string;
-  lead: string;
-  image: string;
-  content: string;
-  description: string;
-}
+import Image from "../../types/image";
+import Article from "../../types/article";
 
 const EditArticleForm: React.FC<{ article: Article }> = ({ article }) => {
   const [editedArticle, setEditedArticle] = useState<Article>(article);

@@ -1,6 +1,6 @@
 import { Button, Modal, ModalBody, Label, TextInput } from "flowbite-react";
 import { useState } from "react";
-import ErrorCMS from "./ErrorCMS";
+import ErrorCMS from "../ErrorCMS.tsx";
 import uploadAuthor from "../../hooks/UseUploadAuthors.ts";
 
 type Props = {

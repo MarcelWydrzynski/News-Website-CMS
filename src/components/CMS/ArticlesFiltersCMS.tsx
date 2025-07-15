@@ -7,7 +7,7 @@ type ArticlesFiltersCMSProps = {
   onDelete: () => void;
 };
 
-const ArticlesFiltersCMS: React.FC<ArticlesFiltersCMSProps> = ({ selectedArticles, onSearch, onDelete }) => {
+const ArticlesFiltersCMS = ({ selectedArticles, onSearch, onDelete }: ArticlesFiltersCMSProps) => {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onSearch(event.target.value);
   };

@@ -1,6 +1,6 @@
 import { useState, ChangeEvent } from "react";
 import UseFetchArticles from "../../hooks/UseFetchArticles";
-import Error from "../../components/CMS/ErrorCMS";
+import Error from "../../components/ErrorCMS";
 import LoaderCMS from "../../components/CMS/LoaderCMS";
 import ArticlesFiltersCMS from "../../components/CMS/ArticlesFiltersCMS";
 import deleteArticles from "../../hooks/UseDeleteArticles";
@@ -49,10 +49,8 @@ const ArticlesCMS = () => {
 
   const filteredArticles = searchQuery.trim() === "" ? articles : articles.filter((article) => article.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
-
   return (
     <div className="flex gap-y-10 flex-col w-full">
-      
       <ArticlesFiltersCMS selectedArticles={selectedArticles} onSearch={handleSearch} onDelete={handleDelete} />
       {openModal ? <ArticleModal openModal={openModal} setOpenModal={setOpenModal} article={selectedArticle} /> : null}
 
@@ -64,7 +62,6 @@ const ArticlesCMS = () => {
           <p className="text-2xl text-white">No articles found</p>
         ) : (
           filteredArticles.map((article) => (
-            
             <Card
               key={article.id}
               className="max-w-sm hover:scale-105 transition-all relative flex flex-col justify-between break-words"

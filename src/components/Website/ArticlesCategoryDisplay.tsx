@@ -2,23 +2,13 @@ import { Card, Button } from "flowbite-react";
 import { Link } from "react-router-dom";
 import slugify from "../../hooks/slugify";
 import LoaderCMS from "../CMS/LoaderCMS";
-
-type Article = {
-  id: number;
-  author: string;
-  category: string;
-  title: string;
-  description: string;
-  lead: string;
-  image: string;
-  content: string;
-  date_created: string;
-};
+import Article from "../../types/article";
+import Error from "../ErrorCMS";
 
 type ArticlesCategoryDisplayProps = {
   data: Article[];
   loading: boolean;
-  error: string | null;
+  error: string;
   title: string;
 };
 
@@ -30,10 +20,8 @@ const ArticlesCategoryDisplay = ({ data, loading, error, title }: ArticlesCatego
   return (
     <div className="w-full flex flex-col my-15">
       <h2 className="text-3xl font-serif mb-6 select-none">Latest articles from {title}</h2>
-
-      {error && <p className="text-black mt-10 mx-auto">Failed to fetch crypto data. Please try again later.</p>}
-
       {loading && <LoaderCMS textDark={true} />}
+      {error && <Error errorMessage="Error fetching articles, please try again later" />}
 
       <div className="flex justify-around max-[1000px]:flex-col max-[1000px]:gap-8 gap-2">
         <div className="w-[50%] flex max-[1000px]:w-full">

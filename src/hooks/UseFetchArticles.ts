@@ -29,6 +29,7 @@ const UseFetchArticles = () => {
       setArticles(data || []);
     }
     setFetchingArticlesLoading(false);
+
   };
 
   useEffect(() => {

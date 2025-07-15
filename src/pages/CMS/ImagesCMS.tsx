@@ -1,16 +1,11 @@
 import { useState, ChangeEvent } from "react";
 import { Button, Card, Checkbox } from "flowbite-react";
 import UseFetchImages from "../../hooks/UseFetchImages";
-import ErrorCMS from "../../components/CMS/ErrorCMS";
+import ErrorCMS from "../../components/ErrorCMS";
 import LoaderCMS from "../../components/CMS/LoaderCMS";
 import ImagesFiltersCMS from "../../components/CMS/ImagesFiltersCMS";
 import ImageModalCMS from "../../components/CMS/ImageModalCMS";
-
-type Image = {
-  id: string;
-  url: string;
-  name: string;
-};
+import Image from "../../types/image";
 
 const ImagesCMS = () => {
   const [selectedImages, setSelectedImages] = useState<Image[]>([]);
@@ -45,7 +40,7 @@ const ImagesCMS = () => {
 
         {openModal ? <ImageModalCMS selectedImage={selectedImage} setOpenModal={setOpenModal} /> : null}
 
-        {fetchingImagesLoading && <LoaderCMS textDark={false}/>}
+        {fetchingImagesLoading && <LoaderCMS textDark={false} />}
         {fetchingImagesError && <ErrorCMS errorMessage={fetchingImagesError} />}
 
         <div className="flex flex-wrap gap-y-8 gap-x-6 justify-center items-stretch">

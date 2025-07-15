@@ -2,14 +2,9 @@ import React from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Card, Checkbox } from "flowbite-react";
 import UseFetchImages from "../../hooks/UseFetchImages";
 import LoaderCMS from "./LoaderCMS";
-import ErrorCMS from "./ErrorCMS";
+import ErrorCMS from "../ErrorCMS";
 import type { ChangeEvent } from "react";
-
-type Image = {
-  id: string;
-  url: string;
-  name: string;
-};
+import Image from "../../types/image";
 
 type ImagesModalCMSProps = {
   openModal: boolean;
@@ -36,7 +31,7 @@ const ImagesModalCMS: React.FC<ImagesModalCMSProps> = ({ openModal, setOpenModal
     <Modal dismissible show={openModal} onClose={() => setOpenModal(false)} size="7xl">
       <ModalHeader>Select a image for you article and hit proceed</ModalHeader>
       <ModalBody className="">
-        {fetchingImagesLoading ? <LoaderCMS textDark={false}/> : null}
+        {fetchingImagesLoading ? <LoaderCMS textDark={false} /> : null}
         {fetchingImagesError ? <ErrorCMS errorMessage={fetchingImagesError} /> : null}
         <div className="flex flex-wrap gap-x-4 gap-y-6 justify-center items-center">
           {images.length === 0 ? (

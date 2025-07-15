@@ -2,12 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import { TextInput, Button, FileInput, Label } from "flowbite-react";
 import uploadImage from "../../hooks/UseUploadImage";
 import deleteImages from "../../hooks/UseDeleteImages";
-
-type Image = {
-  id: string;
-  url: string;
-  name: string;
-};
+import Image from "../../types/image";
 
 type ImagesFiltersCMSProps = {
   selectedImages: Image[];
@@ -15,7 +10,7 @@ type ImagesFiltersCMSProps = {
 };
 
 const ImagesFiltersCMS: React.FC<ImagesFiltersCMSProps> = ({ selectedImages, onSearch }) => {
-  const [file, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<File>();
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
@@ -34,8 +29,6 @@ const ImagesFiltersCMS: React.FC<ImagesFiltersCMSProps> = ({ selectedImages, onS
       alert("Please upload a jpg/jpeg/png image");
       return;
     }
-
-    console.log(file);
     uploadImage(file);
   };
 
