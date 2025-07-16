@@ -1,6 +1,6 @@
 import { useState, ChangeEvent } from "react";
 import UseFetchArticles from "../../hooks/UseFetchArticles";
-import Error from "../../components/ErrorCMS";
+import Error from "../../components/Error";
 import LoaderCMS from "../../components/CMS/LoaderCMS";
 import ArticlesFiltersCMS from "../../components/CMS/ArticlesFiltersCMS";
 import deleteArticles from "../../hooks/UseDeleteArticles";

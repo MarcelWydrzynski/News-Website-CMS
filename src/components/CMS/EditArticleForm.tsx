@@ -2,7 +2,7 @@ import { useState, ChangeEvent } from "react";
 import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
 import ImagesModalCMS from "./ImagesModalCMS";
 import UseFetchAuthors from "../../hooks/UseFetchAuthors";
-import ErrorCMS from "../ErrorCMS";
+import ErrorCMS from "../Error";
 import RichTextEditor from "./RichTextEditor";
 import useUpdateArticle from "../../hooks/UseUpdateArticle";
 import Image from "../../types/image";

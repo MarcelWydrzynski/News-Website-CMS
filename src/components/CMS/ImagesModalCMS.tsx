@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Card, Checkbox } from "flowbite-react";
 import UseFetchImages from "../../hooks/UseFetchImages";
 import LoaderCMS from "./LoaderCMS";
-import ErrorCMS from "../ErrorCMS";
+import ErrorCMS from "../Error";
 import type { ChangeEvent } from "react";
 import Image from "../../types/image";
 

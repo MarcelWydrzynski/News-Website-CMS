@@ -5,7 +5,7 @@ type ErrorProps = {
 };
 
 const Error = ({ errorMessage }: ErrorProps) => {
-  return <p className="text-center text-xl text-red-400">{errorMessage}</p>;
+  return <p className="text-center text-xl text-rose-300 text-shadow-black">{errorMessage}</p>;
 };
 
 export default Error;

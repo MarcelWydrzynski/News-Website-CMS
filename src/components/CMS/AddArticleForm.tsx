@@ -3,7 +3,7 @@ import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
 import ImagesModalCMS from "./ImagesModalCMS";
 import uploadArticle from "../../hooks/UseUploadArticle";
 import UseFetchAuthors from "../../hooks/UseFetchAuthors";
-import ErrorCMS from "../ErrorCMS";
+import ErrorCMS from "../Error";
 import { useNavigate } from "react-router";
 import RichTextEditor from "./RichTextEditor";
 import Image from "../../types/image";

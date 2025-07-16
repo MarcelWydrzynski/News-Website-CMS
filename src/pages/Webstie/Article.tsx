@@ -20,11 +20,9 @@ const renderHtmlContent = (htmlString: string) => {
 
 const Article = () => {
   const { state } = useLocation();
-  const article = state?.article as Article;
-  const allArticles = state?.allArticles as Article[];
+  const article = state.article as Article;
+  const allArticles = state.allArticles as Article[];
 
-  console.log(article.content);
-  console.log(renderHtmlContent(article.content));
   return (
     <>
       <div className="w-full">
@@ -42,7 +40,7 @@ const Article = () => {
           </>
         )}
       </div>
-      <ShowRelatedArticles articlesFromSameCategory={allArticles} selectedArticle={article} />
+      <ShowRelatedArticles allArticles={allArticles} selectedArticle={article} />
     </>
   );
 };

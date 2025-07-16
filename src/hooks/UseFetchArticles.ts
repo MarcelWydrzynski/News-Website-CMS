@@ -15,7 +15,7 @@ interface Article {
 
 const UseFetchArticles = () => {
   const [articles, setArticles] = useState<Article[]>([]);
-  const [fetchingArticlesError, setFetchingArticlesError] = useState<string | null>(null);
+  const [fetchingArticlesError, setFetchingArticlesError] = useState<string>("");
   const [fetchingArticlesLoading, setFetchingArticlesLoading] = useState<boolean>(false);
 
   const fetchArticles = async () => {
@@ -29,7 +29,6 @@ const UseFetchArticles = () => {
       setArticles(data || []);
     }
     setFetchingArticlesLoading(false);
-
   };
 
   useEffect(() => {
