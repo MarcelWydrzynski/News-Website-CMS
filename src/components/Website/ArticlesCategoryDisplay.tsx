@@ -1,7 +1,7 @@
 import { Card, Button } from "flowbite-react";
 import { Link } from "react-router-dom";
 import slugify from "../../hooks/slugify";
-import LoaderCMS from "../CMS/LoaderCMS";
+import LoaderCMS from "../Loader";
 import Article from "../../types/article";
 import Error from "../Error";
 

@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import ReturnButton from "../../components/Website/ReturnButton";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import useFetchSelectedCrypto from "../../hooks/UseFetchSelectedCrypto";
-import LoaderCMS from "../../components/CMS/LoaderCMS";
+import LoaderCMS from "../../components/Loader";
 
 type SingleCryptoProps = {
   id: string;
@@ -50,7 +50,7 @@ const SingleCrypto = () => {
         {error && <p className="text-black mt-10">Failed to fetch crypto data. Please try again later.</p>}
         {!loading && !error && (
           <>
-            <img src={data.image} alt={`${data.name} logo`} className="max-[500px]:w-1/4"/>
+            <img src={data.image} alt={`${data.name} logo`} className="max-[500px]:w-1/4" />
             <h1 className="text-3xl font-bold font-mono mt-5">
               {data.name} ({data.symbol.toUpperCase()})
             </h1>

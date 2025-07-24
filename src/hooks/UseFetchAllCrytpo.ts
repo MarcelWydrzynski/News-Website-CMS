@@ -15,6 +15,7 @@ const useFetchAllCrypto = () => {
       } catch (err) {
         console.error("Failed to fetch coins:", err);
         setError(true);
+        setLoading(false);
       } finally {
         setLoading(false);
       }

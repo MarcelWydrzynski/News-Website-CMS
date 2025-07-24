@@ -1,7 +1,7 @@
 import { useState, ChangeEvent } from "react";
 import UseFetchArticles from "../../hooks/UseFetchArticles";
 import Error from "../../components/Error";
-import LoaderCMS from "../../components/CMS/LoaderCMS";
+import LoaderCMS from "../../components/Loader";
 import ArticlesFiltersCMS from "../../components/CMS/ArticlesFiltersCMS";
 import deleteArticles from "../../hooks/UseDeleteArticles";
 import { Button, Card, Checkbox } from "flowbite-react";

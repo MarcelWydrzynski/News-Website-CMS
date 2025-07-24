@@ -37,13 +37,14 @@ const Crytpo = () => {
                 placeholder="Type here..."
                 onChange={(e) => filterCoins(e)}
               />
-              <CryptoSearchResults filteredCoins={filteredCoins} loading={loading} error={error} />{" "}
+              <CryptoSearchResults filteredCoins={filteredCoins} error={error} />{" "}
             </div>
           </>
         )}
       </div>
 
       <CryptoList allCoins={allCoins} loading={loading} error={error} />
+      
       <div className="mt-20 text-center">
         <p className="select-none opacity-65 text-sm ">
           Data provided by{" "}

@@ -2,7 +2,7 @@ import { useState, ChangeEvent } from "react";
 import { Button, Card, Checkbox } from "flowbite-react";
 import UseFetchImages from "../../hooks/UseFetchImages";
 import ErrorCMS from "../../components/Error";
-import LoaderCMS from "../../components/CMS/LoaderCMS";
+import LoaderCMS from "../../components/Loader";
 import ImagesFiltersCMS from "../../components/CMS/ImagesFiltersCMS";
 import ImageModalCMS from "../../components/CMS/ImageModalCMS";
 import Image from "../../types/image";

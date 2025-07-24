@@ -1,16 +1,8 @@
 import { useState } from "react";
 import Pagination from "../../components/Website/Pagination";
 import CryptoCard from "./CryptoCard";
-import LoaderCMS from "../CMS/LoaderCMS";
-
-type Coin = {
-  id: string;
-  name: string;
-  image: string;
-  current_price: number;
-  price_change_percentage_24h: number;
-  market_cap: number;
-};
+import LoaderCMS from "../Loader";
+import Coin from "../../types/Coin";
 
 type CryptoListProps = {
   allCoins: Coin[];
@@ -27,7 +19,7 @@ const CryptoList = ({ allCoins, loading, error }: CryptoListProps) => {
   const indexOfLastCoin = currentPage * coinsPerPage;
   const indexOfFirstCoin = indexOfLastCoin - coinsPerPage;
   const currentCoins = allCoins.slice(indexOfFirstCoin, indexOfLastCoin);
-
+//how to rework this?
   return (
     <div className="items-stretch w-full max-w-4xl mx-auto">
       <ul className="rounded-2xl flex flex-col gap-y-3">
@@ -40,9 +32,8 @@ const CryptoList = ({ allCoins, loading, error }: CryptoListProps) => {
         </div>
         {loading && <LoaderCMS textDark={true} />}
         {error && <p className="text-black mt-10 mx-auto">Failed to fetch crypto data. Please try again later.</p>}
-        {currentCoins.map((coin: Coin, index) => (
-          <CryptoCard key={index} data={coin} number={index} />
-        ))}
+
+        {!loading && !error ? currentCoins.map((coin: Coin, index) => <CryptoCard key={index} data={coin} number={index} />) : null}
       </ul>
       {!loading && !error ? <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={(page) => setCurrentPage(page)} /> : null}
     </div>
