@@ -14,6 +14,7 @@ type CryptoCardProps = {
 };
 
 const CryptoCard = ({ data, number }: CryptoCardProps) => {
+  console.log(number);
   return (
     <Link to={`/crypto/${slugify(data.name)}`} state={data}>
       {" "}
