@@ -15,9 +15,13 @@ const CustomPagination = ({ currentPage, totalPages, onPageChange }: CustomPagin
   const nextPage = currentPage < totalPages ? currentPage + 1 : totalPages;
 
   const pageRangeSize = 10;
-  const startPage = Math.max(1, currentPage - Math.floor(pageRangeSize / 2));
-  const endPage = Math.min(totalPages, startPage + pageRangeSize - 1);
+  let startPage = Math.max(1, currentPage - Math.floor(pageRangeSize / 2));
+  let endPage = startPage + pageRangeSize - 1;
 
+  if (endPage > totalPages) {
+    endPage = totalPages;
+    startPage = Math.max(1, endPage - pageRangeSize + 1);
+  }
   const pageNumbers = [];
   for (let i = startPage; i <= endPage; i++) {
     pageNumbers.push(i);
@@ -63,7 +67,9 @@ const CustomPagination = ({ currentPage, totalPages, onPageChange }: CustomPagin
 
       <button
         onClick={() => handlePageClick(nextPage)}
-        className={`${baseButtonClasses} mb-2 rounded-r-lg ${currentPage === totalPages ? "cursor-not-allowed text-gray-500 bg-gray-100 hover:bg-gray-100" : ""}`}
+        className={`${baseButtonClasses} mb-2 rounded-r-lg ${
+          currentPage === totalPages ? "cursor-not-allowed text-gray-500 bg-gray-100 hover:bg-gray-100" : ""
+        }`}
         disabled={currentPage === totalPages}
       >
         Next

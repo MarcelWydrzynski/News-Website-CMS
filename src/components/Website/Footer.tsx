@@ -36,7 +36,7 @@ const FooterComponent = () => {
                   </FooterLink>
                 </Link>
 
-                <Link to={"terms&conditions"}>
+                <Link to={"terms-conditions"}>
                   {" "}
                   <FooterLink href="#" className="!text-black">
                     Terms &amp; Conditions

@@ -1,6 +1,7 @@
-import { useLocation } from "react-router-dom";
 import ReturnButton from "../../components/Website/ReturnButton";
 import ShowRelatedArticles from "../../components/Website/ShowRelatedArticles";
+import { useParams } from "react-router";
+import UseFetchSingleArticle from "../../hooks/UseFetchSingleArticle";
 
 type Article = {
   id: number;
@@ -19,17 +20,16 @@ const renderHtmlContent = (htmlString: string) => {
 };
 
 const Article = () => {
-  const { state } = useLocation();
-  const article = state.article as Article;
-  const allArticles = state.allArticles as Article[];
+  const { idSlug } = useParams();
+  const articleId = parseInt(idSlug?.split("-")[0] || "", 10);
+
+  const { article, loading, error } = UseFetchSingleArticle(articleId);
 
   return (
     <>
       <div className="w-full">
         <ReturnButton path={"/"} />
-        {!article ? (
-          <p>Article not found please return to homepage</p>
-        ) : (
+        {!loading && !error && article && (
           <>
             <h1 className="text-4xl font-bold mb-4 select-none">{article.title}</h1>
             <p className="text-gray-600 mb-6 select-none">
@@ -37,6 +37,8 @@ const Article = () => {
             </p>
             <img src={article.image} alt={article.title} className="w-full h-auto rounded mb-8" />
             {renderHtmlContent(article.content)}
+
+            <ShowRelatedArticles allArticles={[article]} selectedArticle={article} />
           </>
         )}
       </div>

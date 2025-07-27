@@ -24,13 +24,14 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="article/:slug" element={<Article />} />
+        <Route path="/article/:idSlug" element={<Article />} />
+
         <Route path="crypto" element={<Crytpo />} />
         <Route path="crypto/:slug" element={<SingleCrypto />} />
         <Route path="weather" element={<Weather />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="licensing" element={<Licensing />} />
-        <Route path="terms&conditions" element={<TermsAndConditions />} />
+        <Route path="terms-conditions" element={<TermsAndConditions />} />
         <Route path="InProgress" element={<InProgress />} />
       </Route>
 
