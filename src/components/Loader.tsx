@@ -4,7 +4,7 @@ type LoaderCMSProps = {
   textDark: boolean;
 };
 
-const LoaderCMS = ({ textDark }: LoaderCMSProps) => {
+const Loader = ({ textDark }: LoaderCMSProps) => {
   return (
     <p className={`text-2xl tracking-tight ${textDark ? "text-black" : "text-white"} mx-auto`}>
       loading data... <Spinner aria-label="Large spinner example" size="lg" />
@@ -12,4 +12,4 @@ const LoaderCMS = ({ textDark }: LoaderCMSProps) => {
   );
 };
 
-export default LoaderCMS;
+export default Loader;

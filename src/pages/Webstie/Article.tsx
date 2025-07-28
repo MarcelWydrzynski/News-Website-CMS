@@ -2,6 +2,9 @@ import ReturnButton from "../../components/Website/ReturnButton";
 import ShowRelatedArticles from "../../components/Website/ShowRelatedArticles";
 import { useParams } from "react-router";
 import UseFetchSingleArticle from "../../hooks/UseFetchSingleArticle";
+import UseFetchArticles from "../../hooks/UseFetchArticles";
+import Loader from "../../components/Loader";
+import Error from "../../components/Error";
 
 type Article = {
   id: number;
@@ -29,6 +32,8 @@ const Article = () => {
     <>
       <div className="w-full">
         <ReturnButton path={"/"} />
+        {loading && <Loader textDark={true} />}
+        {error && <Error errorMessage="Failed to fetch article. Please try again later" />}
         {!loading && !error && article && (
           <>
             <h1 className="text-4xl font-bold mb-4 select-none">{article.title}</h1>
@@ -38,11 +43,10 @@ const Article = () => {
             <img src={article.image} alt={article.title} className="w-full h-auto rounded mb-8" />
             {renderHtmlContent(article.content)}
 
-            <ShowRelatedArticles allArticles={[article]} selectedArticle={article} />
+            <ShowRelatedArticles allArticles={articles} selectedArticle={article} />
           </>
         )}
       </div>
-      <ShowRelatedArticles allArticles={allArticles} selectedArticle={article} />
     </>
   );
 };
