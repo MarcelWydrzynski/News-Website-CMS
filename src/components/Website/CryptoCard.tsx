@@ -1,4 +1,4 @@
-import slugify from "../../hooks/slugify";
+import slugify from "../../utils/slugify";
 import { Link } from "react-router-dom";
 
 type CryptoCardProps = {

@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import useScrollToTop from "./hooks/ScrollToTop"; // <-- Import the hook
+import useScrollToTop from "./utils/ScrollToTop.ts"; // <-- Import the hook
 import Layout from "./components/Website/Layout";
 import HomeCMS from "./pages/CMS/HomeCMS";
 import ArticlesCMS from "./pages/CMS/ArticlesCMS";

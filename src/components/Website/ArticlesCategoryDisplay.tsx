@@ -1,6 +1,6 @@
 import { Card, Button } from "flowbite-react";
 import { Link } from "react-router-dom";
-import slugify from "../../hooks/slugify";
+import slugify from "../../utils/slugify";
 import LoaderCMS from "../Loader";
 import Article from "../../types/article";
 import Error from "../Error";
@@ -40,7 +40,7 @@ const ArticlesCategoryDisplay = ({ data, loading, error, title }: ArticlesCatego
                   </div>
                   <h5 className="text-2xl font-bold">{article.title}</h5>
                   <p className="text-gray-700">{article.description}</p>
-                  <Link to={`/article/${slugify(article.title)}`} state={{ article, allArticles: formattedArticles }}>
+                  <Link to={`/article/${article.id}-${slugify(article.title)}`}>
                     <Button className="bg-transparent! text-black border w-fit self-end mt-auto hover:bg-white focus:ring-transparent! hover:cursor-pointer select-none">
                       view article
                     </Button>
@@ -66,7 +66,7 @@ const ArticlesCategoryDisplay = ({ data, loading, error, title }: ArticlesCatego
                   </div>
                   <h5 className="text-xl font-bold">{article.title}</h5>
                   <p className="text-gray-700">{article.description}</p>
-                  <Link to={`/article/${slugify(article.title)}`} state={{ article, allArticles: formattedArticles }}>
+                  <Link to={`/article/${article.id}-${slugify(article.title)}`}>
                     <Button className="bg-transparent! text-black border w-fit self-end mt-auto hover:bg-white focus:ring-transparent! hover:cursor-pointer select-none">
                       view article
                     </Button>
@@ -88,7 +88,7 @@ const ArticlesCategoryDisplay = ({ data, loading, error, title }: ArticlesCatego
                   </div>
                   <h5 className="text-xl font-bold">{article.title}</h5>
                   <p className="text-gray-700">{article.description}</p>
-                  <Link to={`/article/${slugify(article.title)}`} state={{ article, allArticles: formattedArticles }}>
+                  <Link to={`/article/${article.id}-${slugify(article.title)}`}>
                     <Button className="bg-transparent! text-black border w-fit self-end mt-auto hover:bg-white focus:ring-transparent! hover:cursor-pointer select-none">
                       view article
                     </Button>

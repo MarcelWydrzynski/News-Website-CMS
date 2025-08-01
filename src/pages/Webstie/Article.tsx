@@ -2,7 +2,6 @@ import ReturnButton from "../../components/Website/ReturnButton";
 import ShowRelatedArticles from "../../components/Website/ShowRelatedArticles";
 import { useParams } from "react-router";
 import UseFetchSingleArticle from "../../hooks/UseFetchSingleArticle";
-import UseFetchArticles from "../../hooks/UseFetchArticles";
 import Loader from "../../components/Loader";
 import Error from "../../components/Error";
 
@@ -43,7 +42,7 @@ const Article = () => {
             <img src={article.image} alt={article.title} className="w-full h-auto rounded mb-8" />
             {renderHtmlContent(article.content)}
 
-            <ShowRelatedArticles allArticles={articles} selectedArticle={article} />
+            <ShowRelatedArticles selectedArticle={article} />
           </>
         )}
       </div>

@@ -1,6 +1,6 @@
 import { Button, Card } from "flowbite-react";
-import { data, Link } from "react-router-dom";
-import slugify from "../../hooks/slugify";
+import {  Link } from "react-router-dom";
+import slugify from "../../utils/slugify";
 import LoaderCMS from "../Loader";
 import Article from "../../types/article";
 import Error from "../Error";
@@ -13,9 +13,6 @@ type LatestArticlesProps = {
 
 const LatestArticles = ({ data, loading, error }: LatestArticlesProps) => {
   const fiveLatestArticles = data.slice(0, 5);
-  console.log(data);
-
-  const allArticles = data;
 
   return (
     <div className="min-w-full flex flex-col items-center gap-y-5">
@@ -69,7 +66,7 @@ const LatestArticles = ({ data, loading, error }: LatestArticlesProps) => {
                     </div>
                     <h5 className="text-2xl font-bold">{article.title}</h5>
                     <p className="text-gray-900">{article.description}</p>
-                    <Link to={`/article/${slugify(article.title)}`} state={{ article, allArticles }}>
+                    <Link to={`/article/${article.id}-${slugify(article.title)}`}>
                       <Button className="bg-transparent! text-black border w-fit self-end mt-auto hover:bg-white focus:ring-transparent! hover:cursor-pointer select-none">
                         view article
                       </Button>
