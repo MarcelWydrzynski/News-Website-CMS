@@ -3,6 +3,7 @@ import Pagination from "../../components/Website/Pagination";
 import CryptoCard from "./CryptoCard";
 import LoaderCMS from "../Loader";
 import Coin from "../../types/Coin";
+import Error from "../Error";
 
 type CryptoListProps = {
   allCoins: Coin[];
@@ -30,11 +31,17 @@ const CryptoList = ({ allCoins, loading, error }: CryptoListProps) => {
           <p>24H Change</p>
           <p className="max-[700px]:hidden">Market Cap</p>
         </div>
-        {loading && <LoaderCMS textDark={true} />}
-        {error && <p className="text-black mt-10 mx-auto">Failed to fetch crypto data. Please try again later.</p>}
 
-        {!loading && !error ? currentCoins.map((coin: Coin, index) => <CryptoCard key={coin.id} data={coin} number={indexOfFirstCoin + index + 1} />) : null}
+        {/* Loading */}
+        {loading && <LoaderCMS textDark={true} />}
+
+        {/* Error */}
+        {error && <Error errorMessage="Error fetching crypto data, please try again later" />}
+
+        {/* Render crypto list component*/}
+        {!loading && !error && currentCoins.map((coin: Coin, index) => <CryptoCard key={coin.id} data={coin} number={indexOfFirstCoin + index + 1} />)}
       </ul>
+      
       {!loading && !error ? <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={(page) => setCurrentPage(page)} /> : null}
     </div>
   );

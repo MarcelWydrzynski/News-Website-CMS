@@ -3,13 +3,17 @@ import axios from "axios";
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
-const useFetchWeeklyForecast = (coords: { lat: number; lon: number } | null) => {
+const UseFetchWeeklyForecast = (coords: { lat: number; lon: number } | null) => {
   const [forecastData, setForecastData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!coords) return;
 
     const fetchForecast = async () => {
+      setLoading(true);
+      setError(null);
       try {
         const res = await axios.get("https://api.openweathermap.org/data/2.5/forecast", {
           params: {
@@ -21,14 +25,16 @@ const useFetchWeeklyForecast = (coords: { lat: number; lon: number } | null) => 
         });
         setForecastData(res.data.list);
       } catch (err) {
-        console.error("Forecast fetch error", err);
+        setError("Failed to fetch forecast");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchForecast();
   }, [coords]);
 
-  return { forecastData };
+  return { forecastData, loading, error };
 };
 
-export default useFetchWeeklyForecast;
+export default UseFetchWeeklyForecast;

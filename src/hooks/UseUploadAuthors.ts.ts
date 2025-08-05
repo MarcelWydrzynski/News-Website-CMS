@@ -1,10 +1,5 @@
 import supabase from "../lib/supabase";
-
-type Author = {
-  id: number;
-  created_at: Date;
-  name: string;
-};
+import Author from "../types/Author";
 const generateRandomID = () => Math.floor(Math.random() * 1_000_000_000);
 
 const uploadAuthor = async (author: Author) => {

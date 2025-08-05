@@ -1,11 +1,6 @@
 import { useState, useEffect } from "react";
 import supabase from "../lib/supabase";
-
-type Author = {
-  id: number;
-  name: string;
-  created_at: string;
-};
+import Author from "../types/Author";
 
 const UseFetchAuthors = () => {
   const [authors, setAuthors] = useState<Author[]>([]);

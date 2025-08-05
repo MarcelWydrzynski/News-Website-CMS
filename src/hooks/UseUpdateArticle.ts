@@ -1,23 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // <-- import useNavigate
 import supabase from "../lib/supabase";
-
-interface Article {
-  id: number;
-  title: string;
-  author: string;
-  category: string;
-  lead: string;
-  image: string;
-  content: string;
-  description: string;
-}
+import Article from "../types/article";
 
 const useUpdateArticle = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
-  const navigate = useNavigate(); // <-- get navigate function
+  const navigate = useNavigate();
 
   const updateArticle = async (updatedArticle: Article) => {
     setLoading(true);

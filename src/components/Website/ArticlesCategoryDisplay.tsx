@@ -20,10 +20,15 @@ const ArticlesCategoryDisplay = ({ data, loading, error, title }: ArticlesCatego
   return (
     <div className="w-full flex flex-col my-15">
       <h2 className="text-3xl font-serif mb-6 select-none">Latest articles from {title}</h2>
+
+      {/* Loading */}
       {loading && <LoaderCMS textDark={true} />}
+
+      {/* Error */}
       {error && <Error errorMessage="Error fetching articles, please try again later" />}
 
-      {!error && (
+      {/* Render category display component*/}
+      {!error && !loading && (
         <div className="flex justify-around max-[1000px]:flex-col max-[1000px]:gap-8 gap-2">
           <div className="w-[50%] flex max-[1000px]:w-full">
             {formattedArticles.slice(0, 1).map((article) => (

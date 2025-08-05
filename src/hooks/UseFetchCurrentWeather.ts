@@ -3,13 +3,17 @@ import axios from "axios";
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
-const useFetchCurrentWeather = (coords: { lat: number; lon: number } | null) => {
+const UseFetchCurrentWeather = (coords: { lat: number; lon: number } | null) => {
   const [weatherData, setWeatherData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!coords) return;
 
     const fetchWeather = async () => {
+      setLoading(true);
+      setError(null);
       try {
         const res = await axios.get("https://api.openweathermap.org/data/2.5/weather", {
           params: {
@@ -21,14 +25,16 @@ const useFetchCurrentWeather = (coords: { lat: number; lon: number } | null) => 
         });
         setWeatherData(res.data);
       } catch (err) {
-        console.error("Current weather error", err);
+        setError("Failed to fetch current weather");
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchWeather();
   }, [coords]);
 
-  return { weatherData };
+  return { weatherData, loading, error };
 };
 
-export default useFetchCurrentWeather;
+export default UseFetchCurrentWeather;

@@ -1,17 +1,6 @@
 import { useState, useEffect } from "react";
 import supabase from "../lib/supabase";
-
-interface Article {
-  id: number;
-  author: string;
-  category: string;
-  title: string;
-  description: string;
-  lead: string;
-  image: string;
-  content: string;
-  date_created: string;
-}
+import Article from "../types/article";
 
 const UseFetchArticles = () => {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -29,7 +18,6 @@ const UseFetchArticles = () => {
       setArticles(data || []);
     }
     setFetchingArticlesLoading(false);
-    setFetchingArticlesLoading(true);
   };
 
   useEffect(() => {

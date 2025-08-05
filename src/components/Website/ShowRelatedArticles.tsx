@@ -13,9 +13,7 @@ type ShowRelatedArticlesProps = {
 
 const ShowRelatedArticles = ({ selectedArticle }: ShowRelatedArticlesProps) => {
   const { articles, fetchingArticlesError, fetchingArticlesLoading } = UseFetchArticles();
-
   const articlesFromSameCategory = articles.filter((article) => article.category === selectedArticle.category);
-
   const filteredArticles = articlesFromSameCategory.filter((article) => article.id !== selectedArticle.id);
 
   return (
@@ -23,10 +21,10 @@ const ShowRelatedArticles = ({ selectedArticle }: ShowRelatedArticlesProps) => {
       <Separator />
       <h1 className="text-3xl font-bold select-none mb-10">Related articles</h1>
 
-      {/* Handle loading */}
+      {/* Loading */}
       {fetchingArticlesLoading && <Loader textDark={true} />}
 
-      {/* Handle error */}
+      {/* Error */}
       {fetchingArticlesError && <Error errorMessage="Failed to fetch articles. Please try again later." />}
 
       {/* Handle no articles */}

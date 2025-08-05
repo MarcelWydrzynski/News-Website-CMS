@@ -1,27 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useCitySearch, { CitySuggestion } from "../../hooks/UseCitySearch";
-import useFetchCurrentWeather from "../../hooks/UseFetchCurrentWeather";
-import useFetchWeeklyForecast from "../..//hooks/UseFetchWeatherForecast";
+import UseFetchCurrentWeather from "../../hooks/UseFetchCurrentWeather";
+import UseFetchWeeklyForecast from "../../hooks/useFetchWeeklyForecasts";
 import CurrentWeatherForecast from "../../components/Website/CurrentWeatherForecast";
 import WeeklyForecast from "../../components/Website/WeeklyForecast";
+import LoaderCMS from "../../components/Loader";
+import Error from "../../components/Error";
 
 const Weather = () => {
   const [query, setQuery] = useState("");
-  const [selectedCoords, setSelectedCoords] = useState<{ lat: number; lon: number }>({
-    lat: 50.3167,
-    lon: 19.0833,
-  });
+  const [selectedCoords, setSelectedCoords] = useState<{ lat: number; lon: number } | null>(null);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setSelectedCoords({
+          lat: position.coords.latitude,
+          lon: position.coords.longitude,
+        });
+      },
+      (err) => {
+        console.error("Geolocation error:", err);
+        setSelectedCoords({ lat: 51.5074, lon: -0.1278 });
+      }
+    );
+  }, []);
 
   const { results } = useCitySearch(query);
-  const { weatherData } = useFetchCurrentWeather(selectedCoords);
-  const { forecastData } = useFetchWeeklyForecast(selectedCoords);
+  const { weatherData, loading: currentLoading, error: currentError } = UseFetchCurrentWeather(selectedCoords);
 
-  const isCurrentWeatherReady = weatherData && weatherData && weatherData && weatherData && weatherData;
+  const { forecastData, loading: forecastLoading, error: forecastError } = UseFetchWeeklyForecast(selectedCoords);
+
+  const isCurrentWeatherReady = weatherData && forecastData.length > 0;
 
   const handleCityClick = (city: CitySuggestion) => {
     setSelectedCoords({ lat: city.lat, lon: city.lon });
     setQuery("");
   };
+
+  const loading = currentLoading || forecastLoading;
+  const error = currentError || forecastError;
 
   return (
     <div className="flex flex-col w-full">
@@ -49,8 +67,19 @@ const Weather = () => {
       </div>
 
       <div className="py-20 w-4/5 flex flex-wrap gap-y-10 items-stretch mx-auto">
-        {isCurrentWeatherReady && <CurrentWeatherForecast current={weatherData} forecast={forecastData} />}
-        {Array.isArray(forecastData) && forecastData.length > 0 && <WeeklyForecast data={forecastData} />}
+        {/* Loading */}
+        {loading && <LoaderCMS textDark={true} />}
+
+        {/* Error */}
+        {error && <Error errorMessage="Error fetching weather data, please try again later." />}
+
+        {/* Forecasts */}
+        {!loading && !error && isCurrentWeatherReady && (
+          <>
+            <CurrentWeatherForecast current={weatherData} forecast={forecastData} />
+            <WeeklyForecast data={forecastData} />
+          </>
+        )}
       </div>
     </div>
   );
