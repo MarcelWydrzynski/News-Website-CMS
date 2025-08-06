@@ -1,7 +1,7 @@
 import { Button, Card } from "flowbite-react";
-import {  Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import slugify from "../../utils/slugify";
-import LoaderCMS from "../Loader";
+import Loader from "../Loader";
 import Article from "../../types/article";
 import Error from "../Error";
 
@@ -18,13 +18,14 @@ const LatestArticles = ({ data, loading, error }: LatestArticlesProps) => {
     <div className="min-w-full flex flex-col items-center gap-y-5">
       <h2 className="text-3xl font-serif self-start select-none">Latest articles</h2>
       <div className="w-full flex flex-wrap gap-y-4 justify-center">
-        {error ? (
-          <Error errorMessage="Failed to fetch article data. Please try again later." />
-        ) : loading ? (
-          <LoaderCMS textDark={true} />
-        ) : fiveLatestArticles.length === 0 ? (
-          <p className="text-black mt-10 mx-auto">No articles in database</p>
-        ) : (
+        {/* Loading */}
+        {loading && <Loader textDark={true} />}
+
+        {/* Error */}
+        {error && <Error errorMessage="Failed to fetch articles data, please try again later" />}
+
+        {/* Render component */}
+        {!loading && !error && (
           <>
             <div className="flex flex-wrap w-full justify-around gap-4 max-[800px]:gap-8">
               {fiveLatestArticles.slice(0, 2).map((article) => (

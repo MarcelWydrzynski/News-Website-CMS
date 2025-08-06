@@ -8,10 +8,9 @@ import Error from "../Error";
 type CryptoListProps = {
   allCoins: Coin[];
   loading: boolean;
-  error: boolean;
 };
 
-const CryptoList = ({ allCoins, loading, error }: CryptoListProps) => {
+const CryptoList = ({ allCoins, loading }: CryptoListProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const coinsPerPage = 10;
@@ -35,14 +34,11 @@ const CryptoList = ({ allCoins, loading, error }: CryptoListProps) => {
         {/* Loading */}
         {loading && <LoaderCMS textDark={true} />}
 
-        {/* Error */}
-        {error && <Error errorMessage="Error fetching crypto data, please try again later" />}
-
         {/* Render crypto list component*/}
-        {!loading && !error && currentCoins.map((coin: Coin, index) => <CryptoCard key={coin.id} data={coin} number={indexOfFirstCoin + index + 1} />)}
+        {!loading && currentCoins.map((coin: Coin, index) => <CryptoCard key={coin.id} data={coin} number={indexOfFirstCoin + index + 1} />)}
       </ul>
-      
-      {!loading && !error ? <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={(page) => setCurrentPage(page)} /> : null}
+
+      {!loading ? <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={(page) => setCurrentPage(page)} /> : null}
     </div>
   );
 };
