@@ -6,7 +6,7 @@ type LoaderCMSProps = {
 
 const Loader = ({ textDark }: LoaderCMSProps) => {
   return (
-    <p className={`text-2xl tracking-tight ${textDark ? "text-black" : "text-white"} mx-auto`}>
+    <p className={`text-2xl tracking-tight ${textDark ? "text-black" : "text-white"} mx-auto text-center select-none`}>
       loading data... <Spinner aria-label="Large spinner example" size="lg" />
     </p>
   );

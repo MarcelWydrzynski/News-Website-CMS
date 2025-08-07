@@ -48,7 +48,7 @@ const Weather = () => {
         {/* Error */}
         {error && <Error errorMessage="Error fetching weather data, please try again later." />}
 
-        {/* Main Content */}
+        {/* Render the content */}
         {!loading && !error && isCurrentWeatherReady && (
           <>
             <h2 className="text-2xl select-none">Search your city below</h2>

@@ -35,8 +35,8 @@ const Article = () => {
         {error && <Error errorMessage="Failed to fetch article. Please try again later" />}
         {!loading && !error && article && (
           <>
-            <h1 className="text-4xl font-bold mb-4 select-none">{article.title}</h1>
-            <p className="text-gray-600 mb-6 select-none">
+            <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
+            <p className="text-gray-600 mb-6">
               By {article.author} | Category: {article.category}
             </p>
             <img src={article.image} alt={article.title} className="w-full h-auto rounded mb-8" />

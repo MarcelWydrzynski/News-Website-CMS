@@ -4,27 +4,27 @@ import Article from "../types/article";
 
 const UseFetchArticles = () => {
   const [articles, setArticles] = useState<Article[]>([]);
-  const [fetchingArticlesError, setFetchingArticlesError] = useState<string>("");
-  const [fetchingArticlesLoading, setFetchingArticlesLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const fetchArticles = async () => {
-    setFetchingArticlesLoading(true);
+    setLoading(true);
 
     const { data, error } = await supabase.from("ArticlesList").select("*").order("date_created", { ascending: false });
 
     if (error) {
-      setFetchingArticlesError(error.message);
+      setError(error.message);
     } else {
       setArticles(data || []);
     }
-    setFetchingArticlesLoading(false);
+    setLoading(false);
   };
 
   useEffect(() => {
     fetchArticles();
   }, []);
 
-  return { articles, fetchingArticlesError, fetchingArticlesLoading };
+  return { articles, error, loading };
 };
 
 export default UseFetchArticles;

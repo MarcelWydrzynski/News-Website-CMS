@@ -1,30 +1,29 @@
-import { Card, Button } from "flowbite-react";
-import { Link } from "react-router-dom";
-import slugify from "../../utils/slugify";
 import Article from "../../types/article";
+import { Card } from "flowbite-react";
+import slugify from "../../utils/slugify";
+import { Link } from "react-router-dom";
+import { Button } from "flowbite-react";
 
 type ArticleCardProps = {
   article: Article;
-  widthClass?: string;         // 👈 Only pass width (e.g. w-[30%])
-  horizontal?: boolean;
+  layout: "vertical" | "horizontal";
+  className: string;
 };
 
-const ArticleCard = ({ article, widthClass = "", horizontal = false }: ArticleCardProps) => {
+const ArticleCard = ({ article, layout, className = "" }: ArticleCardProps) => {
   return (
     <Card
-      className={`text-black transition-all hover:scale-105 ${
-        horizontal ? "" : "break-words"
-      } ${widthClass}`}
+      className={`${className} ${layout === "horizontal" ? "flex-row" : "flex-col"} bg-transparent! text-black`}
       imgAlt={article.title}
       imgSrc={article.image}
-      horizontal={horizontal}
+      horizontal={layout === "horizontal"}
     >
-      <div className="flex flex-col gap-3 h-full">
+      <div className="flex flex-col gap-3">
         <div className="flex justify-between text-sm text-gray-600">
           <span>By: {article.author}</span>
           <span>Category: {article.category}</span>
         </div>
-        <h5 className="text-2xl font-bold">{article.title}</h5>
+        <h5 className="text-xl font-bold">{article.title}</h5>
         <p className="text-gray-700">{article.description}</p>
         <Link to={`/article/${article.id}-${slugify(article.title)}`}>
           <Button className="bg-transparent! text-black border w-fit self-end mt-auto hover:bg-white focus:ring-transparent! hover:cursor-pointer select-none">
@@ -37,4 +36,3 @@ const ArticleCard = ({ article, widthClass = "", horizontal = false }: ArticleCa
 };
 
 export default ArticleCard;
-s
