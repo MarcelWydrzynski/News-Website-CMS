@@ -23,22 +23,14 @@ const LatestArticles = () => {
             {/* First two articles */}
             <div className="flex flex-wrap w-full justify-around gap-4 max-[800px]:gap-8">
               {fiveLatestArticles.slice(0, 2).map((article) => (
-                <ArticleCard
-                  key={article.id}
-                  article={article}
-                  className="w-[48%] max-[800px]:w-full text-black bg-transparent! break-words max-[800px]:hover:scale-100"
-                />
+                <ArticleCard key={article.id} article={article} width="w-[48%]" horizontal={false} />
               ))}
             </div>
 
             {/* Remaining three articles */}
             <div className="flex flex-wrap w-full justify-around gap-4 mt-4 max-[800px]:gap-8">
               {fiveLatestArticles.slice(2).map((article) => (
-                <ArticleCard
-                  key={article.id}
-                  article={article}
-                  className="w-[30%] max-[800px]:w-full text-black bg-transparent! break-words max-[800px]:hover:scale-100"
-                />
+                <ArticleCard key={article.id} article={article} width="w-[30%]" horizontal={false} />
               ))}
             </div>
           </>

@@ -1,40 +1,49 @@
-import { Card, Button } from "flowbite-react";
-import { Link } from "react-router-dom";
-import slugify from "../../utils/slugify";
+import Loader from "../Loader";
+import Error from "../Error";
+import UseFetchArticles from "../../hooks/UseFetchArticles";
 import Article from "../../types/article";
+import ArticleCard from "./ArticleCard";
 
-type ArticleCardProps = {
-  article: Article;
-  widthClass?: string;         // 👈 Only pass width (e.g. w-[30%])
-  horizontal?: boolean;
-};
+const ArticlesCategoryDisplay = () => {
+  const { articles, loading, error } = UseFetchArticles();
 
-const ArticleCard = ({ article, widthClass = "", horizontal = false }: ArticleCardProps) => {
+  const allCategories = new Set(articles.map((article: Article) => article.category));
+  const allCategoriesArray = [...allCategories];
+
   return (
-    <Card
-      className={`text-black transition-all hover:scale-105 ${
-        horizontal ? "" : "break-words"
-      } ${widthClass}`}
-      imgAlt={article.title}
-      imgSrc={article.image}
-      horizontal={horizontal}
-    >
-      <div className="flex flex-col gap-3 h-full">
-        <div className="flex justify-between text-sm text-gray-600">
-          <span>By: {article.author}</span>
-          <span>Category: {article.category}</span>
-        </div>
-        <h5 className="text-2xl font-bold">{article.title}</h5>
-        <p className="text-gray-700">{article.description}</p>
-        <Link to={`/article/${article.id}-${slugify(article.title)}`}>
-          <Button className="bg-transparent! text-black border w-fit self-end mt-auto hover:bg-white focus:ring-transparent! hover:cursor-pointer select-none">
-            view article
-          </Button>
-        </Link>
-      </div>
-    </Card>
+    <>
+      {allCategoriesArray.map((category) => {
+        const formattedArticles = articles.filter((article) => article.category === category).slice(0, 5);
+
+        if (formattedArticles.length < 4) return null;
+
+        return (
+          <div key={category} className="w-full flex flex-col my-15">
+            <h2 className="text-3xl font-serif mb-6 select-none">Latest articles from {category}</h2>
+
+            {loading && <Loader textDark={true} />}
+            {error && <Error errorMessage="Error fetching articles, please try again later" />}
+
+            {!error && !loading && (
+              <div className="flex justify-around max-[1000px]:flex-col max-[1000px]:gap-8 gap-2">
+                {/* First full-width article */}
+                <div className="w-full max-w-[50%] max-[1000px]:max-w-full">
+                  <ArticleCard article={formattedArticles[0]} width="100%" horizontal={false}/>
+                </div>
+
+                {/* Next 3 articles, responsive width */}
+                <div className="flex flex-col gap-4 items-center w-full max-[1000px]:gap-6">
+                  {formattedArticles.slice(1, 4).map((article) => (
+                    <ArticleCard key={article.id} article={article} horizontal={true} width="100%" />
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </>
   );
 };
 
-export default ArticleCard;
-s
+export default ArticlesCategoryDisplay;
