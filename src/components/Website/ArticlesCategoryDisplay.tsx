@@ -21,14 +21,17 @@ const ArticlesCategoryDisplay = () => {
           <div key={category} className="w-full flex flex-col my-15">
             <h2 className="text-3xl font-serif mb-6 select-none">Latest articles from {category}</h2>
 
+            {/* Loading */}
             {loading && <Loader textDark={true} />}
+
+            {/* Error */}
             {error && <Error errorMessage="Error fetching articles, please try again later" />}
 
             {!error && !loading && (
               <div className="flex justify-around max-[1000px]:flex-col max-[1000px]:gap-8 gap-2">
                 {/* First full-width article */}
                 <div className="w-full max-w-[50%] max-[1000px]:max-w-full">
-                  <ArticleCard article={formattedArticles[0]} width="100%" horizontal={false}/>
+                  <ArticleCard article={formattedArticles[0]} width="100%" horizontal={false} />
                 </div>
 
                 {/* Next 3 articles, responsive width */}
