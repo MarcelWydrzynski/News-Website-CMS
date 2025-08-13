@@ -1,13 +1,12 @@
-import Loader from "../Loader";
-import Error from "../Error";
-import UseFetchArticles from "../../hooks/UseFetchArticles";
 import Article from "../../types/article";
 import ArticleCard from "./ArticleCard";
 
-const ArticlesCategoryDisplay = () => {
-  const { articles, loading, error } = UseFetchArticles();
+type ArticlesCategoryDisplayProps = {
+  articles: Article[];
+};
 
-  const allCategories = new Set(articles.map((article: Article) => article.category));
+const ArticlesCategoryDisplay = ({ articles }: ArticlesCategoryDisplayProps) => {
+  const allCategories = new Set(articles.map((article) => article.category));
   const allCategoriesArray = [...allCategories];
 
   return (
@@ -21,27 +20,19 @@ const ArticlesCategoryDisplay = () => {
           <div key={category} className="w-full flex flex-col my-15">
             <h2 className="text-3xl font-serif mb-6 select-none">Latest articles from {category}</h2>
 
-            {/* Loading */}
-            {loading && <Loader textDark={true} />}
-
-            {/* Error */}
-            {error && <Error errorMessage="Error fetching articles, please try again later" />}
-
-            {!error && !loading && (
-              <div className="flex justify-around max-[1000px]:flex-col max-[1000px]:gap-8 gap-2">
-                {/* First full-width article */}
-                <div className="w-full max-w-[50%] max-[1000px]:max-w-full">
-                  <ArticleCard article={formattedArticles[0]} width="100%" horizontal={false} />
-                </div>
-
-                {/* Next 3 articles, responsive width */}
-                <div className="flex flex-col gap-4 items-center w-full max-[1000px]:gap-6">
-                  {formattedArticles.slice(1, 4).map((article) => (
-                    <ArticleCard key={article.id} article={article} horizontal={true} width="100%" />
-                  ))}
-                </div>
+            <div className="flex justify-around max-[1000px]:flex-col max-[1000px]:gap-8 gap-2">
+              {/* First full-width article */}
+              <div className="w-full max-w-[50%] max-[1000px]:max-w-full">
+                <ArticleCard article={formattedArticles[0]} width="100%" horizontal={false} />
               </div>
-            )}
+
+              {/* Next 3 articles, responsive width */}
+              <div className="flex flex-col gap-4 items-center w-full max-[1000px]:gap-6">
+                {formattedArticles.slice(1, 4).map((article: Article) => (
+                  <ArticleCard key={article.id} article={article} horizontal={true} width="100%" />
+                ))}
+              </div>
+            </div>
           </div>
         );
       })}
