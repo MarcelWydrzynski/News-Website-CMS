@@ -13,7 +13,7 @@ import Crytpo from "./pages/Webstie/Crytpo";
 import PrivacyPolicy from "./pages/Webstie/PrivacyPolicy";
 import Licensing from "./pages/Webstie/Licensing";
 import TermsAndConditions from "./pages/Webstie/TermsAndConditions";
-import InProgress from "./pages/Webstie/InProgress";
+import LostPage from "./pages/Webstie/LostPage.tsx";
 import SingleCrypto from "./pages/Webstie/SingleCrypto";
 import Weather from "./pages/Webstie/Weather.tsx";
 
@@ -32,7 +32,7 @@ function App() {
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="licensing" element={<Licensing />} />
         <Route path="terms-conditions" element={<TermsAndConditions />} />
-        <Route path="InProgress" element={<InProgress />} />
+        <Route path="*" element={<LostPage textDark={true}/>} />
       </Route>
 
       <Route path="/cms" element={<HomeCMS />}>
@@ -41,6 +41,7 @@ function App() {
         <Route path="authors" element={<AuthorsCMS />} />
         <Route path="add-article" element={<AddArticle />} />
         <Route path="edit-article" element={<EditArticle />} />
+        <Route path="*" element={<LostPage textDark={false}/>} />
       </Route>
     </Routes>
   );

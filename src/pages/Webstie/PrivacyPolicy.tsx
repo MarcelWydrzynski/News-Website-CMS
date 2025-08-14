@@ -1,9 +1,9 @@
-import ReturnButton from "../../components/Website/ReturnButton";
+import ReturnButton from "../../components/Website/ReturnToHomeButton";
 
 const PrivacyPolicy = () => {
   return (
     <div className="w-full mx-auto">
-        <ReturnButton path={"/"}/>
+      <ReturnButton path={"/"} />
       <h1 className="text-4xl font-bold mb-6">Privacy Policy</h1>
       <p className="mb-4">We value your privacy. This Privacy Policy outlines how we collect, use, and protect your personal information.</p>
 

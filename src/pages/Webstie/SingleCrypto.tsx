@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import ReturnButton from "../../components/Website/ReturnButton";
+import ReturnButton from "../../components/Website/ReturnToHomeButton";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import useFetchSelectedCrypto from "../../hooks/UseFetchSelectedCrypto";
 import LoaderCMS from "../../components/Loader";

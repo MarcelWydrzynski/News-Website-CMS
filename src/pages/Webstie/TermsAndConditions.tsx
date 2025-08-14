@@ -1,4 +1,4 @@
-import ReturnButton from "../../components/Website/ReturnButton";
+import ReturnButton from "../../components/Website/ReturnToHomeButton";
 
 const TermsAndConditions = () => {
   return (

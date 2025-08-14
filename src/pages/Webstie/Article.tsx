@@ -1,4 +1,4 @@
-import ReturnButton from "../../components/Website/ReturnButton";
+import ReturnButton from "../../components/Website/ReturnToHomeButton";
 import ShowRelatedArticles from "../../components/Website/ShowRelatedArticles";
 import { useParams } from "react-router";
 import UseFetchSingleArticle from "../../hooks/UseFetchSingleArticle";
@@ -31,8 +31,13 @@ const Article = () => {
     <>
       <div className="w-full">
         <ReturnButton path={"/"} />
+        {/* Loading */}
         {loading && <Loader textDark={true} />}
+
+        {/* Error */}
         {error && <Error errorMessage="Failed to fetch article. Please try again later" />}
+
+        {/* Render content */}
         {!loading && !error && article && (
           <>
             <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
