@@ -6,31 +6,41 @@ type MarketChartData = {
   total_volumes: [number, number][];
 };
 
-const useFetchSelectedCrypto = (cryptoName: string) => {
-  const [selectedCrypto, setSelectedCrypto] = useState<MarketChartData | null>(null);
+const useFetchSelectedCrypto = (cryptoName: string | null) => {
+  const [cryptoGrapghData, setCryptoGrapghData] = useState<MarketChartData | null>(null);
+  const [selectedCrypto, setselectedCrypto] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+
   useEffect(() => {
     const fetchSelectedCrypto = async () => {
+      setError(false);
+
       try {
-        const options = { method: "GET", headers: { accept: "application/json" } };
-        const res = await fetch(`https://api.coingecko.com/api/v3/coins/${cryptoName}/market_chart?vs_currency=USD&days=10`, options);
-        const data = await res.json();
-        setSelectedCrypto(data);
+        const [marketRes, coinRes] = await Promise.all([
+          fetch(`https://api.coingecko.com/api/v3/coins/${cryptoName}/market_chart?vs_currency=USD&days=10`),
+          fetch(`https://api.coingecko.com/api/v3/coins/${cryptoName}`),
+        ]);
+
+        const marketData = await marketRes.json();
+        const coinData = await coinRes.json();
+
+        setCryptoGrapghData(marketData);
+        setselectedCrypto(coinData);
       } catch (err) {
         setError(true);
-        console.log(error)
-        setLoading(false);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchSelectedCrypto();
+    if (cryptoName) {
+      fetchSelectedCrypto();
+    }
   }, [cryptoName]);
 
-  return { selectedCrypto, loading, error };
+  return { cryptoGrapghData, selectedCrypto, loading, error };
 };
 
 export default useFetchSelectedCrypto;

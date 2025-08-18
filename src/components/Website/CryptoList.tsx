@@ -1,16 +1,13 @@
 import { useState } from "react";
 import Pagination from "../../components/Website/Pagination";
 import CryptoCard from "./CryptoCard";
-import LoaderCMS from "../Loader";
 import Coin from "../../types/Coin";
-import Error from "../Error";
 
 type CryptoListProps = {
   allCoins: Coin[];
-  loading: boolean;
 };
 
-const CryptoList = ({ allCoins, loading }: CryptoListProps) => {
+const CryptoList = ({ allCoins }: CryptoListProps) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const coinsPerPage = 10;
@@ -31,14 +28,12 @@ const CryptoList = ({ allCoins, loading }: CryptoListProps) => {
           <p className="max-[700px]:hidden">Market Cap</p>
         </div>
 
-        {/* Loading */}
-        {loading && <LoaderCMS textDark={true} />}
-
-        {/* Render crypto list component*/}
-        {!loading && currentCoins.map((coin: Coin, index) => <CryptoCard key={coin.id} data={coin} number={indexOfFirstCoin + index + 1} />)}
+        {currentCoins.map((coin: Coin, index) => (
+          <CryptoCard key={coin.id} data={coin} number={indexOfFirstCoin + index + 1} />
+        ))}
       </ul>
 
-      {!loading ? <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={(page) => setCurrentPage(page)} /> : null}
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={(page) => setCurrentPage(page)} />
     </div>
   );
 };

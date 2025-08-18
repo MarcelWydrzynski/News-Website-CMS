@@ -24,13 +24,13 @@ const renderHtmlContent = (htmlString: string) => {
 const Article = () => {
   const { idSlug } = useParams();
   const articleId = parseInt(idSlug?.split("-")[0] || "", 10);
-
+console.log(idSlug);
   const { article, loading, error } = UseFetchSingleArticle(articleId);
 
   return (
     <>
       <div className="w-full">
-        <ReturnButton path={"/"} />
+        <ReturnButton />
         {/* Loading */}
         {loading && <Loader textDark={true} />}
 
