@@ -1,5 +1,5 @@
 import supabase from "../lib/supabase";
-import Article from "../types/article";
+import Article from "../types/Article";
 
 const generateRandomID = () => Math.floor(Math.random() * 1_000_000_000);
 
@@ -10,7 +10,7 @@ const uploadArticle = async (article: Article, navigate: Function) => {
     date_created: new Date().toISOString(),
   };
 
-  const {  error } = await supabase.from("ArticlesList").insert([articleWithIdplusDate]);
+  const { error } = await supabase.from("ArticlesList").insert([articleWithIdplusDate]);
 
   if (error) {
     console.error("Upload Error", error.message);

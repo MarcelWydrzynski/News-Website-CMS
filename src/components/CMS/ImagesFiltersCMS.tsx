@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import { TextInput, Button, FileInput, Label } from "flowbite-react";
 import uploadImage from "../../hooks/UseUploadImage";
 import deleteImages from "../../hooks/UseDeleteImages";
-import Image from "../../types/image";
+import Image from "../../types/Image";
 
 type ImagesFiltersCMSProps = {
   selectedImages: Image[];

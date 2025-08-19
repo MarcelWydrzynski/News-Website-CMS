@@ -1,46 +1,48 @@
 import { useState, useEffect } from "react";
 
-type MarketChartData = {
-  prices: [number, number][];
-  market_caps: [number, number][];
-  total_volumes: [number, number][];
-};
-
-const useFetchSelectedCrypto = (cryptoName: string | null) => {
-  const [cryptoGrapghData, setCryptoGrapghData] = useState<MarketChartData | null>(null);
-  const [selectedCrypto, setselectedCrypto] = useState([]);
+const useFetchSelectedCrypto = (cryptoId: string) => {
+  const [selectedCrypto, setSelectedCrypto] = useState<any>(null);
+  const [cryptoGrapghData, setCryptoGraphData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchSelectedCrypto = async () => {
-      setError(false);
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
 
       try {
-        const [marketRes, coinRes] = await Promise.all([
-          fetch(`https://api.coingecko.com/api/v3/coins/${cryptoName}/market_chart?vs_currency=USD&days=10`),
-          fetch(`https://api.coingecko.com/api/v3/coins/${cryptoName}`),
+        const [cryptoRes, graphRes] = await Promise.all([
+          fetch(`https://api.coingecko.com/api/v3/coins/${cryptoId}`),
+          fetch(`https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=USD&days=7`),
         ]);
 
-        const marketData = await marketRes.json();
-        const coinData = await coinRes.json();
+        if (cryptoRes.status === 429 || graphRes.status === 429) {
+          setError("Too many requests on the free API. Please try again later.");
+          setLoading(false);
+          return;
+        }
 
-        setCryptoGrapghData(marketData);
-        setselectedCrypto(coinData);
-      } catch (err) {
-        setError(true);
+        if (!cryptoRes.ok || !graphRes.ok) {
+          throw new Error("Failed to fetch crypto data");
+        }
+
+        const cryptoData = await cryptoRes.json();
+        const graphData = await graphRes.json();
+
+        setSelectedCrypto(cryptoData);
+        setCryptoGraphData(graphData);
+      } catch (err: any) {
+        setError(err.message || "An unexpected error occurred");
       } finally {
         setLoading(false);
       }
     };
 
-    if (cryptoName) {
-      fetchSelectedCrypto();
-    }
-  }, [cryptoName]);
+    fetchData();
+  }, [cryptoId]);
 
-  return { cryptoGrapghData, selectedCrypto, loading, error };
+  return { selectedCrypto, cryptoGrapghData, loading, error };
 };
 
 export default useFetchSelectedCrypto;

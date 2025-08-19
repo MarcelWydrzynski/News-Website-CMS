@@ -1,28 +1,30 @@
 import { useParams } from "react-router-dom";
-import ReturnButton from "../../components/Website/ReturnToHomeButton";
+import ReturnButton from "../../components/Website/ReturnButton";
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import useFetchSelectedCrypto from "../../hooks/UseFetchSelectedCrypto";
 import LoaderCMS from "../../components/Loader";
+import Error from "../../components/Error";
 
 const SingleCrypto = () => {
-  const { cryptoname } = useParams<{ cryptoname: string }>(); // <-- must match :slug
+  const { cryptoId } = useParams<{ cryptoId: string }>();
 
-  const { cryptoGrapghData, selectedCrypto, loading, error } = useFetchSelectedCrypto(cryptoname);
+  const { cryptoGrapghData, selectedCrypto, loading, error } = useFetchSelectedCrypto(cryptoId!);
 
-  const formattedData = cryptoGrapghData?.prices?.map(([timestamp, price]) => ({
+  const formattedData = cryptoGrapghData?.prices?.map(([timestamp, price]: [number, number]) => ({
     date: new Date(timestamp).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
     price: Number(price.toFixed(2)),
   }));
-
-  console.log(cryptoGrapghData, selectedCrypto);
-
+  {
+    console.log(selectedCrypto);
+  }
   return (
     <>
-      <ReturnButton />
+      <ReturnButton path={"/crypto"} />
 
       <div className="flex items-center justify-center flex-col select-none font-semibold">
         {loading && <LoaderCMS textDark={true} />}
-        {error && <p className="text-black mt-10">Failed to fetch crypto data. Please try again later.</p>}
+        {error && <Error errorMessage={"Failed to fetch crypto data. Please try again later. (Possibly too many requests on free API)"} />}
+
         {!loading && !error && cryptoGrapghData && selectedCrypto && (
           <>
             <div className="w-full max-w-4xl h-96 my-15">
@@ -49,25 +51,30 @@ const SingleCrypto = () => {
             <ul className="w-full max-w-4xl flex flex-col gap-3">
               <li className="flex justify-between w-full border-b pb-3">
                 <p>Crypto Market Rank</p>
-                <p>{selectedCrypto.market_data.current_price.usd}</p>
+                <p>{selectedCrypto.market_cap_rank.toLocaleString()}</p>
               </li>
               <li className="flex justify-between w-full border-b pb-3">
                 <p>Current Price</p>
-                <p>${selectedCrypto.market_data.current_price.usd}</p>
+                <p>${selectedCrypto.market_data.current_price.usd.toLocaleString()}</p>
               </li>
               <li className="flex justify-between w-full border-b pb-3">
                 <p>Market Cap</p>
-                <p>${selectedCrypto.market_data.current_price.usd}</p>
+                <p>${selectedCrypto.market_data.market_cap.usd.toLocaleString()}</p>
               </li>
               <li className="flex justify-between w-full border-b pb-3">
                 <p>24 Hour High</p>
-                <p>${selectedCrypto.market_data.current_price.usd}</p>
+                <p>${selectedCrypto.market_data.high_24h.usd.toLocaleString()}</p>
               </li>
               <li className="flex justify-between w-full border-b pb-3">
                 <p>24 Hour Low</p>
-                <p>${selectedCrypto.market_data.current_price.usd}</p>
+                <p>${selectedCrypto.market_data.low_24h.usd.toLocaleString()}</p>
               </li>
             </ul>
+
+            <div className="mt-10 flex flex-col gap-4">
+              <h2 className="text-2xl">{selectedCrypto.id} description</h2>
+              <p className="font-normal">{selectedCrypto.description.en}</p>
+            </div>
           </>
         )}
       </div>

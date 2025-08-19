@@ -1,9 +1,11 @@
-import ReturnButton from "../../components/Website/ReturnToHomeButton";
-import ShowRelatedArticles from "../../components/Website/ShowRelatedArticles";
-import { useParams } from "react-router";
+import ReturnButton from "../../components/Website/ReturnButton";
 import UseFetchSingleArticle from "../../hooks/UseFetchSingleArticle";
 import Loader from "../../components/Loader";
 import Error from "../../components/Error";
+import { Suspense, lazy } from "react";
+import { useParams } from "react-router";
+
+const ShowRelatedArticles = lazy(() => import("../../components/Website/ShowRelatedArticles"));
 
 type Article = {
   id: number;
@@ -24,13 +26,14 @@ const renderHtmlContent = (htmlString: string) => {
 const Article = () => {
   const { idSlug } = useParams();
   const articleId = parseInt(idSlug?.split("-")[0] || "", 10);
-console.log(idSlug);
+  console.log(idSlug);
   const { article, loading, error } = UseFetchSingleArticle(articleId);
 
   return (
     <>
       <div className="w-full">
-        <ReturnButton />
+        <ReturnButton path={"/"} />
+
         {/* Loading */}
         {loading && <Loader textDark={true} />}
 
@@ -44,10 +47,12 @@ console.log(idSlug);
             <p className="text-gray-600 mb-6">
               By {article.author} | Category: {article.category}
             </p>
-            <img src={article.image} alt={article.title} className="w-full h-auto rounded mb-8" />
+            <img src={article.image} alt={article.title} className="w-full h-auto rounded mb-8" loading="lazy" />
             {renderHtmlContent(article.content)}
 
-            <ShowRelatedArticles selectedArticle={article} />
+            <Suspense fallback={<Loader textDark={true} />}>
+              <ShowRelatedArticles selectedArticle={article} />
+            </Suspense>
           </>
         )}
       </div>

@@ -1,7 +1,11 @@
 import { useState } from "react";
 import Pagination from "../../components/Website/Pagination";
-import CryptoCard from "./CryptoCard";
+import { Suspense, lazy } from "react";
 import Coin from "../../types/Coin";
+
+const CryptoCard = lazy(() => import("./CryptoCard"))
+
+
 
 type CryptoListProps = {
   allCoins: Coin[];

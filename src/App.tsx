@@ -26,7 +26,7 @@ function App() {
         <Route index element={<Home />} />
         <Route path="/article/:idSlug" element={<Article />} />
         <Route path="crypto" element={<Crytpo />} />
-        <Route path="crypto/:cryptoname" element={<SingleCrypto />} />
+        <Route path="crypto/:cryptoId" element={<SingleCrypto />} />
         <Route path="weather" element={<Weather />} />
         <Route path="privacy-policy" element={<PrivacyPolicy />} />
         <Route path="licensing" element={<Licensing />} />

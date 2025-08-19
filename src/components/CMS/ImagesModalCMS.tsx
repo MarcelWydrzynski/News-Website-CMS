@@ -4,7 +4,7 @@ import UseFetchImages from "../../hooks/UseFetchImages";
 import LoaderCMS from "../Loader";
 import ErrorCMS from "../Error";
 import type { ChangeEvent } from "react";
-import Image from "../../types/image";
+import Image from "../../types/Image";
 
 type ImagesModalCMSProps = {
   openModal: boolean;

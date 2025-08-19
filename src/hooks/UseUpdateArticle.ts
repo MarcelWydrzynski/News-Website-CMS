@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // <-- import useNavigate
 import supabase from "../lib/supabase";
-import Article from "../types/article";
+import Article from "../types/Article";
 
 const useUpdateArticle = () => {
   const [loading, setLoading] = useState(false);
@@ -32,7 +32,7 @@ const useUpdateArticle = () => {
     } else {
       setSuccess(true);
       alert("The article has been updated. You will now be taken to the articles page :)");
-      navigate("/cms"); 
+      navigate("/cms");
     }
 
     setLoading(false);

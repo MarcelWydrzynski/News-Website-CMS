@@ -1,5 +1,5 @@
 import { Modal, ModalBody, ModalHeader } from "flowbite-react";
-import Article from "../../types/article";
+import Article from "../../types/Article";
 
 type ArticleModalProps = {
   openModal: boolean;

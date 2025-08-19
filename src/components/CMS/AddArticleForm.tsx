@@ -6,7 +6,7 @@ import UseFetchAuthors from "../../hooks/UseFetchAuthors";
 import ErrorCMS from "../Error";
 import { useNavigate } from "react-router";
 import RichTextEditor from "./RichTextEditor";
-import Image from "../../types/image";
+import Image from "../../types/Image";
 
 const AddArticleForm = () => {
   const [newArticle, setNewArticle] = useState({

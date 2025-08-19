@@ -1,5 +1,5 @@
 import { Modal, ModalBody, ModalHeader } from "flowbite-react";
-import Image from "../../types/image";
+import Image from "../../types/Image";
 
 type ImageModalCMSProps = {
   selectedImage: Image | null;
