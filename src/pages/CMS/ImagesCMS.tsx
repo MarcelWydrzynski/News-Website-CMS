@@ -9,10 +9,11 @@ import Image from "../../types/Image";
 
 const ImagesCMS = () => {
   const [selectedImages, setSelectedImages] = useState<Image[]>([]);
-  const { images, fetchingImagesError, fetchingImagesLoading } = UseFetchImages();
   const [openModal, setOpenModal] = useState(false);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const { images, error, loading } = UseFetchImages();
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>, image: Image) => {
     if (event.target.checked) {
@@ -40,23 +41,23 @@ const ImagesCMS = () => {
 
         {openModal ? <ImageModalCMS selectedImage={selectedImage} setOpenModal={setOpenModal} /> : null}
 
-        {fetchingImagesLoading && <LoaderCMS textDark={false} />}
-        {fetchingImagesError && <ErrorCMS errorMessage={fetchingImagesError} />}
+        {/* Loading */}
+        {loading && <LoaderCMS textDark={false} />}
+
+        {/* Error */}
+        {error && <ErrorCMS errorMessage={error} />}
 
         <div className="flex flex-wrap gap-y-8 gap-x-6 justify-center items-stretch">
-          {filteredImages.length === 0 && fetchingImagesLoading === false ? (
-            <p className="text-2xl text-white">No images stored in database</p>
-          ) : (
-            filteredImages.map((image) => (
-              <Card key={image.id} className="max-w-sm relative hover:scale-105 transition-all" imgSrc={image.url} imgAlt={image.name}>
-                <Checkbox className="absolute top-3 left-3 w-6 h-6" onChange={(e) => handleCheckboxChange(e, image)} />
-                <h4 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{image.name}</h4>
-                <Button className="w-fit self-end mt-auto" onClick={() => handleModal(image)}>
-                  Show Image
-                </Button>
-              </Card>
-            ))
-          )}
+          {filteredImages.length === 0 && loading === false && <p className="text-2xl text-white">No images stored in database</p>}
+          {filteredImages.map((image) => (
+            <Card key={image.id} className="max-w-sm relative hover:scale-105 transition-all" imgSrc={image.url} imgAlt={image.name}>
+              <Checkbox className="absolute top-3 left-3 w-6 h-6" onChange={(e) => handleCheckboxChange(e, image)} />
+              <h4 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{image.name}</h4>
+              <Button className="w-fit self-end mt-auto" onClick={() => handleModal(image)}>
+                Show Image
+              </Button>
+            </Card>
+          ))}
         </div>
       </div>
     </>

@@ -6,15 +6,15 @@ const CDNURL = "https://vhdzgbgquqmnfgcynhno.supabase.co/storage/v1/object/publi
 
 const UseFetchImages = () => {
   const [images, setImages] = useState<Image[]>([]);
-  const [fetchingImagesLoading, setFetchingImagesLoading] = useState<boolean>(true);
-  const [fetchingImagesError, setFetchingImagesError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   const getImages = async () => {
     const { data, error } = await supabase.storage.from("cmsstorage").list("");
 
     if (error) {
-      setFetchingImagesLoading(false);
-      setFetchingImagesError(error.message);
+      setLoading(false);
+      setError(error.message);
       console.log("New error:", error);
       return;
     }
@@ -35,8 +35,8 @@ const UseFetchImages = () => {
         .sort((a, b) => b.timestamp - a.timestamp);
 
       setImages(formattedData);
-      setFetchingImagesError(null);
-      setFetchingImagesLoading(false);
+      setError(null);
+      setLoading(false);
     }
   };
 
@@ -44,7 +44,7 @@ const UseFetchImages = () => {
     getImages();
   }, []);
 
-  return { images, fetchingImagesError, fetchingImagesLoading };
+  return { images, error, loading };
 };
 
 export default UseFetchImages;

@@ -1,5 +1,5 @@
 import { Modal, ModalBody, ModalHeader } from "flowbite-react";
-import Article from "../../types/Article";
+import Article from "../../types/article";
 
 type ArticleModalProps = {
   openModal: boolean;
@@ -8,6 +8,7 @@ type ArticleModalProps = {
 };
 
 const ArticleModal = ({ openModal, setOpenModal, article }: ArticleModalProps) => {
+
   return (
     <>
       <Modal dismissible show={openModal} size="6xl" onClose={() => setOpenModal(false)} popup>

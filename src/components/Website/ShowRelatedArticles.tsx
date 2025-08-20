@@ -1,10 +1,9 @@
 import Separator from "./Separator";
-import { Suspense, lazy } from "react";
 import Article from "../../types/article";
 import UseFetchArticles from "../../hooks/UseFetchArticles";
 import Loader from "../Loader";
 import Error from "../Error";
-const ArticleCard = lazy(() => import("./ArticleCard"));
+import ArticleCard from "./ArticleCard";
 
 type ShowRelatedArticlesProps = {
   selectedArticle: Article;
@@ -33,9 +32,7 @@ const ShowRelatedArticles = ({ selectedArticle }: ShowRelatedArticlesProps) => {
       {!loading && !error && filteredArticles.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-15">
           {filteredArticles.slice(0, 3).map((article) => (
-            <Suspense fallback={<Loader textDark={true} />} key={article.id}>
-              <ArticleCard article={article} width="100%" horizontal={false} />
-            </Suspense>
+            <ArticleCard article={article} width="100%" horizontal={false} />
           ))}
         </div>
       )}

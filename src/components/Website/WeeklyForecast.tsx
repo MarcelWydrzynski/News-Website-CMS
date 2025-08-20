@@ -35,7 +35,12 @@ const WeeklyForecast = ({ data }: WeeklyForecastProps) => {
               <p className="flex items-center w-1/3 font-semibold justify-center">🌡 {item.main.temp.toFixed(1)}°C</p>
               <p className="flex items-center w-1/3 font-semibold justify-center">💨 {item.wind.speed} m/s</p>
               <p className="w-1/3 justify-center flex items-center text-xs font-thin break-after-column gap-x-2">
-                <img src={`https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`} className="w-[40px] bg-gray-300 rounded-xl" alt="weather icon" />
+                <img
+                  src={`https://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
+                  className="w-[40px] bg-gray-300 rounded-xl"
+                  alt="weather icon"
+                  loading="lazy"
+                />
                 {item.weather[0].description}
               </p>
               <p className="flex items-center w-1/3 font-semibold justify-center">☁️ {item.clouds.all}%</p>

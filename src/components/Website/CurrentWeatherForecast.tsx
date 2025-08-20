@@ -59,7 +59,7 @@ const CurrentWeatherForecast = ({ current, forecast }: CurrentWeatherForecastPro
             <span className="font-thin capitalize">{current.weather[0].description}</span>
           </li>
           <li>
-            <img src={weatherIcon} alt="Weather icon" className="w-[60px] bg-gray-300 rounded-xl" />
+            <img src={weatherIcon} alt="Weather icon" className="w-[60px] bg-gray-300 rounded-xl" loading="lazy" />
           </li>
         </ul>
       </div>
@@ -95,7 +95,7 @@ const CurrentWeatherForecast = ({ current, forecast }: CurrentWeatherForecastPro
             return (
               <li key={index} className="flex flex-col gap-2 font-semibold justify-center items-center p-4 rounded-xl border">
                 <span className="font-thin">{`${time}:00`}</span>
-                <img src={iconUrl} alt="Forecast icon" className="w-[40px] bg-gray-300 rounded-xl" />
+                <img src={iconUrl} alt="Forecast icon" className="w-[40px] bg-gray-300 rounded-xl" loading="lazy"/>
                 <span>{Math.round(item.main.temp)}°C</span>
               </li>
             );

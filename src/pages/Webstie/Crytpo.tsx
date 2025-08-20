@@ -1,8 +1,10 @@
-import CryptoList from "../../components/Website/CryptoList";
-import CryptoSearchResults from "../../components/Website/CryptoSearchResults";
 import useFetchAllCrypto from "../../hooks/UseFetchAllCrytpo";
 import Error from "../../components/Error";
 import Loader from "../../components/Loader";
+import { Suspense, lazy } from "react";
+
+const CryptoList = lazy(() => import("../../components/Website/CryptoList"));
+const CryptoSearchResults = lazy(() => import("../../components/Website/../../components/Website/CryptoSearchResults"));
 
 const Crytpo = () => {
   const { allCoins, loading, error } = useFetchAllCrypto();
@@ -20,8 +22,10 @@ const Crytpo = () => {
         {!error && !loading && (
           <>
             <CryptoSearchResults allCoins={allCoins} />
+            <Suspense fallback={<Loader textDark={true} />}>
+              <CryptoList allCoins={allCoins} />
+            </Suspense>
 
-            <CryptoList allCoins={allCoins} />
             <div className="mt-20 text-center mb-0">
               <p className="select-none opacity-65 text-sm ">
                 Data provided by{" "}

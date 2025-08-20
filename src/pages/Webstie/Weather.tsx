@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import useCitySearch, { CitySuggestion } from "../../hooks/UseCitySearch";
 import useFetchCurrentWeather from "../../hooks/UseFetchCurrentWeather";
 import useFetchWeeklyForecast from "../../hooks/useFetchWeeklyForecasts";
-import CurrentWeatherForecast from "../../components/Website/CurrentWeatherForecast";
-import WeeklyForecast from "../../components/Website/WeeklyForecast";
 import LoaderCMS from "../../components/Loader";
 import Error from "../../components/Error";
+import { Suspense, lazy } from "react";
+
+const CurrentWeatherForecast = lazy(() => import("../../components/Website/CurrentWeatherForecast"));
+const WeeklyForecast = lazy(() => import("../../components/Website/WeeklyForecast"));
 
 const Weather = () => {
   const [query, setQuery] = useState("");
@@ -73,8 +75,10 @@ const Weather = () => {
             </div>
 
             <div className="py-10 w-full flex flex-wrap gap-y-10 items-stretch mx-auto">
-              <CurrentWeatherForecast current={weatherData} forecast={forecastData} />
-              <WeeklyForecast data={forecastData} />
+              <Suspense fallback={<LoaderCMS textDark={true} />}>
+                <CurrentWeatherForecast current={weatherData} forecast={forecastData} />
+                <WeeklyForecast data={forecastData} />
+              </Suspense>
             </div>
           </>
         )}
