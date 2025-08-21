@@ -1,5 +1,5 @@
 import supabase from "../lib/supabase";
-import Article from "../types/Article";
+import Article from "../types/ArticleType";
 
 const generateRandomID = () => Math.floor(Math.random() * 1_000_000_000);
 

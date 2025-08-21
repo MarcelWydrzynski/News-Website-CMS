@@ -1,24 +1,19 @@
 import React, { ChangeEvent } from "react";
 import { Card, Checkbox, Button } from "flowbite-react";
 import { Link } from "react-router-dom";
-import Article from "../../types/article";
+import ArticleType from "../../types/ArticleType";
 
 type ArticleCardCMSProps = {
-  article: Article;
-  setSelectedArticle: (article: Article) => void;
+  article: ArticleType;
+  setSelectedArticle: (article: ArticleType) => void;
   handleCheckboxChange: (event: ChangeEvent<HTMLInputElement>, article: Article) => void;
-  handleModal: (article: Article) => void;
+  handleModal: (article: ArticleType) => void;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ArticleCardCMS = ({ article, handleCheckboxChange, handleModal }: ArticleCardCMSProps) => {
   return (
-    <Card
-      key={article.id}
-      className="max-w-sm relative flex flex-col justify-between break-words"
-      imgAlt={article.title}
-      imgSrc={article.image}
-    >
+    <Card key={article.id} className="max-w-sm relative flex flex-col justify-between break-words" imgAlt={article.title} imgSrc={article.image}>
       <Checkbox className="absolute top-3 left-3 w-6 h-6" onChange={(event) => handleCheckboxChange(event, article)} />
 
       <div className="flex flex-col gap-2 flex-grow overflow-hidden">
@@ -36,7 +31,7 @@ const ArticleCardCMS = ({ article, handleCheckboxChange, handleModal }: ArticleC
         <Button className="mt-auto w-fit hover:scale-105 transition-all cursor-pointer" onClick={() => handleModal(article)}>
           Display article
         </Button>
-        <Link to={`edit-article`} state={article.id}>
+        <Link to={`edit-article/${article.id}`}>
           <Button className="mt-auto w-fit hover:scale-105 transition-all cursor-pointer">Edit Article</Button>
         </Link>
       </div>

@@ -1,19 +1,8 @@
 import { useState, useEffect } from "react";
 import supabase from "../lib/supabase";
+import Article from "../types/ArticleType";
 
-interface Article {
-  id: number;
-  author: string;
-  category: string;
-  title: string;
-  description: string;
-  lead: string;
-  image: string;
-  content: string;
-  date_created: string;
-}
-
-const UseFetchSingleArticle = (id: number) => {
+const UseFetchSingleArticle = (id?: string | number) => {
   const [article, setArticle] = useState<Article | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);

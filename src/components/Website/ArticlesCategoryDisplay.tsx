@@ -1,4 +1,4 @@
-import Article from "../../types/Article";
+import Article from "../../types/ArticleType";
 import ArticleCard from "./ArticleCard";
 
 type ArticlesCategoryDisplayProps = {

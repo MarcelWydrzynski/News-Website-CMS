@@ -1,28 +1,23 @@
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router";
 import UseFetchSingleArticle from "../../hooks/UseFetchSingleArticle";
 import EditArticleForm from "../../components/CMS/EditArticleForm";
-import { Spinner } from "flowbite-react";
+import Loader from "../../components/Loader";
+import Error from "../../components/Error";
 
 const EditArticle = () => {
-  const location = useLocation();
-  const articleId = location.state;
-  const { article, loading, error } = UseFetchSingleArticle(articleId);
-
-  if (loading) {
-    return (
-      <div className="w-full flex justify-center mt-10">
-        <Spinner size="xl" />
-      </div>
-    );
-  }
-
-  if (error || !article) {
-    return <div className="w-full flex justify-center mt-10 text-red-600 font-semibold">Error loading article: {error || "Article not found."}</div>;
-  }
+  const { idSlug } = useParams();
+  const { article, loading, error } = UseFetchSingleArticle(idSlug);
 
   return (
     <div className="w-full flex justify-center">
-      <EditArticleForm article={article} />
+      {/* Loading */}
+      {loading && <Loader textDark={false} />}
+
+      {/* Error */}
+      {error && <Error errorMessage="Cound not fetch article data. Please try again later" />}
+
+      {/* Render content */}
+      {!loading && !error && article && <EditArticleForm article={article}/>}
     </div>
   );
 };

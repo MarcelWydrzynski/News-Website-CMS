@@ -1,4 +1,4 @@
-type Article = {
+type ArticleType = {
   id: number;
   author: string;
   category: string;
@@ -9,4 +9,4 @@ type Article = {
   content: string;
 };
 
-export default Article;
+export default ArticleType;

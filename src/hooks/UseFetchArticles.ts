@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import supabase from "../lib/supabase";
-import Article from "../types/article";
+import Article from "../types/ArticleType";
 
 const UseFetchArticles = () => {
   const [articles, setArticles] = useState<Article[]>([]);

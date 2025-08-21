@@ -1,8 +1,8 @@
 import ArticleCard from "./ArticleCard";
-import Article from "../../types/article";
+import ArticleType from "../../types/ArticleType";
 
 type LatestArticlesProps = {
-  articles: Article[];
+  articles: ArticleType[];
 };
 
 const LatestArticles = ({ articles }: LatestArticlesProps) => {

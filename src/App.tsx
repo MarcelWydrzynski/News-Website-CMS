@@ -8,7 +8,7 @@ import AddArticle from "./pages/CMS/AddArticleCMS";
 import EditArticle from "./pages/CMS/EditArticleCMS";
 import AuthorsCMS from "./pages/CMS/AuthorsCMS";
 import Home from "./pages/Webstie/Home";
-import Article from "./pages/Webstie/Article";
+import ArticlePage from "./pages/Webstie/ArticlePage";
 import Crytpo from "./pages/Webstie/Crytpo";
 import PrivacyPolicy from "./pages/Webstie/PrivacyPolicy";
 import Licensing from "./pages/Webstie/Licensing";
@@ -24,7 +24,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="/article/:idSlug" element={<Article />} />
+        <Route path="/article/:idSlug" element={<ArticlePage />} />
         <Route path="crypto" element={<Crytpo />} />
         <Route path="crypto/:cryptoId" element={<SingleCrypto />} />
         <Route path="weather" element={<Weather />} />
@@ -39,7 +39,7 @@ function App() {
         <Route path="images" element={<ImagesCMS />} />
         <Route path="authors" element={<AuthorsCMS />} />
         <Route path="add-article" element={<AddArticle />} />
-        <Route path="edit-article" element={<EditArticle />} />
+        <Route path="edit-article/:idSlug" element={<EditArticle />} />
         <Route path="*" element={<LostPage textDark={false}/>} />
       </Route>
     </Routes>

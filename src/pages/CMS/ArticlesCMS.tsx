@@ -6,7 +6,7 @@ import ArticlesFiltersCMS from "../../components/CMS/ArticlesFiltersCMS";
 import deleteArticles from "../../hooks/UseDeleteArticles";
 import ArticleModal from "../../components/CMS/ArticleModal";
 import ArticleCardCMS from "../../components/CMS/ArticleCardCMS";
-import Article from "../../types/article";
+import Article from "../../types/ArticleType";
 
 const ArticlesCMS = () => {
   const [selectedArticles, setSelectedArticles] = useState<number[]>([]);

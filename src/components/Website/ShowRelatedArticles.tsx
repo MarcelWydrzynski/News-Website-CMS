@@ -1,5 +1,5 @@
 import Separator from "./Separator";
-import Article from "../../types/article";
+import Article from "../../types/ArticleType";
 import UseFetchArticles from "../../hooks/UseFetchArticles";
 import Loader from "../Loader";
 import Error from "../Error";

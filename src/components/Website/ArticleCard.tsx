@@ -1,10 +1,10 @@
 import { Card, Button } from "flowbite-react";
 import { Link } from "react-router-dom";
 import slugify from "../../utils/slugify";
-import Article from "../../types/article";
+import ArticleType from "../../types/ArticleType";
 
 type ArticleCardProps = {
-  article: Article;
+  article: ArticleType;
   width: string;
   horizontal: boolean;
 };

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"; // <-- import useNavigate
 import supabase from "../lib/supabase";
-import Article from "../types/Article";
+import Article from "../types/ArticleType";
 
 const useUpdateArticle = () => {
   const [loading, setLoading] = useState(false);

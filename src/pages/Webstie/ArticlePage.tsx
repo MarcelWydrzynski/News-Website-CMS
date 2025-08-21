@@ -4,26 +4,15 @@ import Loader from "../../components/Loader";
 import Error from "../../components/Error";
 import { Suspense, lazy } from "react";
 import { useParams } from "react-router";
+import type Article from "../../types/ArticleType";
 
 const ShowRelatedArticles = lazy(() => import("../../components/Website/ShowRelatedArticles"));
-
-type Article = {
-  id: number;
-  author: string;
-  category: string;
-  title: string;
-  description: string;
-  lead: string;
-  image: string;
-  content: string;
-  date_created: string;
-};
 
 const renderHtmlContent = (htmlString: string) => {
   return <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: htmlString }} />;
 };
 
-const Article = () => {
+const ArticlePage = () => {
   const { idSlug } = useParams();
   const articleId = parseInt(idSlug?.split("-")[0] || "", 10);
   console.log(idSlug);
@@ -60,4 +49,4 @@ const Article = () => {
   );
 };
 
-export default Article;
+export default ArticlePage;
