@@ -2,6 +2,7 @@ import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
 import UseFetchAuthors from "../../hooks/UseFetchAuthors";
 import { SubmitHandler, useForm } from "react-hook-form";
 import ArticleType from "../../types/ArticleType";
+import Error from "../Error";
 
 type FormFields = {
   title: string;
@@ -20,35 +21,63 @@ type EditArticleFormProps = {
 const EditArticleForm = ({ article }: EditArticleFormProps) => {
   const { authors } = UseFetchAuthors();
 
-  const { register } = useForm<FormFields>()
-  
-  const onSubmit: SubmitHandler<FormFields> = (data) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormFields>();
 
+  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     console.log(data);
-  }
+  };
 
   return (
     <>
-      <form className="flex w-4/5 flex-col gap-4 mx-auto" >
+      <form className="flex w-4/5 flex-col gap-4 mx-auto" onSubmit={handleSubmit(onSubmit)}>
         <div>
           <Label htmlFor="articleTitle">Title</Label>
-          <TextInput {...register("title")} id="articleTitle" type="text" />
+          <TextInput
+            {...register("title", {
+              required: "Title is required",
+              minLength: {
+                value: 30,
+                message: "Title must have at least 30 characters",
+              },
+              maxLength: {
+                value: 70,
+                message: "Title must be shorther then 70 characters",
+              },
+            })}
+            id="articleTitle"
+            type="text"
+            defaultValue={article.title}
+          />
+          {errors.title && <div className=" text-red-500">{errors.title.message}</div>}
         </div>
 
         <div>
           <Label htmlFor="articleDescription">Description</Label>
-          <TextInput {...register("description")} id="articleDescription" type="text" />
+          <TextInput
+            {...(register("description"),
+            {
+              required: true,
+            })}
+            id="articleDescription"
+            type="text"
+            defaultValue={article.description}
+          />
         </div>
 
         <div>
           <Label htmlFor="articleLead">Lead</Label>
-          <Textarea {...register("lead")}  id="articleLead" rows={4} />
+          <Textarea {...register("lead")} id="articleLead" rows={4} defaultValue={article.lead} />
         </div>
 
         <div className="flex gap-4 justify-end flex-wrap max-[800px]:justify-center">
           <div className="max-w-md">
             <Label htmlFor="categories">Select your Category</Label>
-            <Select {...register("category")}  id="categories">
+            <Select {...register("category")} id="categories" defaultValue={article.category}>
               <option value="" disabled>
                 Select category
               </option>
@@ -62,7 +91,7 @@ const EditArticleForm = ({ article }: EditArticleFormProps) => {
 
           <div className="max-w-md">
             <Label htmlFor="authors">Select your Author</Label>
-            <Select {...register("author")} id="authors">
+            <Select {...register("author")} id="authors" defaultValue={article.author}>
               <option value="" disabled>
                 Select Author
               </option>
@@ -75,7 +104,7 @@ const EditArticleForm = ({ article }: EditArticleFormProps) => {
           </div>
         </div>
 
-        <Button type="submit" className="w-fit self-end max-[800px]:self-center">
+        <Button disabled={isSubmitting} type="submit" className="cursor-pointer select-none w-fit self-end max-[800px]:self-center">
           Update article
         </Button>
       </form>
