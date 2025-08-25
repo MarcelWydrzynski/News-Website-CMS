@@ -1,49 +1,48 @@
 import React from "react";
-import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Card, Checkbox } from "flowbite-react";
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Card } from "flowbite-react";
 import UseFetchImages from "../../hooks/UseFetchImages";
 import LoaderCMS from "../Loader";
 import ErrorCMS from "../Error";
-import type { ChangeEvent } from "react";
 import Image from "../../types/Image";
 
 type ImagesModalCMSProps = {
   openModal: boolean;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  handleCheckboxChecked: (event: ChangeEvent<HTMLInputElement>, image: Image) => void;
-  selectedImage: Image | null;
-  setEditedArticle: React.Dispatch<React.SetStateAction<any>>;
+  value: string; // current selected image url
+  onChange: (url: string) => void; // pass back to RHF
 };
 
-const ImagesModalCMS: React.FC<ImagesModalCMSProps> = ({ openModal, setOpenModal, handleCheckboxChecked, selectedImage, setEditedArticle }) => {
-  const { images, fetchingImagesError, fetchingImagesLoading } = UseFetchImages();
+const ImagesModalCMS: React.FC<ImagesModalCMSProps> = ({ openModal, setOpenModal, value, onChange }) => {
+  const { images, error, loading } = UseFetchImages();
 
   const handleProceed = () => {
-    if (selectedImage) {
-      setEditedArticle((prev: object) => ({ ...prev, image: selectedImage.url }));
-      setOpenModal(false);
-    } else {
-      alert("Please select a image to proceed with");
+    if (!value) {
+      alert("Please select an image to proceed");
       return;
     }
+    setOpenModal(false);
   };
 
   return (
     <Modal dismissible show={openModal} onClose={() => setOpenModal(false)} size="7xl">
-      <ModalHeader>Select a image for you article and hit proceed</ModalHeader>
-      <ModalBody className="">
-        {fetchingImagesLoading ? <LoaderCMS textDark={false} /> : null}
-        {fetchingImagesError ? <ErrorCMS errorMessage={fetchingImagesError} /> : null}
+      <ModalHeader>Select an image for your article and hit proceed</ModalHeader>
+      <ModalBody>
+        {loading && <LoaderCMS textDark={false} />}
+        {error && <ErrorCMS errorMessage={error} />}
+
         <div className="flex flex-wrap gap-x-4 gap-y-6 justify-center items-center">
           {images.length === 0 ? (
             <p className="text-2xl text-white">No images stored in database</p>
           ) : (
-            images.map((image) => (
-              <Card key={image.id} className="max-w-sm relative hover:scale-105 transition-all" imgSrc={image.url} imgAlt={image.name}>
-                <Checkbox
-                  className="absolute top-3 left-3 w-6 h-6"
-                  checked={selectedImage?.id === image.id}
-                  onChange={(e) => handleCheckboxChecked(e, image)}
-                />
+            images.map((image: Image) => (
+              <Card
+                key={image.id}
+                className={`max-w-sm relative hover:scale-105 transition-all cursor-pointer 
+                  ${value === image.url ? "ring-4 ring-blue-500" : ""}`}
+                imgSrc={image.url}
+                imgAlt={image.name}
+                onClick={() => onChange(image.url)}
+              >
                 <p className="font-normal text-gray-700 dark:text-gray-400">{image.name}</p>
               </Card>
             ))
