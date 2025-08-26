@@ -5,7 +5,6 @@ import ArticleType from "../../types/ArticleType";
 import RichTextEditor from "../CMS/RichTextEditor";
 import ImagesModalCMS from "../CMS/ImagesModalCMS";
 import { useState } from "react";
-import type Image from "../../types/Image";
 import useUpdateArticle from "../../hooks/UseUpdateArticle";
 
 type FormFields = {
@@ -25,7 +24,6 @@ type EditArticleFormProps = {
 const EditArticleForm = ({ article }: EditArticleFormProps) => {
   const { authors } = UseFetchAuthors();
   const [openModal, setOpenModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
 
   const { updateArticle, loading, error } = useUpdateArticle();
 
@@ -33,6 +31,7 @@ const EditArticleForm = ({ article }: EditArticleFormProps) => {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors },
   } = useForm<FormFields>({
     defaultValues: {
@@ -47,11 +46,11 @@ const EditArticleForm = ({ article }: EditArticleFormProps) => {
   });
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    // include id so Supabase can match row
     const updatedArticle = { ...data, id: article.id };
     await updateArticle(updatedArticle);
   };
 
+  console.log(article.author);
   return (
     <>
       <form className="flex w-4/5 flex-col gap-4 mx-auto" onSubmit={handleSubmit(onSubmit)}>
@@ -78,7 +77,7 @@ const EditArticleForm = ({ article }: EditArticleFormProps) => {
             type="text"
             {...register("description", {
               required: "Description is required",
-              validate: (v) => v.trim() !== "" || "Description cannot be empty",
+              minLength: { value: 150, message: "Description must be at least 150 characters" },
             })}
           />
           {errors.description && <p className="text-red-500">{errors.description.message}</p>}
@@ -92,8 +91,8 @@ const EditArticleForm = ({ article }: EditArticleFormProps) => {
             rows={4}
             {...register("lead", {
               required: "Lead is required",
-              maxLength: { value: 300, message: "Max 300 characters" },
-              validate: (v) => v.trim() !== "" || "Lead cannot be empty",
+              maxLength: { value: 300, message: "Lead cannot be longer then 300 characters" },
+               minLength: { value: 100, message: "Lead must be at least 100 characters" },
             })}
           />
           {errors.lead && <p className="text-red-500">{errors.lead.message}</p>}
@@ -119,7 +118,7 @@ const EditArticleForm = ({ article }: EditArticleFormProps) => {
           {errors.content && <p className="text-red-500">{errors.content.message}</p>}
         </div>
 
-        {/* Category & Author */}
+        {/* Category */}
         <div className="flex gap-4 justify-end flex-wrap max-[800px]:justify-center">
           <div className="max-w-md">
             <Label htmlFor="categories">Select Category</Label>
@@ -134,10 +133,11 @@ const EditArticleForm = ({ article }: EditArticleFormProps) => {
             {errors.category && <p className="text-red-500">{errors.category.message}</p>}
           </div>
 
+          {/* Author*/}
           <div className="max-w-md">
             <Label htmlFor="authors">Select Author</Label>
             <Select id="authors" {...register("author", { required: "Author is required" })}>
-              <option value="">Select Author</option>
+              <option> {article.author}</option>
               {authors.map((author) => (
                 <option key={author.name} value={author.name}>
                   {author.name}
@@ -146,17 +146,18 @@ const EditArticleForm = ({ article }: EditArticleFormProps) => {
             </Select>
             {errors.author && <p className="text-red-500">{errors.author.message}</p>}
           </div>
+
+          {/* Image */}
+          <div className="max-w-md">
+            \<Label htmlFor="authors">Select Author</Label>
+            <Button type="button" onClick={() => setOpenModal(true)} className="self-end">
+              {watch("image") ? watch("image").split("/").pop() : "Select Image"}
+            </Button>
+          </div>
         </div>
 
-        {/* Image */}
-        <div>
-          <Label>Article Image</Label>
-          <Button type="button" onClick={() => setOpenModal(true)} className="mt-2">
-            {selectedImage ? "Change Image" : "Select Image"}
-          </Button>
-          {errors.image && <p className="text-red-500">{errors.image.message}</p>}
-        </div>
-
+        {/* Errors */}
+        {errors.image && <p className="text-red-500">{errors.image.message}</p>}
         {error && <p className="text-red-500">{error}</p>}
 
         <Button disabled={loading} type="submit" className="cursor-pointer select-none w-fit self-end max-[800px]:self-center">

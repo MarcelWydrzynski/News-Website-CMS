@@ -8,8 +8,8 @@ import Image from "../../types/Image";
 type ImagesModalCMSProps = {
   openModal: boolean;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  value: string; // current selected image url
-  onChange: (url: string) => void; // pass back to RHF
+  value: string; 
+  onChange: (url: string) => void;
 };
 
 const ImagesModalCMS: React.FC<ImagesModalCMSProps> = ({ openModal, setOpenModal, value, onChange }) => {

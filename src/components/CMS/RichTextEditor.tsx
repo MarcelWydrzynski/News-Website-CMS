@@ -31,7 +31,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ value, onChange }) => {
   };
 
   return (
-    <div className=" rounded-md  bg-[#374151]">
+    <div className=" rounded-md  bg-[#374151] overflow-auto">
       <div className="flex gap-2 bg-[#374151] p-2 rounded-t-md border-b-1">
         <button
           type="button"
