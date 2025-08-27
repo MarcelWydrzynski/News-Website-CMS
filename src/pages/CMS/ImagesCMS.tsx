@@ -1,8 +1,8 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, Suspense } from "react";
 import { Button, Card, Checkbox } from "flowbite-react";
 import UseFetchImages from "../../hooks/UseFetchImages";
-import ErrorCMS from "../../components/Error";
-import LoaderCMS from "../../components/Loader";
+import Error from "../../components/Error";
+import Loader from "../../components/Loader";
 import ImagesFiltersCMS from "../../components/CMS/ImagesFiltersCMS";
 import ImageModalCMS from "../../components/CMS/ImageModalCMS";
 import Image from "../../types/Image";
@@ -42,22 +42,24 @@ const ImagesCMS = () => {
         {openModal ? <ImageModalCMS selectedImage={selectedImage} setOpenModal={setOpenModal} /> : null}
 
         {/* Loading */}
-        {loading && <LoaderCMS textDark={false} />}
+        {loading && <Loader textDark={false} />}
 
         {/* Error */}
-        {error && <ErrorCMS errorMessage={error} />}
+        {error && <Error errorMessage={error} />}
 
         <div className="flex flex-wrap gap-y-8 gap-x-6 justify-center items-stretch">
           {filteredImages.length === 0 && loading === false && <p className="text-2xl text-white">No images stored in database</p>}
-          {filteredImages.map((image) => (
-            <Card key={image.id} className="max-w-sm relative hover:scale-105 transition-all" imgSrc={image.url} imgAlt={image.name}>
-              <Checkbox className="absolute top-3 left-3 w-6 h-6" onChange={(e) => handleCheckboxChange(e, image)} />
-              <h4 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{image.name}</h4>
-              <Button className="w-fit self-end mt-auto" onClick={() => handleModal(image)}>
-                Show Image
-              </Button>
-            </Card>
-          ))}
+          <Suspense fallback={<Loader textDark={false} />}>
+            {filteredImages.map((image) => (
+              <Card key={image.id} className="max-w-sm relative hover:scale-105 transition-all" imgSrc={image.url} imgAlt={image.name}>
+                <Checkbox className="absolute top-3 left-3 w-6 h-6" onChange={(e) => handleCheckboxChange(e, image)} />
+                <h4 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{image.name}</h4>
+                <Button className="w-fit self-end mt-auto" onClick={() => handleModal(image)}>
+                  Show Image
+                </Button>
+              </Card>
+            ))}
+          </Suspense>
         </div>
       </div>
     </>

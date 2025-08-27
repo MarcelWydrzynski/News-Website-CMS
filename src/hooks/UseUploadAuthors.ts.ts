@@ -1,13 +1,13 @@
 import supabase from "../lib/supabase";
-import Author from "../types/Author";
 const generateRandomID = () => Math.floor(Math.random() * 1_000_000_000);
 
-const uploadAuthor = async (author: Author) => {
+const uploadAuthor = async (author: string) => {
   const authorWithId = {
-    ...author,
+    name: author,
     id: generateRandomID(),
     created_at: new Date(),
   };
+  console.log(authorWithId);
   const { error } = await supabase.from("authors").insert([authorWithId]);
   alert("New author has been added the page will now reload");
   location.reload();

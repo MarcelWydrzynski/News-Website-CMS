@@ -12,18 +12,18 @@ type Author = {
 
 const CategoriesCMS = () => {
   const { authors } = UseFetchAuthors();
-  const [selectedAuthors, setSelectedAuthors] = useState<number[]>([]);
+
+  const [selectedAuthors, setSelectedAuthors] = useState<Author[]>([]);
   const [modal, setModal] = useState(false);
 
   const handleModal = () => setModal(true);
 
   const handleCheckBox = (event: React.ChangeEvent<HTMLInputElement>, author: Author) => {
     if (event.target.checked) {
-      setSelectedAuthors((prev) => [...prev, author.id]);
+      setSelectedAuthors((prev) => [...prev, { id: author.id, name: author.name, created_at: author.created_at }]);
     } else {
-      setSelectedAuthors((prev) => [...prev.filter((id) => id === author.id)]);
+      setSelectedAuthors((prev) => [...prev.filter((author) => author.id !== author.id)]);
     }
-    console.log(selectedAuthors);
     return;
   };
 
@@ -35,7 +35,7 @@ const CategoriesCMS = () => {
         {authors.length === 0 ? (
           <p className="text-2xl text-white">No authors stored in database</p>
         ) : (
-          authors.reverse().map((author) => (
+          [...authors].reverse().map((author) => (
             <Card key={author.id} className="max-w-sm relative hover:scale-105 transition-all p-8">
               <Checkbox className="absolute top-3 left-3 w-6 h-6" onChange={(event) => handleCheckBox(event, author)} />
               <h4 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{author.name}</h4>

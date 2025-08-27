@@ -1,11 +1,11 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, Suspense, lazy } from "react";
 import UseFetchArticles from "../../hooks/UseFetchArticles";
 import Error from "../../components/Error";
 import Loader from "../../components/Loader";
 import ArticlesFiltersCMS from "../../components/CMS/ArticlesFiltersCMS";
 import deleteArticles from "../../hooks/UseDeleteArticles";
 import ArticleModal from "../../components/CMS/ArticleModal";
-import ArticleCardCMS from "../../components/CMS/ArticleCardCMS";
+const ArticleCardCMS = lazy(() => import("../../components/CMS/ArticleCardCMS"));
 import Article from "../../types/ArticleType";
 
 const ArticlesCMS = () => {
@@ -55,18 +55,20 @@ const ArticlesCMS = () => {
         {filteredArticles.length === 0 && !loading && <p className="text-2xl text-white">No articles found</p>}
 
         {/*Render content */}
-        {!loading &&
-          !error &&
-          filteredArticles.map((article) => (
-            <ArticleCardCMS
-              key={article.id}
-              article={article}
-              setSelectedArticle={setSelectedArticle}
-              handleCheckboxChange={handleCheckboxChange}
-              handleModal={handleModal}
-              setOpenModal={setOpenModal}
-            />
-          ))}
+        {!loading && !error && (
+          <Suspense fallback={<Loader textDark={false} />}>
+            {filteredArticles.map((article) => (
+              <ArticleCardCMS
+                key={article.id}
+                article={article}
+                setSelectedArticle={setSelectedArticle}
+                handleCheckboxChange={handleCheckboxChange}
+                handleModal={handleModal}
+                setOpenModal={setOpenModal}
+              />
+            ))}
+          </Suspense>
+        )}
       </div>
     </div>
   );

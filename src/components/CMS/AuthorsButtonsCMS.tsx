@@ -1,20 +1,30 @@
-import {  Button, } from "flowbite-react";
+import { Button } from "flowbite-react";
 import deleteAuthors from "../../hooks/UseDeleteAuthors";
+import UseFetchArticles from "../../hooks/UseFetchArticles";
+import Author from "../../types/Author";
 
 type Props = {
   handleModal: () => void;
-  selectedAuthors: number[];
+  selectedAuthors: Author[];
 };
 
 const AuthorsButtonsCMS = ({ handleModal, selectedAuthors }: Props) => {
+  const { articles } = UseFetchArticles();
+
   const handleDelete = () => {
     if (selectedAuthors.length === 0) {
       alert("Please select author/authors to delete");
       return;
-    } else {
-      deleteAuthors(selectedAuthors);
+    }
+
+    const authorsWithArticles = selectedAuthors.filter((author) => articles.some((article) => article.author === author.name));
+
+    if (authorsWithArticles.length > 0) {
+      alert(`Cannot delete author(s) with existing articles: ${authorsWithArticles.map((a) => a.name).join(", ")}`);
       return;
     }
+
+    deleteAuthors(selectedAuthors.map((author) => author.id));
   };
 
   return (

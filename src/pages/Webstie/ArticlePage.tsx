@@ -4,7 +4,6 @@ import Loader from "../../components/Loader";
 import Error from "../../components/Error";
 import { Suspense, lazy } from "react";
 import { useParams } from "react-router";
-import type Article from "../../types/ArticleType";
 
 const ShowRelatedArticles = lazy(() => import("../../components/Website/ShowRelatedArticles"));
 
