@@ -3,7 +3,7 @@ import Article from "../types/ArticleType";
 
 const generateRandomID = () => Math.floor(Math.random() * 1_000_000_000);
 
-const uploadArticle = async (article: Article, navigate: Function) => {
+const uploadArticle = async (article: Article) => {
   const articleWithIdplusDate = {
     ...article,
     id: generateRandomID(),
@@ -14,12 +14,10 @@ const uploadArticle = async (article: Article, navigate: Function) => {
 
   if (error) {
     console.error("Upload Error", error.message);
-    alert("Failed to upload article: " + error.message);
-    return;
+    throw new Error("Failed to upload article: " + error.message);
   }
 
-  alert("The article has been uploaded. You will now be taken to the articles page :)");
-  navigate("/cms");
+  return true; 
 };
 
 export default uploadArticle;

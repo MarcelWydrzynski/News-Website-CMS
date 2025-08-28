@@ -50,7 +50,6 @@ const EditArticleForm = ({ article }: EditArticleFormProps) => {
     await updateArticle(updatedArticle);
   };
 
-  console.log(article.author);
   return (
     <>
       <form className="flex w-4/5 flex-col gap-4 mx-auto" onSubmit={handleSubmit(onSubmit)}>
@@ -63,7 +62,7 @@ const EditArticleForm = ({ article }: EditArticleFormProps) => {
             {...register("title", {
               required: "Title is required",
               minLength: { value: 30, message: "Must be at least 30 characters" },
-              maxLength: { value: 70, message: "Cannot exceed 70 characters" },
+              maxLength: { value: 70, message: "Title cannot exceed 70 cahrcters" },
             })}
           />
           {errors.title && <p className="text-red-500">{errors.title.message}</p>}
@@ -77,7 +76,7 @@ const EditArticleForm = ({ article }: EditArticleFormProps) => {
             type="text"
             {...register("description", {
               required: "Description is required",
-              minLength: { value: 150, message: "Description must be at least 150 characters" },
+              minLength: { value: 50, message: "Description must be at least 50 characters" },
             })}
           />
           {errors.description && <p className="text-red-500">{errors.description.message}</p>}
@@ -92,7 +91,7 @@ const EditArticleForm = ({ article }: EditArticleFormProps) => {
             {...register("lead", {
               required: "Lead is required",
               maxLength: { value: 300, message: "Lead cannot be longer then 300 characters" },
-               minLength: { value: 100, message: "Lead must be at least 100 characters" },
+              minLength: { value: 100, message: "Lead must be at least 100 characters" },
             })}
           />
           {errors.lead && <p className="text-red-500">{errors.lead.message}</p>}
@@ -109,7 +108,8 @@ const EditArticleForm = ({ article }: EditArticleFormProps) => {
               validate: (val) => {
                 const plain = val.replace(/<[^>]+>/g, "").trim();
                 if (!plain) return "Content cannot be empty";
-                if (plain.length > 3000) return "Max 3000 characters";
+                if (plain.length < 300) return "Content should have min 300 characters";
+                if (plain.length > 3000) return "Content should have max 3000 characters";
                 return true;
               },
             }}
@@ -153,12 +153,9 @@ const EditArticleForm = ({ article }: EditArticleFormProps) => {
             <Button type="button" onClick={() => setOpenModal(true)} className="self-end">
               {watch("image") ? watch("image").split("/").pop() : "Select Image"}
             </Button>
+            {errors.image && <p className="text-red-500">{errors.image.message}</p>}
           </div>
         </div>
-
-        {/* Errors */}
-        {errors.image && <p className="text-red-500">{errors.image.message}</p>}
-        {error && <p className="text-red-500">{error}</p>}
 
         <Button disabled={loading} type="submit" className="cursor-pointer select-none w-fit self-end max-[800px]:self-center">
           {loading ? "Updating..." : "Update article"}

@@ -1,219 +1,160 @@
-import { useState, ChangeEvent } from "react";
+import { useState } from "react";
 import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
 import ImagesModalCMS from "./ImagesModalCMS";
-import uploadArticle from "../../hooks/UseUploadArticle";
 import UseFetchAuthors from "../../hooks/UseFetchAuthors";
-import ErrorCMS from "../Error";
 import { useNavigate } from "react-router";
 import RichTextEditor from "./RichTextEditor";
-import Image from "../../types/Image";
+import { SubmitHandler, useForm, Controller } from "react-hook-form";
+import UseUploadArticle from "../../hooks/UseUploadArticle";
 
+type FormFiels = {
+  id: number;
+  title: string;
+  description: string;
+  lead: string;
+  category: string;
+  author: string;
+  content: string;
+  image: string;
+};
 const AddArticleForm = () => {
-  const [newArticle, setNewArticle] = useState({
-    id: 0,
-    title: "",
-    author: "",
-    category: "",
-    lead: "",
-    image: "",
-    content: "",
-    description: "",
-  });
-  const [error, setError] = useState({
-    errorstate: false,
-    errorMessage: "",
-  });
+  const navigate = useNavigate(); // ✅ hook
+
   const { authors } = UseFetchAuthors();
-  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [openModal, setOpenModal] = useState(false);
-  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    formState: { errors },
+  } = useForm<FormFiels>({});
 
-  const handleCheckboxChecked = (event: ChangeEvent<HTMLInputElement>, image: Image) => {
-    if (event.target.checked) {
-      setSelectedImage(image);
-      setNewArticle((prev) => ({ ...prev, image: image.url }));
-    } else {
-      setSelectedImage(null);
-      setNewArticle((prev) => ({ ...prev, image: "" }));
-    }
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const handleFormValidation = () => {
-    let errorMessage = "";
-    if (newArticle.title.trim().length === 0) {
-      errorMessage = "Title cannot be empty";
-    } else if (newArticle.title.length < 20) {
-      errorMessage = "Title must be at least 20 characters";
-    } else if (newArticle.title.length > 70) {
-      errorMessage = "Title must be less than 70 characters";
-    } else if (newArticle.description.trim().length === 0) {
-      errorMessage = "Description cannot be empty";
-    } else if (newArticle.description.trim().length >= 100) {
-      errorMessage = "Description cannot be longer than 100 characters";
-    } else if (newArticle.lead.length < 100) {
-      errorMessage = "Lead must be at least 100 characters";
-    } else if (newArticle.content.replace(/<[^>]+>/g, "").length < 500) {
-      errorMessage = "Content must be at least 500 characters";
-    } else if (newArticle.image.length === 0) {
-      errorMessage = "Please select an image";
-    } else if (newArticle.category.length === 0) {
-      errorMessage = "Category must be selected";
-    } else if (newArticle.author.length === 0) {
-      errorMessage = "Author cannot be empty";
-    }
-
-    if (errorMessage) {
-      setError({ errorstate: true, errorMessage });
-      scrollToTop();
-      return;
-    }
-
-    setError({ errorstate: false, errorMessage: "" });
-    uploadArticle(newArticle, navigate);
+  const onSubmit: SubmitHandler<FormFiels> = async (data) => {
+    const newArticle = { ...data };
+    await UseUploadArticle(newArticle);
+    alert("The article has been uploaded. You will now be taken back to the articles page");
+    navigate("/cms"); // ✅ function, not a component
   };
 
   return (
     <>
-      {openModal && (
-        <ImagesModalCMS
-          openModal={openModal}
-          setOpenModal={setOpenModal}
-          handleCheckboxChecked={handleCheckboxChecked}
-          selectedImage={selectedImage}
-          setEditedArticle={setNewArticle}
-        />
-      )}
-      <form
-        className="flex w-4/5 flex-col gap-4"
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleFormValidation();
-        }}
-      >
-        {error.errorstate ? <ErrorCMS errorMessage={error.errorMessage} /> : <p className="opacity-0 text-xl">Error placeholder</p>}
-
+      <form className="flex w-4/5 flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+        {/* Title */}
         <div>
           <Label htmlFor="articleTitle">Title</Label>
           <TextInput
             id="articleTitle"
             type="text"
-            value={newArticle.title}
-            color={error.errorMessage.includes("Title") ? "failure" : "gray"}
-            onChange={(e) =>
-              setNewArticle((prev) => ({
-                ...prev,
-                title: e.target.value,
-              }))
-            }
+            {...register("title", {
+              required: "Title is required",
+              minLength: { value: 30, message: "Must be at least 30 character" },
+              maxLength: { value: 70, message: "Title cannot exceed 70 cahrcters" },
+            })}
           />
+          {errors.title && <p className="text-red-500">{errors.title.message}</p>}
         </div>
 
+        {/* Description */}
         <div>
           <Label htmlFor="articleDescription">Description</Label>
           <TextInput
             id="articleDescription"
             type="text"
-            value={newArticle.description}
-            color={error.errorMessage.includes("Description") ? "failure" : "gray"}
-            onChange={(e) =>
-              setNewArticle((prev) => ({
-                ...prev,
-                description: e.target.value,
-              }))
-            }
+            {...register("description", {
+              required: "Description is required",
+              minLength: { value: 50, message: "Description must be at least 50 characters" },
+            })}
           />
+          {errors.description && <p className="text-red-500">{errors.description.message}</p>}
         </div>
 
+        {/* Lead */}
         <div>
           <Label htmlFor="articleLead">Lead</Label>
           <Textarea
             id="articleLead"
             rows={4}
-            value={newArticle.lead}
-            color={error.errorMessage.includes("Lead") ? "failure" : "gray"}
-            onChange={(e) =>
-              setNewArticle((prev) => ({
-                ...prev,
-                lead: e.target.value,
-              }))
-            }
+            {...register("lead", {
+              required: "Lead is required",
+              maxLength: { value: 300, message: "Lead cannot be longer then 300 characters" },
+              minLength: { value: 100, message: "Lead must be at least 100 characters" },
+            })}
           />
+          {errors.lead && <p className="text-red-500">{errors.lead.message}</p>}
         </div>
 
+        {/* Content */}
         <div>
-          <Label>Content</Label>
-          <RichTextEditor
-            value={newArticle.content}
-            onChange={(html) =>
-              setNewArticle((prev) => ({
-                ...prev,
-                content: html,
-              }))
-            }
+          <Label htmlFor="articleContent">Content</Label>
+          <Controller
+            control={control}
+            name="content"
+            rules={{
+              required: "Content is required",
+              validate: (val) => {
+                const plain = val.replace(/<[^>]+>/g, "").trim();
+                if (!plain) return "Content cannot be empty";
+                if (plain.length < 300) return "Content should have min 300 characters";
+                if (plain.length > 3000) return "Content should have max 3000 characters";
+                return true;
+              },
+            }}
+            render={({ field }) => <RichTextEditor value={field.value} onChange={field.onChange} />}
           />
+          {errors.content && <p className="text-red-500">{errors.content.message}</p>}
         </div>
 
+        {/* Category */}
         <div className="flex gap-4 justify-end flex-wrap max-[800px]:justify-center">
-          <Button type="button" className="self-end" color={error.errorMessage.includes("image") ? "red" : "gray"} onClick={() => setOpenModal(true)}>
-            {selectedImage === null ? "Select your image" : selectedImage.name}
-          </Button>
-
           <div className="max-w-md">
-            <Label htmlFor="categories">Select your Category</Label>
-            <Select
-              id="categories"
-              value={newArticle.category}
-              color={error.errorMessage.includes("Category") ? "failure" : "gray"}
-              onChange={(e) =>
-                setNewArticle((prev) => ({
-                  ...prev,
-                  category: e.target.value,
-                }))
-              }
-            >
-              <option value="" disabled>
-                Select category
-              </option>
+            <Label htmlFor="categories">Select Category</Label>
+            <Select id="categories" {...register("category", { required: "Category is required" })}>
+              <option value="">Select category</option>
               <option value="Tech">Tech</option>
               <option value="Politics">Politics</option>
               <option value="Business">Business</option>
               <option value="Sports">Sports</option>
               <option value="Crypto">Crypto</option>
             </Select>
+            {errors.category && <p className="text-red-500">{errors.category.message}</p>}
           </div>
 
+          {/* Author*/}
           <div className="max-w-md">
-            <Label htmlFor="authors">Select your Author</Label>
-            <Select
-              id="authors"
-              value={newArticle.author}
-              color={error.errorMessage.includes("Author") ? "failure" : "gray"}
-              onChange={(e) =>
-                setNewArticle((prev) => ({
-                  ...prev,
-                  author: e.target.value,
-                }))
-              }
-            >
-              <option value="" disabled>
-                Select Author
-              </option>
+            <Label htmlFor="authors">Select Author</Label>
+            <Select id="authors" {...register("author", { required: "Author is required" })}>
+              <option></option>
               {authors.map((author) => (
                 <option key={author.name} value={author.name}>
                   {author.name}
                 </option>
               ))}
             </Select>
+            {errors.author && <p className="text-red-500">{errors.author.message}</p>}
+          </div>
+
+          {/* Image */}
+          <div className="max-w-md">
+            \<Label htmlFor="authors">Select Author</Label>
+            <Button type="button" onClick={() => setOpenModal(true)} className="self-end">
+              {watch("image") ? watch("image").split("/").pop() : "Select Image"}
+            </Button>
+            {errors.image && <p className="text-red-500">{errors.image.message}</p>}
           </div>
         </div>
 
-        <Button type="submit" className="w-fit self-end max-[800px]:self-center">
-          Submit
+        <Button type="submit" className="cursor-pointer select-none w-fit self-end max-[800px]:self-center">
+          Upload Article
         </Button>
+
+        {/* Images Modal */}
+        <Controller
+          control={control}
+          name="image"
+          rules={{ required: "Image is required" }}
+          render={({ field }) => <ImagesModalCMS openModal={openModal} setOpenModal={setOpenModal} value={field.value} onChange={field.onChange} />}
+        />
       </form>
     </>
   );
