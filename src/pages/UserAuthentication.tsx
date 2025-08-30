@@ -1,38 +1,82 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { TextInput, Button } from "flowbite-react";
-import Error from "../components/Error";
+import { useAuth } from "../Context/AuthContext";
+
+type FormData = {
+  email: string;
+  password: string;
+  username: string;
+};
 
 const UserAuthentication = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState<FormData>({
+    email: "",
+    password: "",
+    username: "",
+  });
+
+  const { user, loading, error, signUp, signIn, signOut } = useAuth();
+  const [isLogin, setIsLogin] = useState(false); // toggle between login/signup
+
+  // Update state when user types
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Handle form submit
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (isLogin) {
+      await signIn(formData.email, formData.password);
+    } else {
+      await signUp(formData.email, formData.password, formData.username);
+    }
+  };
+
+  if (loading) return <div>Loading...</div>;
+
+  if (user)
+    return (
+      <div className="text-white bg-black">
+        <h1>Welcome, {user.email}</h1>
+        <p>You are logged in!</p>
+        <button onClick={signOut}> log Out</button>
+      </div>
+    );
 
   return (
-    <div className="w-dvw h-dvh bg-[#10141c]">
-      <form
-        className="select-none w-2/3 p-15 flex flex-col gap-5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-lg bg-gray-800"
-      >
-        <h1 className="text-white text-3xl text-center">Sign up</h1>
+    <div className="w-dvw h-dvh bg-[#10141c] flex justify-center items-center">
+      <form className="w-2/3 p-10 flex flex-col gap-5 rounded-lg bg-gray-800" onSubmit={handleSubmit}>
+        <h1 className="text-white text-3xl text-center">{isLogin ? "Login" : "Sign Up"}</h1>
+
+        {error && <p className="text-red-500">{error}</p>}
 
         <div className="text-white w-full">
           <label htmlFor="email">E-mail</label>
-          <TextInput type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <TextInput type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
         </div>
 
         <div className="text-white w-full">
           <label htmlFor="password">Password</label>
-          <TextInput type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <TextInput type="password" id="password" name="password" value={formData.password} onChange={handleChange} required />
         </div>
 
-        {error && <Error errorMessage={error} />}
+        {!isLogin && (
+          <div className="text-white w-full">
+            <label htmlFor="username">Username</label>
+            <TextInput type="text" id="username" name="username" value={formData.username} onChange={handleChange} required />
+          </div>
+        )}
 
-        <div className="w-fit mx-auto text-white flex gap-2 flex-col items-center">
-          <Button type="submit" disabled={loading} className="cursor-pointer">
-            Register!
+        <div className="w-fit mx-auto text-white flex flex-col gap-2 items-center">
+          <Button type="submit" className="cursor-pointer">
+            {isLogin ? "Login" : "Register"}
           </Button>
           <p className="text-sm">
-            Or, <span className="cursor-pointer text-[#8394b6] hover:text-[#23478e] ">sign in</span>
+            <span className="cursor-pointer text-[#8394b6] hover:text-[#23478e]" onClick={() => setIsLogin(!isLogin)}>
+              {isLogin ? "Switch to Sign Up" : "Switch to Login"}
+            </span>
           </p>
         </div>
       </form>

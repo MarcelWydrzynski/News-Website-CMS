@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import useScrollToTop from "./utils/ScrollToTop.ts"; // <-- Import the hook
 import Layout from "./components/Website/Layout";
 import HomeCMS from "./pages/CMS/HomeCMS";
 import ArticlesCMS from "./pages/CMS/ArticlesCMS";
@@ -17,13 +16,11 @@ import LostPage from "./pages/Webstie/LostPage.tsx";
 import SingleCrypto from "./pages/Webstie/SingleCrypto";
 import Weather from "./pages/Webstie/Weather.tsx";
 import UserAuthentication from "./pages/UserAuthentication.tsx";
-import { AuthContextProvider } from "./Context/AuthContext.tsx";
+import { AuthProvider } from "./Context/AuthContext.tsx";
 
 function App() {
-  useScrollToTop();
-
   return (
-    <AuthContextProvider>
+    <AuthProvider>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
@@ -47,7 +44,7 @@ function App() {
         </Route>
         <Route path="user-authentication" element={<UserAuthentication />} />
       </Routes>
-    </AuthContextProvider>
+    </AuthProvider>
   );
 }
 

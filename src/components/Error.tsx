@@ -4,7 +4,7 @@ type ErrorProps = {
 };
 
 const Error = ({ errorMessage }: ErrorProps) => {
-  return <p className="text-center select-none text-xl text-rose-400 text-shadow-black">{errorMessage}</p>;
+  return <p className="text-center select-none text-xl text-red-400">{errorMessage}</p>;
 };
 
 export default Error;
