@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import supabase from "../lib/supabase";
 import type { User } from "@supabase/supabase-js";
+import { useNavigate } from "react-router";
 
 // Define what our context provides
 type AuthContextType = {
@@ -17,6 +18,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Provider component
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -48,7 +50,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       password,
       options: { data: { username } },
     });
-    if (error) setError(error.message);
+    if (error) {
+      setError(error.message);
+    } else {
+      if (window.history.length > 1) {
+        navigate(-1);
+      } else {
+        navigate("/");
+      }
+    }
     setLoading(false);
   };
 
@@ -57,7 +67,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setError(null);
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) setError(error.message);
+    if (error) {
+      setError(error.message);
+    } else {
+      if (window.history.length > 1) {
+        navigate(-1);
+      } else {
+        navigate("/");
+      }
+    }
     setLoading(false);
   };
 

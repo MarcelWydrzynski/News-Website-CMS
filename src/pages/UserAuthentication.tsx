@@ -16,15 +16,16 @@ const UserAuthentication = () => {
   });
 
   const { user, loading, error, signUp, signIn, signOut } = useAuth();
-  const [isLogin, setIsLogin] = useState(false); // toggle between login/signup
+  const [isLogin, setIsLogin] = useState(false);
+  {
+    console.log(user);
+  }
 
-  // Update state when user types
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle form submit
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isLogin) {

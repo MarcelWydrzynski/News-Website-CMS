@@ -1,20 +1,10 @@
 import { MegaMenu, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from "flowbite-react";
 import Logo from "../../../public/czelad-times-high-resolution-logo.png";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../Context/AuthContext";
 
 function Header() {
-  const today = new Date();
-  const month = today.getMonth() + 1;
-  const year = today.getFullYear();
-  const date = today.getDate();
-  const currentDate = `${date}/${month}/${year}`;
-
-  const hours = today.getHours();
-  const minutes = today.getMinutes();
-  const formattedHours = hours % 12 || 12;
-  const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
-  const isPM = hours >= 12;
-  const currentTime = `${formattedHours}:${formattedMinutes} ${isPM ? "PM" : "AM"}`;
+  const { user } = useAuth();
 
   return (
     <MegaMenu className="bg-transparent! py-2 w-full border-b-1 select-none">
@@ -25,7 +15,13 @@ function Header() {
       </NavbarBrand>
       <div className="flex md:order-2 gap-2">
         <p className="text-md">
-          {currentDate} {currentTime}
+          {user ? (
+            <p>{`Hello, ${user.user_metadata.username}`} </p>
+          ) : (
+            <Link to="/user-authentication">
+              <p>Please log in</p>
+            </Link>
+          )}
         </p>
       </div>
       <NavbarToggle className="hover:bg-[#dbdbdbe3]! focus:ring-transparent!" />
