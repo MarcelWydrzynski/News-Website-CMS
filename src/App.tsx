@@ -17,6 +17,7 @@ import SingleCrypto from "./pages/Webstie/SingleCrypto";
 import Weather from "./pages/Webstie/Weather.tsx";
 import UserAuthentication from "./pages/UserAuthentication.tsx";
 import { AuthProvider } from "./Context/AuthContext.tsx";
+import FavoriteArticles from "./pages/Webstie/FavoriteArticles.tsx";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="crypto" element={<Crytpo />} />
           <Route path="crypto/:cryptoId" element={<SingleCrypto />} />
           <Route path="weather" element={<Weather />} />
+          <Route path="favorite-articles" element={<FavoriteArticles />} />
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
           <Route path="licensing" element={<Licensing />} />
           <Route path="terms-conditions" element={<TermsAndConditions />} />
