@@ -4,8 +4,9 @@ type User = {
   options: {
     data: {
       username: string;
+      articles: number[];
     };
   };
 };
 
-export default User
+export default User;

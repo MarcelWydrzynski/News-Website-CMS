@@ -11,6 +11,7 @@ type AuthContextType = {
   signUp: (email: string, password: string, username: string) => Promise<void>;
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
+  addArticleToUser: (id: number) => Promise<void>;
 };
 
 // Create the context
@@ -48,7 +49,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { username } },
+      options: { data: { username, articles: [] } },
     });
     if (error) {
       setError(error.message);
@@ -85,7 +86,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (error) setError(error.message);
   };
 
-  return <AuthContext.Provider value={{ user, loading, error, signUp, signIn, signOut }}>{children}</AuthContext.Provider>;
+  // Add articles to user favorites
+  const addArticleToUser = async (id: number) => {
+    if (!user) return;
+
+    const userArticles = await supabase.auth.getUser();
+
+    console.log(userArticles, id);
+  };
+
+  return <AuthContext.Provider value={{ user, loading, error, signUp, signIn, signOut, addArticleToUser }}>{children}</AuthContext.Provider>;
 };
 
 // Custom hook for using auth context

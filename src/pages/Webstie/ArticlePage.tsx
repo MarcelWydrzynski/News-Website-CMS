@@ -4,6 +4,8 @@ import Loader from "../../components/Loader";
 import Error from "../../components/Error";
 import { Suspense, lazy } from "react";
 import { useParams } from "react-router";
+import { Button } from "flowbite-react";
+import { useAuth } from "../../Context/AuthContext";
 
 const ShowRelatedArticles = lazy(() => import("../../components/Website/ShowRelatedArticles"));
 
@@ -17,10 +19,20 @@ const ArticlePage = () => {
   console.log(idSlug);
   const { article, loading, error } = UseFetchSingleArticle(articleId);
 
+  const { addArticleToUser } = useAuth();
+
   return (
     <>
       <div className="w-full">
-        <ReturnButton path={"/"} />
+        <div className="w-full flex justify-between">
+          <ReturnButton path={"/"} />
+          <Button
+            onClick={() => addArticleToUser(articleId)}
+            className="!bg-transparent text-black border w-fit self-end mt-auto hover:!bg-white focus:!ring-transparent hover:cursor-pointer select-none hover:scale-110 transition-all"
+          >
+            add to favorites
+          </Button>
+        </div>
 
         {/* Loading */}
         {loading && <Loader textDark={true} />}
