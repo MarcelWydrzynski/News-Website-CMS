@@ -2,7 +2,7 @@ import { MegaMenu, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from 
 import Logo from "../../../public/czelad-times-high-resolution-logo.png";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext";
-import { Dropdown, DropdownItem, Button } from "flowbite-react";
+import { Dropdown, Button } from "flowbite-react";
 
 function Header() {
   const { user, signOut } = useAuth();
@@ -22,14 +22,14 @@ function Header() {
             <Dropdown
               label={`Hello, ${user.user_metadata.username}`}
               dismissOnClick={false}
-              className="bg-white! text-black! cursor-pointer! focus:ring-transparent!"
+              className="bg-transparent! border-1 text-black! cursor-pointer! focus:ring-transparent!"
             >
-              <DropdownItem className="text-black! hover:bg-gray-200!">
+              <li className="text-black hover:bg-gray-200 p-2 bg-white">
                 <Link to={"favorite-articles"}>Favorite articles</Link>
-              </DropdownItem>
-              <DropdownItem className="text-black! hover:bg-gray-200!" onClick={() => signOut()}>
+              </li>
+              <li className="text-black hover:bg-gray-200 p-2 bg-white" onClick={() => signOut()}>
                 Sign out
-              </DropdownItem>
+              </li>
             </Dropdown>
           ) : (
             <Link to="/user-authentication">
