@@ -12,6 +12,7 @@ type AuthContextType = {
   signIn: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   addArticleToUser: (id: number) => Promise<void>;
+  cleanError: () => void;
 };
 
 // Create the context
@@ -46,11 +47,34 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const signUp = async (email: string, password: string, username: string) => {
     setError(null);
     setLoading(true);
+
+    // Step 1: Pre-check if email exists
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password: "wrongpassword123", 
+    });
+
+    if (signInError && signInError.message !== "Invalid login credentials") {
+      // Some other error (e.g., network), stop here
+      setError(signInError.message);
+      setLoading(false);
+      return;
+    }
+
+    if (signInError?.message === "Invalid login credentials") {
+      // Means email exists, but password is wrong
+      setError("This email is already registered. Try logging in instead.");
+      setLoading(false);
+      return;
+    }
+
+    // Step 2: Continue with real signup
     const { error } = await supabase.auth.signUp({
       email,
       password,
       options: { data: { username, articles: [] } },
     });
+
     if (error) {
       setError(error.message);
     } else {
@@ -60,12 +84,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         navigate("/");
       }
     }
+
     setLoading(false);
   };
 
   // Sign in function
   const signIn = async (email: string, password: string) => {
-    setError(null);
     setLoading(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
@@ -95,7 +119,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     console.log(userArticles, id);
   };
 
-  return <AuthContext.Provider value={{ user, loading, error, signUp, signIn, signOut, addArticleToUser }}>{children}</AuthContext.Provider>;
+  // Clear error function
+  const cleanError = () => setError(null);
+
+  return <AuthContext.Provider value={{ user, loading, error, signUp, signIn, signOut, addArticleToUser, cleanError }}>{children}</AuthContext.Provider>;
 };
 
 // Custom hook for using auth context

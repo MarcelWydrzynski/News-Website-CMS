@@ -34,7 +34,7 @@ function Header() {
           ) : (
             <Link to="/user-authentication">
               <Button className="!bg-transparent text-black border w-fit self-end mt-auto hover:!bg-white focus:!ring-transparent hover:cursor-pointer select-none hover:scale-110 transition-all">
-                Please log in
+                Sign in
               </Button>
             </Link>
           )}
@@ -46,6 +46,7 @@ function Header() {
         <Link to={"/"}>
           <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2 border-none! text-center">Articles</NavbarLink>
         </Link>
+
         <Link to={"crypto"}>
           <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2 border-none! text-center">Crypto</NavbarLink>
         </Link>
@@ -53,9 +54,16 @@ function Header() {
         <Link to={"weather"}>
           <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2 border-none! text-center">Weather</NavbarLink>
         </Link>
-        <Link to={"cms"}>
-          <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2 border-none! text-center">Go to CMS</NavbarLink>
-        </Link>
+
+        {user ? (
+          <Link to={"cms"}>
+            <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2 border-none! text-center">Go to CMS</NavbarLink>
+          </Link>
+        ) : (
+          <Link to={"user-authentication"}>
+            <NavbarLink className="text-black! hover:cursor-pointer hover:bg-transparent! p-4! rounded-2xl mt-2 border-none! text-center">Go to CMS</NavbarLink>
+          </Link>
+        )}
       </NavbarCollapse>
     </MegaMenu>
   );
