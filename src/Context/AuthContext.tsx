@@ -13,15 +13,16 @@ type AuthContextType = {
   signOut: () => Promise<void>;
   addArticleToUser: (id: number) => Promise<void>;
   cleanError: () => void;
+  userArticles: number[];
 };
 
 // Create the context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Provider component
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
+  const [userArticles, setUserArticles] = useState<number[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,6 +31,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const checkUser = async () => {
       const { data } = await supabase.auth.getUser();
       setUser(data.user ?? null);
+      setUserArticles(data.user?.user_metadata.articles || []); // ✅ load from metadata
       setLoading(false);
     };
     checkUser();
@@ -39,6 +41,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
+      setUserArticles(session?.user?.user_metadata.articles || []); // ✅ keep in sync
     });
     return () => listener.subscription.unsubscribe();
   }, []);
@@ -48,27 +51,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setError(null);
     setLoading(true);
 
-    // Step 1: Pre-check if email exists
-    const { error: signInError } = await supabase.auth.signInWithPassword({
-      email,
-      password: "wrongpassword123", 
-    });
-
-    if (signInError && signInError.message !== "Invalid login credentials") {
-      // Some other error (e.g., network), stop here
-      setError(signInError.message);
-      setLoading(false);
-      return;
-    }
-
-    if (signInError?.message === "Invalid login credentials") {
-      // Means email exists, but password is wrong
-      setError("This email is already registered. Try logging in instead.");
-      setLoading(false);
-      return;
-    }
-
-    // Step 2: Continue with real signup
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -110,19 +92,50 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (error) setError(error.message);
   };
 
-  // Add articles to user favorites
+  // Add/remove articles from favorites
   const addArticleToUser = async (id: number) => {
     if (!user) return;
 
-    const userArticles = await supabase.auth.getUser();
+    let updatedArticles: number[];
 
-    console.log(userArticles, id);
+    if (userArticles.includes(id)) {
+      updatedArticles = userArticles.filter((articleId) => articleId !== id);
+    } else {
+      updatedArticles = [...userArticles, id];
+    }
+
+    // ✅ update state
+    setUserArticles(updatedArticles);
+
+    // ✅ persist changes to Supabase metadata
+    const { error } = await supabase.auth.updateUser({
+      data: { ...user.user_metadata, articles: updatedArticles },
+    });
+
+    if (error) {
+      setError(error.message);
+    }
   };
 
-  // Clear error function
   const cleanError = () => setError(null);
 
-  return <AuthContext.Provider value={{ user, loading, error, signUp, signIn, signOut, addArticleToUser, cleanError }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        error,
+        signUp,
+        signIn,
+        signOut,
+        addArticleToUser,
+        cleanError,
+        userArticles,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 // Custom hook for using auth context

@@ -7,8 +7,6 @@ import { Dropdown, Button } from "flowbite-react";
 function Header() {
   const { user, signOut } = useAuth();
 
-  console.log(user);
-
   return (
     <MegaMenu className="bg-transparent! py-2 w-full border-b-1 select-none">
       <NavbarBrand>
