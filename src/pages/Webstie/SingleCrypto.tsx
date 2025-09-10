@@ -14,9 +14,7 @@ const SingleCrypto = () => {
     date: new Date(timestamp).toLocaleDateString("en-US", { month: "short", day: "numeric" }),
     price: Number(price.toFixed(2)),
   }));
-  {
-    console.log(selectedCrypto);
-  }
+
   return (
     <>
       <ReturnButton path={"/crypto"} />

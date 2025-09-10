@@ -13,7 +13,7 @@ type AuthContextType = {
   signOut: () => Promise<void>;
   addArticleToUser: (id: number) => Promise<void>;
   cleanError: () => void;
-  userArticles: number[];
+  userFavoriteArticles: number[];
 };
 
 // Create the context
@@ -22,7 +22,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
-  const [userArticles, setUserArticles] = useState<number[]>([]);
+  const [userFavoriteArticles, setUserFavoriteArticles] = useState<number[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const checkUser = async () => {
       const { data } = await supabase.auth.getUser();
       setUser(data.user ?? null);
-      setUserArticles(data.user?.user_metadata.articles || []); // ✅ load from metadata
+      setUserFavoriteArticles(data.user?.user_metadata.articles || []); // ✅ load from metadata
       setLoading(false);
     };
     checkUser();
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
-      setUserArticles(session?.user?.user_metadata.articles || []); // ✅ keep in sync
+      setUserFavoriteArticles(session?.user?.user_metadata.articles || []); // ✅ keep in sync
     });
     return () => listener.subscription.unsubscribe();
   }, []);
@@ -82,14 +82,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       } else {
         navigate("/");
       }
+      alert("You have been logged in. You can now acces the CMS page.");
     }
+
     setLoading(false);
   };
 
   // Sign out function
   const signOut = async () => {
     const { error } = await supabase.auth.signOut();
-    if (error) setError(error.message);
+    if (error) {
+      setError(error.message);
+      return;
+    }
+
+    // check if current URL contains "cms"
+    if (window.location.pathname.includes("cms")) {
+      navigate("/"); // force redirect to homepage
+    } else {
+      navigate(0);
+    }
   };
 
   // Add/remove articles from favorites
@@ -98,16 +110,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     let updatedArticles: number[];
 
-    if (userArticles.includes(id)) {
-      updatedArticles = userArticles.filter((articleId) => articleId !== id);
+    if (userFavoriteArticles.includes(id)) {
+      updatedArticles = userFavoriteArticles.filter((articleId) => articleId !== id);
     } else {
-      updatedArticles = [...userArticles, id];
+      updatedArticles = [...userFavoriteArticles, id];
     }
+    setUserFavoriteArticles(updatedArticles);
 
-    // ✅ update state
-    setUserArticles(updatedArticles);
-
-    // ✅ persist changes to Supabase metadata
     const { error } = await supabase.auth.updateUser({
       data: { ...user.user_metadata, articles: updatedArticles },
     });
@@ -130,7 +139,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         signOut,
         addArticleToUser,
         cleanError,
-        userArticles,
+        userFavoriteArticles,
       }}
     >
       {children}

@@ -3,7 +3,7 @@ import UseFetchSingleArticle from "../../hooks/UseFetchSingleArticle";
 import Loader from "../../components/Loader";
 import Error from "../../components/Error";
 import { Suspense, lazy } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import { Button } from "flowbite-react";
 import { useAuth } from "../../Context/AuthContext";
 
@@ -17,20 +17,22 @@ const ArticlePage = () => {
   const { idSlug } = useParams();
   const articleId = parseInt(idSlug?.split("-")[0] || "", 10);
   const { article, loading, error } = UseFetchSingleArticle(articleId);
-  const { addArticleToUser, userArticles } = useAuth();
-
-  const isFavorite = userArticles.includes(articleId);
+  const { addArticleToUser, userFavoriteArticles, user } = useAuth();
+  const navigate = useNavigate();
+  const isFavorite = userFavoriteArticles.includes(articleId);
 
   return (
     <div className="w-full">
       <div className="w-full flex justify-between">
-        <ReturnButton path={"/"} />
-        <Button
-          onClick={() => addArticleToUser(articleId)}
-          className="!bg-transparent text-black border w-fit self-end mt-auto hover:!bg-white focus:!ring-transparent hover:cursor-pointer select-none hover:scale-110 transition-all"
-        >
-          {isFavorite ? "Remove from favorites" : "Add to favorites"}
-        </Button>
+        <ReturnButton />
+        {user && (
+          <Button
+            onClick={() => addArticleToUser(articleId)}
+            className="!bg-transparent text-black border w-fit self-end mt-auto hover:!bg-white focus:!ring-transparent hover:cursor-pointer select-none hover:scale-105 transition-all"
+          >
+            {isFavorite ? "Remove from favorites" : "Add to favorites"}
+          </Button>
+        )}
       </div>
 
       {/* Loading */}

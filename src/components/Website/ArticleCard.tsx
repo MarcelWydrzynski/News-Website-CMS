@@ -10,6 +10,8 @@ type ArticleCardProps = {
 };
 
 const ArticleCard = ({ article, width, horizontal }: ArticleCardProps) => {
+
+
   return (
     <>
       {/* Desktop card */}

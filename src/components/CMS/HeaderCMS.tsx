@@ -1,7 +1,7 @@
 import { Button, MegaMenu, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from "flowbite-react";
 import { Link } from "react-router";
 import { useAuth } from "../../Context/AuthContext";
-import { Dropdown } from "flowbite-react";
+import { Dropdown, DropdownItem } from "flowbite-react";
 
 function HeaderCMS() {
   const { user, signOut } = useAuth();
@@ -13,21 +13,20 @@ function HeaderCMS() {
         </NavbarBrand>
       </Link>
 
-      <div className="order-2 hidden items-center md:flex">
-        {user ? (
-          <Dropdown label={`Hello, ${user.user_metadata.username}`} dismissOnClick={false}>
-            <li>
-              <Link to={"/favorite-articles"}>Favorite articles</Link>
-            </li>
-            <li onClick={() => signOut()}>Sign out</li>
-          </Dropdown>
-        ) : (
-          <Link to="/user-authentication">
-            <Button className="!bg-transparent text-black border w-fit self-end mt-auto hover:!bg-white focus:!ring-transparent hover:cursor-pointer select-none hover:scale-110 transition-all">
-              Sign in
-            </Button>
-          </Link>
-        )}
+      <div className="flex md:order-2 gap-2">
+        <p className="text-md">
+          {user ? (
+            <Dropdown label={`Hello, ${user.user_metadata.username}`} dismissOnClick={true}>
+              <DropdownItem onClick={signOut}>Sign out</DropdownItem>
+            </Dropdown>
+          ) : (
+            <Link to="/user-authentication">
+              <Button className="!bg-transparent text-black border w-fit self-end mt-auto hover:!bg-white focus:!ring-transparent hover:cursor-pointer select-none hover:scale-110 transition-all">
+                Sign in
+              </Button>
+            </Link>
+          )}
+        </p>
       </div>
       <NavbarToggle />
       <NavbarCollapse>
