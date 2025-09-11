@@ -5,7 +5,7 @@ import Error from "../../components/Error";
 import Loader from "../../components/Loader";
 import ImagesFiltersCMS from "../../components/CMS/ImagesFiltersCMS";
 import ImageModalCMS from "../../components/CMS/ImageModalCMS";
-import { ImageType } from "../../types/ImageType";
+import ImageType from "../../types/ImageType";
 
 const ImagesCMS = () => {
   const [selectedImages, setSelectedImages] = useState<ImageType[]>([]);
