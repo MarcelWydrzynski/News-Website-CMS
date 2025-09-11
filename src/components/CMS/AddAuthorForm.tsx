@@ -1,5 +1,6 @@
 import { Button, Modal, ModalBody, Label, TextInput } from "flowbite-react";
 import { useState } from "react";
+import { useAuth } from "../../Context/AuthContext.tsx";
 import Error from "../Error.tsx";
 import uploadAuthor from "../../hooks/UseUploadAuthors.ts";
 
@@ -9,6 +10,8 @@ type Props = {
 };
 
 const AddAuthorForm = ({ openModal, setOpenModal }: Props) => {
+  const { user } = useAuth();
+
   const [input, setNewInput] = useState<string>("");
   const [error, setError] = useState({
     errorstate: false,
@@ -16,14 +19,19 @@ const AddAuthorForm = ({ openModal, setOpenModal }: Props) => {
   });
 
   const validateForm = () => {
+    if (user?.user_metadata.admin === false) {
+      alert("Only admins can upload new authors.");
+      return;
+    }
+    
     if (input.trim().length === 0) {
       setError({
         errorstate: true,
         errorMessage: "Author input cannot be empty",
       });
-    } else {
-      uploadAuthor(input);
     }
+
+    uploadAuthor(input);
   };
   return (
     <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>

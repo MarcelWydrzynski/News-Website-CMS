@@ -1,4 +1,5 @@
 import { Button } from "flowbite-react";
+import { useAuth } from "../../Context/AuthContext";
 import deleteAuthors from "../../hooks/UseDeleteAuthors";
 import UseFetchArticles from "../../hooks/UseFetchArticles";
 import Author from "../../types/Author";
@@ -10,6 +11,7 @@ type Props = {
 
 const AuthorsButtonsCMS = ({ handleModal, selectedAuthors }: Props) => {
   const { articles } = UseFetchArticles();
+  const { user } = useAuth();
 
   const handleDelete = () => {
     if (selectedAuthors.length === 0) {
@@ -23,7 +25,10 @@ const AuthorsButtonsCMS = ({ handleModal, selectedAuthors }: Props) => {
       alert(`Cannot delete author(s) with existing articles: ${authorsWithArticles.map((a) => a.name).join(", ")}`);
       return;
     }
-
+    if (user?.user_metadata.admin === false) {
+      alert("Only admins can delete authors");
+      return;
+    }
     deleteAuthors(selectedAuthors.map((author) => author.id));
   };
 

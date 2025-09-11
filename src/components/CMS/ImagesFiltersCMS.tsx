@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from "react";
 import { TextInput, Button, FileInput, Label } from "flowbite-react";
+import { useAuth } from "../../Context/AuthContext";
 import uploadImage from "../../hooks/UseUploadImage";
 import deleteImages from "../../hooks/UseDeleteImages";
 import Image from "../../types/Image";
@@ -11,6 +12,8 @@ type ImagesFiltersCMSProps = {
 
 const ImagesFiltersCMS: React.FC<ImagesFiltersCMSProps> = ({ selectedImages, onSearch }) => {
   const [file, setFile] = useState<File>();
+
+  const { user } = useAuth();
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
@@ -29,10 +32,19 @@ const ImagesFiltersCMS: React.FC<ImagesFiltersCMSProps> = ({ selectedImages, onS
       alert("Please upload a jpg/jpeg/png image");
       return;
     }
+
+    if (user?.user_metadata.admin === false) {
+      alert("Only admins can upload new images.");
+      return;
+    }
     uploadImage(file);
   };
 
   const handleDelete = () => {
+    if (user?.user_metadata.admin === false) {
+      alert("Only admins can delete images.");
+      return;
+    }
     if (selectedImages.length > 0) {
       deleteImages(selectedImages.map((image) => image.name));
     } else {

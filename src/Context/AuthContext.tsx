@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { username, articles: [] } },
+      options: { data: { username, articles: [], admin: false } },
     });
 
     if (error) {
@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         navigate("/");
       }
     }
-
+    alert("You have been registered. Please confirm your e-mail and log in :)");
     setLoading(false);
   };
 

@@ -2,7 +2,7 @@ import { Modal, ModalBody, ModalHeader } from "flowbite-react";
 import Image from "../../types/Image";
 
 type ImageModalCMSProps = {
-  selectedImage: Image;
+  selectedImage: Image | null;
   setOpenModal: (open: boolean) => void;
 };
 
@@ -12,7 +12,7 @@ const ImageModalCMS = ({ selectedImage, setOpenModal }: ImageModalCMSProps) => {
       <ModalHeader />
       <ModalBody>
         <div className="flex flex-col gap-4 flex-grow items-center">
-          <img src={selectedImage.url} alt={selectedImage.name} id={selectedImage?.id} />
+          <img src={selectedImage?.url} alt={selectedImage?.name} id={selectedImage?.id} />
           <p className="text-lg text-gray-700 dark:text-gray-200">{selectedImage?.name}</p>
         </div>
       </ModalBody>

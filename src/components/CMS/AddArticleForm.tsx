@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
+import { useNavigate } from "react-router";
+import { SubmitHandler, useForm, Controller } from "react-hook-form";
+import { useAuth } from "../../Context/AuthContext";
+import { Link } from "react-router-dom";
+import RichTextEditor from "./RichTextEditor";
+import useUploadArticle from "../../hooks/UseUploadArticle";
 import ImagesModalCMS from "./ImagesModalCMS";
 import UseFetchAuthors from "../../hooks/UseFetchAuthors";
-import { useNavigate } from "react-router";
-import RichTextEditor from "./RichTextEditor";
-import { SubmitHandler, useForm, Controller } from "react-hook-form";
-import UseUploadArticle from "../../hooks/UseUploadArticle";
 
 type FormFiels = {
   id: number;
@@ -18,7 +20,9 @@ type FormFiels = {
   image: string;
 };
 const AddArticleForm = () => {
-  const navigate = useNavigate(); // ✅ hook
+  const navigate = useNavigate();
+  const { uploadArticle } = useUploadArticle();
+  const { user } = useAuth();
 
   const { authors } = UseFetchAuthors();
   const [openModal, setOpenModal] = useState(false);
@@ -31,10 +35,14 @@ const AddArticleForm = () => {
   } = useForm<FormFiels>({});
 
   const onSubmit: SubmitHandler<FormFiels> = async (data) => {
-    const newArticle = { ...data };
-    await UseUploadArticle(newArticle);
-    alert("The article has been uploaded. You will now be taken back to the articles page");
-    navigate("/cms"); // ✅ function, not a component
+    if (user?.user_metadata.admin === false) {
+      alert("Only admins can add new articles");
+      return;
+    } else {
+      await uploadArticle(data);
+      alert("The article has been uploaded. You will now be taken back to the articles page");
+      navigate("/cms");
+    }
   };
 
   return (
@@ -136,7 +144,7 @@ const AddArticleForm = () => {
 
           {/* Image */}
           <div className="max-w-md">
-            \<Label htmlFor="authors">Select Author</Label>
+            \<Label htmlFor="authors">Select Image</Label>
             <Button type="button" onClick={() => setOpenModal(true)} className="self-end">
               {watch("image") ? watch("image").split("/").pop() : "Select Image"}
             </Button>
@@ -144,9 +152,14 @@ const AddArticleForm = () => {
           </div>
         </div>
 
-        <Button type="submit" className="cursor-pointer select-none w-fit self-end max-[800px]:self-center">
-          Upload Article
-        </Button>
+        <div className="self-end flex gap-x-4 max-[800px]:self-center">
+          <Button type="submit" className="cursor-pointer select-none w-fit self-end max-[800px]:self-center">
+            Upload Article
+          </Button>
+          <Link to={"/cms"}>
+            <Button className="cursor-pointer select-none w-fit self-end max-[800px]:self-center">Cancel</Button>
+          </Link>
+        </div>
 
         {/* Images Modal */}
         <Controller

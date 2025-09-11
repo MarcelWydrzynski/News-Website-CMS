@@ -38,6 +38,10 @@ const UserAuthentication = () => {
     }
   };
 
+  const handleTestLogin = (email: string, password: string) => {
+    signIn(email, password);
+  };
+
   return (
     <div className="w-dvw h-dvh bg-[#10141c] flex justify-center items-center">
       <form className="w-2/5 p-10 flex flex-col gap-5 rounded-lg bg-gray-800 select-none max-[1000px]:w-4/5 max-[600px]:w-5/5 mx-2" onSubmit={handleSubmit}>
@@ -103,6 +107,11 @@ const UserAuthentication = () => {
                 <Button type="submit" className="cursor-pointer">
                   {isLogin ? "Login" : "Register"}
                 </Button>
+                {isLogin && (
+                  <Button className="cursor-pointer" onClick={() => handleTestLogin("wydrzynski99@gmail.com", "asdasd123")}>
+                    Test Login
+                  </Button>
+                )}
                 <Link to={"/"}>
                   <Button className="cursor-pointer">Exit</Button>
                 </Link>

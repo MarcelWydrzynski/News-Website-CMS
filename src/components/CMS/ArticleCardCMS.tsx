@@ -6,7 +6,7 @@ import ArticleType from "../../types/ArticleType";
 type ArticleCardCMSProps = {
   article: ArticleType;
   setSelectedArticle: (article: ArticleType) => void;
-  handleCheckboxChange: (event: ChangeEvent<HTMLInputElement>, article: Article) => void;
+  handleCheckboxChange: (event: ChangeEvent<HTMLInputElement>, article: ArticleType) => void;
   handleModal: (article: ArticleType) => void;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 };

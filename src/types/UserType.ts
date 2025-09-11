@@ -5,6 +5,7 @@ type User = {
     data: {
       username: string;
       articles: number[];
+      admin?: boolean;
     };
   };
 };

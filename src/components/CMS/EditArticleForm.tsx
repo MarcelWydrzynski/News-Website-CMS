@@ -1,11 +1,13 @@
 import { Button, Label, TextInput, Textarea, Select } from "flowbite-react";
-import UseFetchAuthors from "../../hooks/UseFetchAuthors";
 import { SubmitHandler, useForm, Controller } from "react-hook-form";
+import { useState } from "react";
+import { useAuth } from "../../Context/AuthContext";
+import { Link } from "react-router";
+import useUpdateArticle from "../../hooks/UseUpdateArticle";
 import ArticleType from "../../types/ArticleType";
 import RichTextEditor from "../CMS/RichTextEditor";
 import ImagesModalCMS from "../CMS/ImagesModalCMS";
-import { useState } from "react";
-import useUpdateArticle from "../../hooks/UseUpdateArticle";
+import UseFetchAuthors from "../../hooks/UseFetchAuthors";
 
 type FormFields = {
   title: string;
@@ -25,7 +27,8 @@ const EditArticleForm = ({ article }: EditArticleFormProps) => {
   const { authors } = UseFetchAuthors();
   const [openModal, setOpenModal] = useState(false);
 
-  const { updateArticle, loading, error } = useUpdateArticle();
+  const { user } = useAuth();
+  const { updateArticle, loading } = useUpdateArticle();
 
   const {
     register,
@@ -46,6 +49,10 @@ const EditArticleForm = ({ article }: EditArticleFormProps) => {
   });
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
+    if (user?.user_metadata.admin === false) {
+      alert("Only admin can make changes to the existing articles.");
+      return;
+    }
     const updatedArticle = { ...data, id: article.id };
     await updateArticle(updatedArticle);
   };
@@ -156,10 +163,14 @@ const EditArticleForm = ({ article }: EditArticleFormProps) => {
             {errors.image && <p className="text-red-500">{errors.image.message}</p>}
           </div>
         </div>
-
-        <Button disabled={loading} type="submit" className="cursor-pointer select-none w-fit self-end max-[800px]:self-center">
-          {loading ? "Updating..." : "Update article"}
-        </Button>
+        <div className="flex self-end gap-x-4 max-[800px]:self-center">
+          <Button disabled={loading} type="submit" className="cursor-pointer select-none w-fit self-end max-[800px]:self-center">
+            {loading ? "Updating..." : "Update article"}
+          </Button>
+          <Link to={"/cms"}>
+            <Button className="cursor-pointer select-none w-fit self-end max-[800px]:self-center">Cancel</Button>
+          </Link>
+        </div>
       </form>
 
       {/* Images Modal */}

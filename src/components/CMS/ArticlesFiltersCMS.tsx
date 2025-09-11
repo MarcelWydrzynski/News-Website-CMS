@@ -1,5 +1,6 @@
 import { TextInput, Button, Label } from "flowbite-react";
 import { Link } from "react-router";
+import { useAuth } from "../../Context/AuthContext";
 
 type ArticlesFiltersCMSProps = {
   selectedArticles: number[];
@@ -8,8 +9,18 @@ type ArticlesFiltersCMSProps = {
 };
 
 const ArticlesFiltersCMS = ({ selectedArticles, onSearch, onDelete }: ArticlesFiltersCMSProps) => {
+  const { user } = useAuth();
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onSearch(event.target.value);
+  };
+
+  const handleDelete = () => {
+    if (user?.user_metadata.admin === false) {
+      alert("Only admins can delete articles.");
+      return;
+    }
+    onDelete();
   };
 
   return (
@@ -24,7 +35,7 @@ const ArticlesFiltersCMS = ({ selectedArticles, onSearch, onDelete }: ArticlesFi
         <Button>Add article</Button>
       </Link>
       <div className="ml-auto max-[800px]:m-0 self-end">
-        <Button onClick={onDelete} disabled={selectedArticles.length === 0}>
+        <Button onClick={() => handleDelete()} disabled={selectedArticles.length === 0}>
           Delete selected article/articles
         </Button>
       </div>
