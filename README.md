@@ -23,12 +23,10 @@ Additionally, users can check the latest cryptocurrency prices and view a weathe
 
 🎨 Modern UI – Tailwind CSS & Flowbite React components
 
-🛠️ Tech Stack
+## 🛠️ Tech Stack
 
-Frontend: React + Vite + TypeScript
-
-Styling: Tailwind CSS, Flowbite React
-
-Deployment: Vercel
-
-Version Control: Git + GitHub
+- **Frontend:** React + Vite + TypeScript  
+- **Styling:** Tailwind CSS, Flowbite React  
+- **Backend / Database:** Supabase (for user authentication, articles, images, and authors management)  
+- **Deployment:** Vercel  
+- **Version Control:** Git + GitHub  
