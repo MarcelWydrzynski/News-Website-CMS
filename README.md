@@ -1,4 +1,4 @@
-News Website CMS
+** News Website CMS
 
 News Website CMS is a full-stack news platform featuring a built-in content management system (CMS) that empowers admins and authors to efficiently manage content. Users with admin or author privileges can create accounts, securely log in, publish and edit news articles, upload and organize images, and add or remove authors, all through a user-friendly and intuitive admin interface.
 
