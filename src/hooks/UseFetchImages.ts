@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import supabase from "../lib/supabase";
-import { Image } from "../types/ImageType";
+import { ImageType } from "../types/ImageType";
 
 const CDNURL = "https://vhdzgbgquqmnfgcynhno.supabase.co/storage/v1/object/public/cmsstorage//";
 
 const UseFetchImages = () => {
-  const [images, setImages] = useState<Image[]>([]);
+  const [images, setImages] = useState<ImageType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 

@@ -3,10 +3,10 @@ import { TextInput, Button, FileInput, Label } from "flowbite-react";
 import { useAuth } from "../../Context/AuthContext";
 import uploadImage from "../../hooks/UseUploadImage";
 import deleteImages from "../../hooks/UseDeleteImages";
-import { Image } from "../../types/ImageType"; // ✅ import type correctly
+import { ImageType } from "../../types/ImageType"; 
 
 type ImagesFiltersCMSProps = {
-  selectedImages: Image[];
+  selectedImages: ImageType[];
   onSearch: (query: string) => void;
 };
 
