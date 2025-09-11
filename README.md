@@ -5,7 +5,7 @@ Admins and authors can create accounts, log in, publish and manage news articles
 
 Additionally, users can check the latest cryptocurrency prices and view a weather forecast, making the website more interactive and informative.
 
-🚀 Features
+## 🚀 Features
 
 ✍️ Article Management – Create, edit, and delete news posts
 
