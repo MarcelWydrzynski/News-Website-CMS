@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import supabase from "../lib/supabase";
-import Image from "../types/Image";
+import { Image } from "../types/Image";
 
 const CDNURL = "https://vhdzgbgquqmnfgcynhno.supabase.co/storage/v1/object/public/cmsstorage//";
 

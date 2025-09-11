@@ -3,7 +3,7 @@ import UseFetchSingleArticle from "../../hooks/UseFetchSingleArticle";
 import Loader from "../../components/Loader";
 import Error from "../../components/Error";
 import { Suspense, lazy } from "react";
-import { useParams, useNavigate } from "react-router";
+import { useParams } from "react-router";
 import { Button } from "flowbite-react";
 import { useAuth } from "../../Context/AuthContext";
 
@@ -18,7 +18,6 @@ const ArticlePage = () => {
   const articleId = parseInt(idSlug?.split("-")[0] || "", 10);
   const { article, loading, error } = UseFetchSingleArticle(articleId);
   const { addArticleToUser, userFavoriteArticles, user } = useAuth();
-  const navigate = useNavigate();
   const isFavorite = userFavoriteArticles.includes(articleId);
 
   return (
