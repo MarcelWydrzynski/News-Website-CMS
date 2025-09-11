@@ -5,17 +5,17 @@ import Error from "../../components/Error";
 import Loader from "../../components/Loader";
 import ImagesFiltersCMS from "../../components/CMS/ImagesFiltersCMS";
 import ImageModalCMS from "../../components/CMS/ImageModalCMS";
-import { Image } from "../../types/Image";
+import { ImageType } from "../../types/ImageType";
 
 const ImagesCMS = () => {
-  const [selectedImages, setSelectedImages] = useState<Image[]>([]);
+  const [selectedImages, setSelectedImages] = useState<ImageType[]>([]);
   const [openModal, setOpenModal] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
+  const [selectedImage, setSelectedImage] = useState<ImageType | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const { images, error, loading } = UseFetchImages();
 
-  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>, image: Image) => {
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>, image: ImageType) => {
     if (event.target.checked) {
       setSelectedImages((prev) => [...prev, image]);
     } else {
@@ -27,7 +27,7 @@ const ImagesCMS = () => {
     setSearchQuery(query);
   };
 
-  const handleModal = (image: Image) => {
+  const handleModal = (image: ImageType) => {
     setSelectedImage(image);
     setOpenModal(true);
   };

@@ -3,7 +3,7 @@ import { TextInput, Button, FileInput, Label } from "flowbite-react";
 import { useAuth } from "../../Context/AuthContext";
 import uploadImage from "../../hooks/UseUploadImage";
 import deleteImages from "../../hooks/UseDeleteImages";
-import { Image } from "../../types/Image"; // ✅ import type correctly
+import { Image } from "../../types/ImageType"; // ✅ import type correctly
 
 type ImagesFiltersCMSProps = {
   selectedImages: Image[];

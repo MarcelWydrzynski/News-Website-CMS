@@ -3,12 +3,12 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader, Card } from "flowbi
 import UseFetchImages from "../../hooks/UseFetchImages";
 import LoaderCMS from "../Loader";
 import ErrorCMS from "../Error";
-import Image from "../../types/Image";
+import Image from "../../types/ImageType";
 
 type ImagesModalCMSProps = {
   openModal: boolean;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  value: string; 
+  value: string;
   onChange: (url: string) => void;
 };
 
