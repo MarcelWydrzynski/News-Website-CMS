@@ -1,9 +1,10 @@
 News Website CMS
 
-A full-stack news website with a built-in content management system (CMS).
-Admins and authors can create accounts, log in, publish and manage news articles, manage images, and add or remove authors — all through an intuitive admin interface. Meanwhile, regular users enjoy a clean, responsive front-end to browse and read articles.
+News Website CMS is a full-stack news platform featuring a built-in content management system (CMS) that empowers admins and authors to efficiently manage content. Users with admin or author privileges can create accounts, securely log in, publish and edit news articles, upload and organize images, and add or remove authors, all through a user-friendly and intuitive admin interface.
 
-Additionally, users can check the latest cryptocurrency prices and view a weather forecast, making the website more interactive and informative.
+Meanwhile, regular visitors can enjoy a clean, modern, and fully responsive front-end, allowing them to browse articles seamlessly across devices. To enhance the user experience, the website also provides real-time cryptocurrency price updates and a weather forecast feature, making the platform not only a news hub but also an informative, interactive, and engaging destination.
+
+The backend is powered by Supabase, which handles authentication, data storage, and real-time updates for articles, images, and user management, ensuring a robust and scalable system.
 
 ## 🚀 Features
 
